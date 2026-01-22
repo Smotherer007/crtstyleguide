@@ -10,8 +10,8 @@
       "types": "./dist/lib/index.d.ts",
       "import": "./dist/lib/index.js"
     },
-    "./styles": "./dist/lib/components.css",
-    "./styles.css": "./dist/lib/components.css"
+    "./styles": "./dist/lib/styles.css",
+    "./styles.css": "./dist/lib/styles.css"
   },
   "files": [
     "dist/lib"

@@ -8,6 +8,7 @@ export default defineConfig({
       name: 'CrtStyleGuide',
       fileName: (format) => `index.${format === 'es' ? 'js' : 'cjs'}`,
       formats: ['es'],
+      cssFileName: 'styles',
     },
     outDir: 'dist/lib',
     emptyOutDir: true,
