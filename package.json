@@ -48,6 +48,7 @@
     "type": "git",
     "url": "https://github.com/Smotherer007/crtstyleguide.git"
   },
+  "homepage": "https://smotherer007.github.io/crtstyleguide/",
   "publishConfig": {
     "access": "public"
   }

@@ -5,11 +5,13 @@
   <img src="https://img.shields.io/badge/lit-3.1.0-33ff33?style=flat-square&labelColor=0a0a0a" alt="Lit">
   <img src="https://img.shields.io/badge/typescript-5.3-33ff33?style=flat-square&labelColor=0a0a0a" alt="TypeScript">
   <img src="https://img.shields.io/badge/license-Apache%202.0-33ff33?style=flat-square&labelColor=0a0a0a" alt="License">
+  <a href="https://smotherer007.github.io/crtstyleguide/"><img src="https://img.shields.io/badge/demo-live-33ff33?style=flat-square&labelColor=0a0a0a" alt="Live Demo"></a>
 </p>
 
 <p align="center">
   <b>Eine moderne Web Component Library im Retro-CRT-Look</b><br>
-  Basierend auf Lit, TypeScript und Vite
+  Basierend auf Lit, TypeScript und Vite<br><br>
+  <a href="https://smotherer007.github.io/crtstyleguide/">🖥️ Live Demo ansehen</a>
 </p>
 
 ---
