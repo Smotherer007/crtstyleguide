@@ -46,7 +46,7 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/DEIN-USERNAME/crtstyleguide.git"
+    "url": "https://github.com/Smotherer007/crtstyleguide.git"
   },
   "publishConfig": {
     "access": "public"
