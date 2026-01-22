@@ -179,6 +179,13 @@ export class MusicPlayer extends LitElement {
   private loadTrack(index: number) {
     if (index < 0 || index >= this.tracks.length) return;
     
+    const track = this.tracks[index];
+    // Don't try to load if URL is empty (demo mode)
+    if (!track?.url) {
+      this.currentIndex = index;
+      return;
+    }
+    
     const wasPlaying = this.isPlaying;
     
     if (this.isPlaying) {
@@ -190,7 +197,7 @@ export class MusicPlayer extends LitElement {
     this.currentTime = 0;
     
     if (this.audio) {
-      this.audio.src = this.tracks[index].url;
+      this.audio.src = track.url;
       this.audio.load();
     }
 
@@ -204,7 +211,10 @@ export class MusicPlayer extends LitElement {
   }
 
   private play() {
-    if (!this.audio?.src || this.tracks.length === 0) return;
+    const track = this.tracks[this.currentIndex];
+    if (!track?.url || this.tracks.length === 0) return;
+    if (!this.audio?.src) return;
+    
     this.visualizer?.connectAudio(this.audio);
     this.audio.play();
     this.isPlaying = true;
