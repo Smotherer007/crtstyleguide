@@ -1,7 +1,7 @@
 {
-  "name": "@crtstyleguide/components",
+  "name": "@patimweb/crtstyleguide",
   "version": "0.0.0-development",
-  "description": "Living Style Guide - Lit component library",
+  "description": "CRT Style Guide - Retro Lit component library",
   "type": "module",
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",

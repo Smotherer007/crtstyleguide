@@ -245,30 +245,30 @@ npm publish
 **Installation:**
 
 ```bash
-npm install @crtstyleguide/components
+npm install @patimweb/crtstyleguide
 ```
 
 **JavaScript/TypeScript einbinden:**
 
 ```typescript
 // Alle Komponenten importieren (registriert automatisch die Custom Elements)
-import '@crtstyleguide/components';
+import '@patimweb/crtstyleguide';
 
 // Oder einzelne Komponenten
-import { Button, Card, Modal } from '@crtstyleguide/components';
+import { Button, Card, Modal } from '@patimweb/crtstyleguide';
 ```
 
 **CSS einbinden:**
 
 ```typescript
 // In deiner Haupt-JS/TS-Datei
-import '@crtstyleguide/components/dist/lib/components.css';
+import '@patimweb/crtstyleguide/dist/lib/components.css';
 ```
 
 Oder direkt im HTML:
 
 ```html
-<link rel="stylesheet" href="node_modules/@crtstyleguide/components/dist/lib/components.css">
+<link rel="stylesheet" href="node_modules/@patimweb/crtstyleguide/dist/lib/components.css">
 ```
 
 **Komponenten verwenden:**
@@ -290,8 +290,8 @@ Oder direkt im HTML:
 **Mit Framework (z.B. React):**
 
 ```tsx
-import '@crtstyleguide/components';
-import '@crtstyleguide/components/dist/lib/components.css';
+import '@patimweb/crtstyleguide';
+import '@patimweb/crtstyleguide/dist/lib/components.css';
 
 function App() {
   return (
