@@ -23,15 +23,16 @@ export class Visualizer extends LitElement {
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
-      height: 100%;
-      min-height: 120px;
-      gap: 2px;
+      /* give a concrete height so percent heights on bars resolve reliably */
+      height: 160px;
+      gap: 6px;
       border: 2px solid var(--crt-primary);
       padding: var(--crt-spacing-md);
       position: relative;
       background: var(--crt-bg-darker);
       box-shadow: var(--crt-glow-inset);
       box-sizing: border-box;
+      overflow: hidden;
     }
 
     .label {
@@ -69,11 +70,14 @@ export class Visualizer extends LitElement {
     }
 
     .bar {
-      flex: 1;
-      background: var(--crt-primary);
-      box-shadow: 0 0 5px var(--crt-primary);
-      min-height: 20%;
-      transition: height 0.05s ease;
+      flex: 1 1 auto;
+      align-self: flex-end;
+      min-width: 6px;
+      background: linear-gradient(180deg, color-mix(in srgb, var(--crt-primary) 80%, white 20%), var(--crt-primary));
+      box-shadow: 0 0 8px color-mix(in srgb, var(--crt-primary) 40%, transparent);
+      transition: height 0.05s ease, background 0.2s ease;
+      will-change: height;
+      border-radius: 2px 2px 0 0;
     }
 
     .bar.active {
