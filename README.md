@@ -264,7 +264,9 @@ import { Button, Card, Modal } from '@patimweb/crtstyleguide';
 
 ```typescript
 // In deiner Haupt-JS/TS-Datei
-import '@patimweb/crtstyleguide/dist/lib/components.css';
+import '@patimweb/crtstyleguide/styles';
+// oder
+import '@patimweb/crtstyleguide/styles.css';
 ```
 
 Oder direkt im HTML:
@@ -293,7 +295,7 @@ Oder direkt im HTML:
 
 ```tsx
 import '@patimweb/crtstyleguide';
-import '@patimweb/crtstyleguide/dist/lib/components.css';
+import '@patimweb/crtstyleguide/styles';
 
 function App() {
   return (

@@ -9,7 +9,9 @@
     ".": {
       "types": "./dist/lib/index.d.ts",
       "import": "./dist/lib/index.js"
-    }
+    },
+    "./styles": "./dist/lib/components.css",
+    "./styles.css": "./dist/lib/components.css"
   },
   "files": [
     "dist/lib"
