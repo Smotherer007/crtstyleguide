@@ -322,5 +322,6 @@ Apache License 2.0 - siehe [LICENSE](LICENSE) für Details.
 ---
 
 <p align="center">
-  <sub>Built with 💚 and lots of neon glow</sub>
+  <sub>Built with 💚 and lots of neon glow</sub><br>
+  <sub>© 2026 Patrick Weppelmann</sub>
 </p>
