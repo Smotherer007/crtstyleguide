@@ -19,7 +19,6 @@ export class FileUpload extends LitElement {
   @property({ type: Number }) maxFiles = 10;
   
   @state() files: UploadedFile[] = [];
-  @state() isDragging = false;
 
   static styles = css`
     :host {
@@ -298,51 +297,17 @@ export class FileUpload extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    // Prevent default drag behaviors on window
-    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-      window.addEventListener(eventName, this._preventDefaults, false);
-    });
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-      window.removeEventListener(eventName, this._preventDefaults, false);
-    });
   }
-
-  private _preventDefaults = (e: Event) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
 
   private _generateId(): string {
     return Math.random().toString(36).substring(2, 9);
   }
 
-  private _handleDragEnter = () => {
-    this.isDragging = true;
-  };
-
-  private _handleDragLeave = (e: DragEvent) => {
-    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
-    if (
-      e.clientX < rect.left ||
-      e.clientX >= rect.right ||
-      e.clientY < rect.top ||
-      e.clientY >= rect.bottom
-    ) {
-      this.isDragging = false;
-    }
-  };
-
-  private _handleDrop = (e: DragEvent) => {
-    this.isDragging = false;
-    const droppedFiles = e.dataTransfer?.files;
-    if (droppedFiles) {
-      this._addFiles(Array.from(droppedFiles));
-    }
-  };
+  // Drag-and-drop removed: files are added via the file input only
 
   private _handleFileSelect = (e: Event) => {
     const input = e.target as HTMLInputElement;
@@ -462,15 +427,8 @@ export class FileUpload extends LitElement {
           </span>
         </div>
 
-        <!-- Drop Zone -->
-        <div 
-          class="drop-zone ${this.isDragging ? 'dragging' : ''}"
-          @click="${this._handleUploadClick}"
-          @dragenter="${this._handleDragEnter}"
-          @dragover="${this._handleDragEnter}"
-          @dragleave="${this._handleDragLeave}"
-          @drop="${this._handleDrop}"
-        >
+        <!-- File input (click only) -->
+        <div>
           <input
             class="upload-input"
             type="file"
@@ -479,13 +437,6 @@ export class FileUpload extends LitElement {
             name="${this.name}"
             @change="${this._handleFileSelect}"
           />
-          <span class="drop-zone-icon">${this.isDragging ? '[+]' : '[^]'}</span>
-          <span class="drop-zone-text">
-            ${this.isDragging ? 'DROP FILES HERE' : 'DRAG & DROP FILES OR CLICK TO BROWSE'}
-          </span>
-          <span class="drop-zone-hint">
-            MAX ${this._formatFileSize(this.maxSize)} PER FILE | ${this.accept || 'ALL FILES'}
-          </span>
         </div>
 
         <!-- File List -->
