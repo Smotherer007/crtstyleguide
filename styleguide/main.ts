@@ -38,6 +38,7 @@ import '../src/components/molecules/accordion';
 import '../src/components/molecules/visualizer';
 import '../src/components/molecules/playlist';
 import '../src/components/molecules/music-player';
+import '../src/components/molecules/terminal';
 import '../src/components/organisms/music-station';
 
 // Import and render template

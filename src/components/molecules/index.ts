@@ -8,4 +8,5 @@ export { Accordion, AccordionItem } from './accordion';
 export { Visualizer } from './visualizer';
 export { Playlist } from './playlist';
 export { MusicPlayer } from './music-player';
+export { Terminal } from './terminal';
 export type { Track } from './playlist';

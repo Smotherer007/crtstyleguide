@@ -22,6 +22,7 @@ import { Grid } from '../src/components/molecules/grid';
 import { Visualizer } from '../src/components/molecules/visualizer';
 import { Playlist } from '../src/components/molecules/playlist';
 import { MusicPlayer } from '../src/components/molecules/music-player';
+import { Terminal } from '../src/components/molecules/terminal';
 
 import { MusicStation } from '../src/components/organisms/music-station';
 
@@ -46,6 +47,7 @@ const _components = {
   Visualizer,
   Playlist,
   MusicPlayer,
+  Terminal,
   MusicStation,
 };
 
@@ -53,6 +55,6 @@ const _components = {
 console.log('Component registry loaded:', Object.keys(_components).length, 'components');
 
 // Export for type checking
-export { Button, Badge, Heading, Text, Tabs, Input, Textarea, Icon, Link, FileUpload, Calendar, Spinner, Card, Table, Grid, Visualizer, Playlist, MusicPlayer, MusicStation };
+export { Button, Badge, Heading, Text, Tabs, Input, Textarea, Icon, Link, FileUpload, Calendar, Spinner, Card, Table, Grid, Visualizer, Playlist, MusicPlayer, Terminal, MusicStation };
 
 

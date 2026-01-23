@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="CRT favicon">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0%" stop-color="#44ff44" />
+      <stop offset="100%" stop-color="#22cc22" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="8" fill="#050605" stroke="url(#g)" stroke-width="3" />
+  <g fill="url(#g)" font-family="VT323, monospace" font-size="22" font-weight="700" text-anchor="middle">
+    <text x="32" y="38">CRT</text>
+  </g>
+</svg>

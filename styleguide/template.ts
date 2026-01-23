@@ -73,6 +73,8 @@ export const styleGuideTemplate = () => html`
             </div>
           </crt-code-example>
 
+
+
           <crt-code-example
             class="mb-lg"
             title="Text"
@@ -900,6 +902,31 @@ document.body.appendChild(spinner);
 ></crt-visualizer>'
           >
             <crt-visualizer style="height: 150px; width: 100%;"></crt-visualizer>
+          </crt-code-example>
+
+          <crt-code-example
+            class="mb-lg"
+            title="Terminal"
+            description="Interaktives Terminal mit blinkendem Cursor. Emitiert 'command' Events bei Enter."
+            code='<crt-terminal></crt-terminal>'
+          >
+            <div style="display: flex; gap: 12px; flex-direction: column; align-items: stretch;">
+              <crt-terminal id="demo-term" style="width: 100%;"></crt-terminal>
+              <div style="display:flex; gap:8px; margin-top:8px;">
+                <crt-button @click=${() => {
+                  const t = document.getElementById('demo-term') as any;
+                  t?.type('> Hello from the style guide', 24);
+                }}>Print Message</crt-button>
+                <crt-button variant="success" @click=${() => {
+                  const t = document.getElementById('demo-term') as any;
+                  t?.println('> SYSTEM: OK');
+                }}>Write OK</crt-button>
+                <crt-button variant="warning" @click=${() => {
+                  const t = document.getElementById('demo-term') as any;
+                  t?.clear();
+                }}>Clear</crt-button>
+              </div>
+            </div>
           </crt-code-example>
 
           <crt-code-example
