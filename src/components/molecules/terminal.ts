@@ -8,7 +8,7 @@ export class Terminal extends LitElement {
   @property({ type: Boolean, reflect: true }) disabled = false;
   @state() private outputs: string[] = [];
   @state() private input = '';
-  @state() private focused = false;
+  
 
   static styles = css`
     :host { display: block; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace; }
@@ -69,7 +69,6 @@ export class Terminal extends LitElement {
 
   private handleFocus = () => {
     if (this.disabled) return;
-    this.focused = true;
     this.focus();
   };
 
@@ -120,7 +119,6 @@ export class Terminal extends LitElement {
 
   focus() {
     super.focus();
-    this.focused = true;
   }
 
   private scrollToBottom() {
