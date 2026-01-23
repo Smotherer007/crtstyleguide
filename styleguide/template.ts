@@ -1,5 +1,7 @@
 import { html } from 'lit';
 import '../src/components/atoms/spinner';
+import '../src/components/atoms/icon';
+import { ICON_NAMES } from '../src/components/atoms/icon';
 
 // Global spinner helper
 (window as any).showSpinner = (message = 'LOADING...', duration = 3000) => {
@@ -95,6 +97,25 @@ export const styleGuideTemplate = () => html`
           >
             <crt-link href="#">Standard Link</crt-link>
             <crt-link href="#">Mehr erfahren →</crt-link>
+          </crt-code-example>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- SECTION: ICONS PREVIEW -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <section id="icons" class="sg-section">
+          <crt-heading level="2">ICONS</crt-heading>
+          <crt-text muted class="mb-lg">Alle verfügbaren Icons (Name als Referenz).</crt-text>
+
+          <crt-code-example
+            class="mb-lg"
+            title="Icons Preview"
+            description="Übersicht aller Icons mit Bezeichnung."
+            code='<!-- All icons preview -->'
+          >
+            <div style="display:flex;flex-wrap:wrap;gap:12px;">
+              ${ICON_NAMES.map((name: string) => html`<div style="width:120px;display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px;border:1px dashed rgba(0,255,0,0.06);border-radius:6px;"><crt-icon name="${name}"></crt-icon><crt-text muted style="font-size:12px;word-break:break-word;text-align:center;width:100%;">${name}</crt-text></div>`) }
+            </div>
           </crt-code-example>
         </section>
 
@@ -582,22 +603,11 @@ export const styleGuideTemplate = () => html`
             class="mb-lg"
             title="Icons"
             description="Icon-Set für verschiedene Anwendungsfälle."
-            code='<crt-icon name="checkmark"></crt-icon>
-<crt-icon name="close"></crt-icon>
-<crt-icon name="plus"></crt-icon>
-<crt-icon name="search"></crt-icon>
-<crt-icon name="settings"></crt-icon>'
+            code='<!-- All icons preview -->'
           >
-            <crt-icon name="checkmark"></crt-icon>
-            <crt-icon name="close"></crt-icon>
-            <crt-icon name="plus"></crt-icon>
-            <crt-icon name="minus"></crt-icon>
-            <crt-icon name="search"></crt-icon>
-            <crt-icon name="arrow-right"></crt-icon>
-            <crt-icon name="arrow-left"></crt-icon>
-            <crt-icon name="trash"></crt-icon>
-            <crt-icon name="edit"></crt-icon>
-            <crt-icon name="settings"></crt-icon>
+            <div style="display:flex;flex-wrap:wrap;gap:12px;">
+              ${ICON_NAMES.map((name: string) => html`<div style="width:120px;display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px;border:1px dashed rgba(0,255,0,0.06);border-radius:6px;"><crt-icon name="${name}"></crt-icon><crt-text muted style="font-size:12px;word-break:break-word;text-align:center;width:100%;">${name}</crt-text></div>`) }
+            </div>
           </crt-code-example>
         </section>
 
