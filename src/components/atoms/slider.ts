@@ -34,7 +34,8 @@ export class Slider extends LitElement {
     .slider-value {
       color: var(--crt-primary);
       font-size: var(--crt-font-size-base);
-      min-width: 50px;
+      min-width: 36px;
+      flex: 0 0 auto;
       text-align: right;
     }
 
@@ -43,6 +44,13 @@ export class Slider extends LitElement {
       height: 24px;
       display: flex;
       align-items: center;
+    }
+
+    /* Allow range input and wrapper to shrink inside flexible containers */
+    .slider-wrapper, .slider-track, input[type="range"] {
+      box-sizing: border-box;
+      min-width: 0;
+      width: 100%;
     }
 
     input[type="range"] {

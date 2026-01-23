@@ -17,11 +17,14 @@ export class Terminal extends LitElement {
       color: #8aff8a;
       padding: 12px;
       border: 2px solid var(--crt-primary);
-      min-height: calc(var(--crt-font-size-md, 16px) * 1.4 * 8);
-      max-height: 380px;
+      min-height: calc(var(--crt-font-size-md, 16px) * 1.2 * 6);
+      max-height: min(380px, 50vh);
       overflow: auto;
       box-sizing: border-box;
       border-radius: 6px;
+    }
+    @media (max-width: 480px) {
+      .term { min-height: calc(var(--crt-font-size-md, 16px) * 1.2 * 4); max-height: 40vh; padding: 8px; }
     }
     .term[aria-disabled="true"] {
       opacity: 0.65;

@@ -25,7 +25,7 @@ export class FileUpload extends LitElement {
       display: block;
       font-family: var(--crt-font-family);
       width: 100%;
-      min-width: 500px;
+      min-width: 0;
     }
 
     .file-manager {
@@ -127,6 +127,7 @@ export class FileUpload extends LitElement {
     .file-list {
       max-height: 300px;
       overflow-y: auto;
+      width: 100%;
     }
 
     .file-list-header {
@@ -178,6 +179,26 @@ export class FileUpload extends LitElement {
       text-overflow: ellipsis;
       white-space: nowrap;
       min-width: 0;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 700px) {
+      .file-list-header,
+      .file-item {
+        grid-template-columns: 1fr 70px 70px 40px;
+      }
+      .drop-zone {
+        padding: var(--crt-spacing-md);
+      }
+    }
+
+    @media (max-width: 420px) {
+      .file-list-header,
+      .file-item {
+        grid-template-columns: 1fr 60px 60px 40px;
+      }
+      .file-list-header { font-size: 0.75rem; }
+      .drop-zone { padding: var(--crt-spacing-sm); min-height: 100px; }
     }
 
     .file-size {

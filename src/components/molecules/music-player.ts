@@ -27,12 +27,22 @@ export class MusicPlayer extends LitElement {
     :host {
       display: block;
       font-family: var(--crt-font-family);
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .player {
       border: 3px double var(--crt-primary);
       background: var(--crt-bg-dark);
       box-shadow: var(--crt-glow-inset);
+      width: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    /* Ensure nested controls can shrink and respect host width */
+    .player, .player * {
+      box-sizing: border-box;
     }
 
     /* Header */
@@ -78,6 +88,8 @@ export class MusicPlayer extends LitElement {
 
     .track-details {
       overflow: hidden;
+      flex: 1 1 auto;
+      min-width: 0;
     }
 
     .track-title {
@@ -100,6 +112,9 @@ export class MusicPlayer extends LitElement {
       flex-shrink: 0;
       margin-left: var(--crt-spacing-md);
     }
+
+    .visualizer-section { width: 100%; }
+    .now-playing { width: 100%; }
 
     /* Progress */
     .progress-section {
@@ -125,18 +140,27 @@ export class MusicPlayer extends LitElement {
       align-items: center;
       gap: var(--crt-spacing-md);
       flex-wrap: wrap;
+      min-width: 0;
     }
 
     .control-buttons {
       display: flex;
       gap: var(--crt-spacing-sm);
       align-items: center;
+      min-width: 0;
     }
 
     .volume-section {
-      flex: 1;
+      flex: 1 1 auto;
       max-width: 200px;
-      min-width: 150px;
+      min-width: 0;
+    }
+
+    /* Responsive: stack controls on narrow viewports */
+    @media (max-width: 520px) {
+      .controls { flex-direction: column; align-items: stretch; }
+      .control-buttons { justify-content: center; margin-bottom: var(--crt-spacing-sm); }
+      .volume-section { max-width: 100%; min-width: 0; }
     }
 
     /* Empty State */

@@ -14,6 +14,8 @@ export class Button extends LitElement {
       background-color: transparent;
       color: #33ff33;
       border: 2px solid #33ff33;
+      box-sizing: border-box;
+      height: 100%;
       padding: 16px 32px;
       font-family: 'VT323', 'Courier New', monospace;
       font-size: 1rem;

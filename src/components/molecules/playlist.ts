@@ -29,6 +29,8 @@ export class Playlist extends LitElement {
       font-size: var(--crt-font-size-sm);
       border: 2px solid var(--crt-primary);
       box-shadow: var(--crt-glow-sm);
+      box-sizing: border-box;
+      table-layout: fixed;
     }
 
     thead {
@@ -47,9 +49,14 @@ export class Playlist extends LitElement {
     }
 
     th.actions {
-      width: 50px;
+      width: 48px;
       text-align: center;
     }
+
+    /* Fix column widths in fixed table layout so title column can shrink
+       without forcing the whole table to overflow */
+    thead th:first-child { width: 48px; }
+    thead th:nth-child(2) { width: auto; }
 
     tbody tr {
       border-bottom: 1px solid rgba(51, 255, 51, 0.2);
@@ -87,16 +94,17 @@ export class Playlist extends LitElement {
     }
 
     td.track-number {
-      width: 60px;
+      min-width: 48px;
+      width: 48px;
       text-align: center;
       opacity: 0.7;
     }
 
     td.track-title {
-      max-width: 200px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      min-width: 0;
     }
 
     td.track-artist {
@@ -139,8 +147,16 @@ export class Playlist extends LitElement {
     .table-wrapper {
       max-height: 400px;
       overflow-y: auto;
+      min-width: 0;
       scrollbar-width: thin;
       scrollbar-color: var(--crt-primary) var(--crt-bg-dark);
+    }
+
+    /* Responsive: hide artist on narrow screens and allow horizontal scroll fallback */
+    @media (max-width: 520px) {
+      td.track-artist { display: none; }
+      td.track-title { max-width: 140px; min-width: 0; }
+      .table-wrapper { overflow-x: auto; min-width: 0; }
     }
 
     .table-wrapper::-webkit-scrollbar {

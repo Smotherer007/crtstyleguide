@@ -23,12 +23,10 @@ export const styleGuideTemplate = () => html`
   <div class="sg-wrapper">
     <div class="sg-container">
       
-      <!-- HEADER -->
-      <header class="sg-header">
-        <crt-heading level="1">╔══════════════════════════════════╗</crt-heading>
-        <crt-heading level="1">║  CRT LIVING STYLE GUIDE  ║</crt-heading>
-        <crt-heading level="1">╚══════════════════════════════════╝</crt-heading>
-        <crt-text>Component Library | Lit Web Components | Atomic Design</crt-text>
+      <!-- HEADER (responsive) -->
+      <header class="sg-header" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px;">
+        <crt-heading level="1" style="text-align:center;white-space:normal;word-break:break-word;">CRT LIVING STYLE GUIDE</crt-heading>
+        <crt-text muted style="font-size:var(--crt-font-size-sm);text-align:center;">Component Library · Lit Web Components · Atomic Design</crt-text>
       </header>
 
       <!-- NAVIGATION -->
@@ -464,18 +462,18 @@ export const styleGuideTemplate = () => html`
 <crt-button icon-only icon-left="menu" size="large"></crt-button>'
           >
             <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;">
-              <crt-button icon-left="download">DOWNLOAD</crt-button>
-              <crt-button icon-left="upload" variant="success">UPLOAD</crt-button>
-              <crt-button icon-right="arrow-right">WEITER</crt-button>
-              <crt-button icon-right="check" variant="success">BESTÄTIGEN</crt-button>
+              <crt-button style="height:40px;display:inline-flex;align-items:center;justify-content:center;" icon-left="download">DOWNLOAD</crt-button>
+              <crt-button style="height:40px;display:inline-flex;align-items:center;justify-content:center;" icon-left="upload" variant="success">UPLOAD</crt-button>
+              <crt-button style="height:40px;display:inline-flex;align-items:center;justify-content:center;" icon-right="arrow-right">WEITER</crt-button>
+              <crt-button style="height:40px;display:inline-flex;align-items:center;justify-content:center;" icon-right="check" variant="success">BESTÄTIGEN</crt-button>
             </div>
-            <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-top: 1rem;">
-              <crt-button icon-only icon-left="plus"></crt-button>
-              <crt-button icon-only icon-left="edit"></crt-button>
-              <crt-button icon-only icon-left="trash" variant="error"></crt-button>
-              <crt-button icon-only icon-left="settings"></crt-button>
-              <crt-button icon-only icon-left="search" size="small"></crt-button>
-              <crt-button icon-only icon-left="menu" size="large"></crt-button>
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;">
+              <crt-button style="height:40px;display:inline-flex;align-items:center;justify-content:center;" icon-only icon-left="plus"></crt-button>
+              <crt-button style="height:40px;display:inline-flex;align-items:center;justify-content:center;" icon-only icon-left="edit"></crt-button>
+              <crt-button style="height:40px;display:inline-flex;align-items:center;justify-content:center;" icon-only icon-left="trash" variant="error"></crt-button>
+              <crt-button style="height:40px;display:inline-flex;align-items:center;justify-content:center;" icon-only icon-left="settings"></crt-button>
+              <crt-button style="height:40px;display:inline-flex;align-items:center;justify-content:center;" icon-only icon-left="search" size="small"></crt-button>
+              <crt-button style="height:40px;display:inline-flex;align-items:center;justify-content:center;" icon-only icon-left="menu" size="large"></crt-button>
             </div>
           </crt-code-example>
         </section>

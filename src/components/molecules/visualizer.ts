@@ -23,8 +23,8 @@ export class Visualizer extends LitElement {
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
-      /* give a concrete height so percent heights on bars resolve reliably */
-      height: 160px;
+      /* allow configurable height and responsive fallback */
+      height: var(--crt-visualizer-height, 160px);
       gap: 6px;
       border: 2px solid var(--crt-primary);
       padding: var(--crt-spacing-md);
@@ -33,6 +33,11 @@ export class Visualizer extends LitElement {
       box-shadow: var(--crt-glow-inset);
       box-sizing: border-box;
       overflow: hidden;
+    }
+
+    @media (max-width: 520px) {
+      .visualizer { height: var(--crt-visualizer-height-sm, 110px); padding: calc(var(--crt-spacing-sm) + 2px); }
+      .bar { min-width: 4px; }
     }
 
     .label {
@@ -70,9 +75,9 @@ export class Visualizer extends LitElement {
     }
 
     .bar {
-      flex: 1 1 auto;
+      flex: 1 1 0;
       align-self: flex-end;
-      min-width: 6px;
+      min-width: 4px;
       background: linear-gradient(180deg, color-mix(in srgb, var(--crt-primary) 80%, white 20%), var(--crt-primary));
       box-shadow: 0 0 8px color-mix(in srgb, var(--crt-primary) 40%, transparent);
       transition: height 0.05s ease, background 0.2s ease;
