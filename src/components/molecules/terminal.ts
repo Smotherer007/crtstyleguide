@@ -11,8 +11,10 @@ export class Terminal extends LitElement {
   
 
   static styles = css`
-    :host { display: block; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace; }
+    :host { display: block; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace; width: 100%; max-width: none; box-sizing: border-box; min-width: 0; }
     .term {
+      width: 100%;
+      max-width: none;
       background: #0b0f0b;
       color: #8aff8a;
       padding: 12px;

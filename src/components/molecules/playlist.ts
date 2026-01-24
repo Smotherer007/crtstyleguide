@@ -19,6 +19,8 @@ export class Playlist extends LitElement {
   static styles = css`
     :host {
       display: block;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     /* Table Styles */
@@ -101,10 +103,12 @@ export class Playlist extends LitElement {
     }
 
     td.track-title {
-      white-space: nowrap;
+      /* Allow titles to wrap on narrow screens to avoid forcing huge action column widths */
+      white-space: normal;
       overflow: hidden;
       text-overflow: ellipsis;
       min-width: 0;
+      word-break: break-word;
     }
 
     td.track-artist {
@@ -116,7 +120,8 @@ export class Playlist extends LitElement {
     }
 
     .remove-btn {
-      opacity: 0;
+      /* Visible by default at low opacity so touch devices can see it */
+      opacity: 0.65;
       transition: var(--crt-transition);
     }
 
@@ -130,6 +135,13 @@ export class Playlist extends LitElement {
       text-align: center;
       padding: var(--crt-spacing-xl);
       transition: var(--crt-transition);
+      /* Ensure the empty preview stretches to the container width */
+      width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
     .empty-state:hover {
@@ -154,8 +166,9 @@ export class Playlist extends LitElement {
 
     /* Responsive: hide artist on narrow screens and allow horizontal scroll fallback */
     @media (max-width: 520px) {
-      td.track-artist { display: none; }
-      td.track-title { max-width: 140px; min-width: 0; }
+      /* Keep artist visible on narrow screens but allow wrapping */
+      td.track-artist { display: table-cell; max-width: 120px; white-space: normal; word-break: break-word; }
+      td.track-title { max-width: 140px; min-width: 0; white-space: normal; }
       .table-wrapper { overflow-x: auto; min-width: 0; }
     }
 

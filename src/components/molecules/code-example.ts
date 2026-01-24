@@ -13,6 +13,9 @@ export class CodeExample extends LitElement {
     :host {
       display: block;
       margin-bottom: var(--crt-spacing-xl);
+      width: 100%;
+      max-width: none;
+      box-sizing: border-box;
     }
 
     .example-header {
@@ -40,6 +43,8 @@ export class CodeExample extends LitElement {
       border: 2px solid var(--crt-primary);
       background: var(--crt-bg-light);
       box-shadow: var(--crt-glow-inset);
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .tab-header {
@@ -84,6 +89,17 @@ export class CodeExample extends LitElement {
       flex-wrap: wrap;
       gap: var(--crt-spacing-md);
       align-items: center;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* Ensure embedded demo components stretch to the available width
+       so examples don't get stuck at an intrinsic/narrow width. */
+    .preview-pane > * {
+      flex: 1 1 100%;
+      min-width: 0; /* allow children to shrink below their content width */
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .code-pane {

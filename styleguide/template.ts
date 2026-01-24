@@ -915,24 +915,32 @@ document.body.appendChild(spinner);
           <crt-code-example
             class="mb-lg"
             title="Terminal"
+            style="width:100%;max-width:none;box-sizing:border-box;"
             description="Interaktives Terminal mit blinkendem Cursor. Emitiert 'command' Events bei Enter."
             code='<crt-terminal></crt-terminal>'
           >
-            <div style="display: flex; gap: 12px; flex-direction: column; align-items: stretch;">
-              <crt-terminal id="demo-term" style="width: 100%;"></crt-terminal>
-              <div style="display:flex; gap:8px; margin-top:8px;">
-                <crt-button @click=${() => {
-                  const t = document.getElementById('demo-term') as any;
-                  t?.type('> Hello from the style guide', 24);
-                }}>Print Message</crt-button>
-                <crt-button variant="success" @click=${() => {
-                  const t = document.getElementById('demo-term') as any;
-                  t?.println('> SYSTEM: OK');
-                }}>Write OK</crt-button>
-                <crt-button variant="warning" @click=${() => {
-                  const t = document.getElementById('demo-term') as any;
-                  t?.clear();
-                }}>Clear</crt-button>
+            <div style="display:flex;gap:12px;flex-direction:column;align-items:stretch;width:100%">
+              <!-- Terminal wrapped in a shrinkable container so sibling controls cannot force width -->
+              <div style="width:100%;min-width:0;box-sizing:border-box;">
+                <crt-terminal id="demo-term" style="width:100%;min-width:0;box-sizing:border-box;"></crt-terminal>
+              </div>
+
+              <!-- Controls live in their own container and do not affect terminal width -->
+              <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;justify-content:flex-start;flex:0 0 auto;">
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                  <crt-button @click=${() => {
+                    const t = document.getElementById('demo-term') as any;
+                    t?.type('> Hello from the style guide', 24);
+                  }}>Print Message</crt-button>
+                  <crt-button variant="success" @click=${() => {
+                    const t = document.getElementById('demo-term') as any;
+                    t?.println('> SYSTEM: OK');
+                  }}>Write OK</crt-button>
+                  <crt-button variant="warning" @click=${() => {
+                    const t = document.getElementById('demo-term') as any;
+                    t?.clear();
+                  }}>Clear</crt-button>
+                </div>
               </div>
             </div>
           </crt-code-example>

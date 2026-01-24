@@ -414,6 +414,36 @@ code {
   min-height: 80px;
 }
 
+/* Prevent flex/grid children from forcing horizontal overflow
+   by allowing them to shrink below their content width. This
+   addresses cases where embedded components (e.g. terminals)
+   force their parent out of the viewport on small screens. */
+.sg-container,
+.sg-main,
+.sg-section,
+.sg-demo-row,
+.sg-demo-item,
+crt-code-example,
+.tabs-wrapper,
+.preview-pane {
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* Force the Terminal demo to take the available width in the styleguide preview.
+   This is a targeted override for the demo element with id="demo-term" and the
+   surrounding code example titled "Terminal" so that layout constraints do not
+   artificially cap its size while developing the component. */
+#demo-term,
+#demo-term .term,
+crt-code-example[title="Terminal"],
+crt-code-example[title="Terminal"] .preview-pane {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
 .sg-footer-text {
   font-size: 0.9rem !important;
 }

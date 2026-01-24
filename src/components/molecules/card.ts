@@ -4,7 +4,17 @@ import { customElement } from 'lit/decorators.js';
 @customElement('crt-card')
 export class Card extends LitElement {
   static styles = css`
+    :host {
+      /* Make the card element act like a normal block-level container
+         so external width/height styles can be applied responsively. */
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
     .card {
+      width: 100%;
+      box-sizing: border-box;
       border: 3px double var(--crt-primary);
       padding: var(--crt-spacing-lg);
       background-color: var(--crt-bg-dark);
