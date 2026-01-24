@@ -1006,7 +1006,12 @@ document.body.appendChild(spinner);
             description="Kombiniert den Music Player (Molekül) mit Playlist und File Upload Modal. Klicke auf die leere Playlist um Audio-Dateien hinzuzufügen."
             code='<crt-music-station></crt-music-station>'
           >
-            <crt-music-station></crt-music-station>
+            <crt-music-station
+              .tracks=${[{ title: 'VERROSTETE TERMINALS', artist: 'PATIMWEP', url: '/patimwep - Verrostete Terminals.mp3' }]}
+              .currentIndex=${0}
+              .autoplay=${true}
+              .autoplayDelay=${700}
+            ></crt-music-station>
           </crt-code-example>
         </section>
 

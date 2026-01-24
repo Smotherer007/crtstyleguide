@@ -123,15 +123,14 @@ export class Textarea extends LitElement {
   render() {
     return html`
       <textarea
+        .value=${this.value}
         placeholder="${this.placeholder}"
         rows="${this.rows}"
         ?disabled="${this.disabled}"
         @input="${(e: Event) => {
           this.value = (e.target as HTMLTextAreaElement).value;
         }}"
-      >
-${this.value}</textarea
-      >
+      ></textarea>
     `;
   }
 }

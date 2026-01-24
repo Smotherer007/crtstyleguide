@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import { customElement, state, query } from 'lit/decorators.js';
+import { customElement, state, query, property } from 'lit/decorators.js';
 import '../molecules/music-player';
 import '../molecules/playlist';
 import '../molecules/modal';
@@ -11,6 +11,8 @@ import type { FileUpload } from '../atoms/file-upload';
 
 @customElement('crt-music-station')
 export class MusicStation extends LitElement {
+  @property({ type: Boolean }) autoplay = false;
+  @property({ type: Number }) autoplayDelay = 500;
   @state() private tracks: Track[] = [];
   @state() private currentIndex = 0;
   @state() private showUploadModal = false;
@@ -171,6 +173,8 @@ export class MusicStation extends LitElement {
             <crt-music-player
               .tracks="${this.tracks}"
               .currentIndex="${this.currentIndex}"
+              .autoplay="${this.autoplay}"
+              .autoplayDelay="${this.autoplayDelay}"
               @track-change="${this.handleTrackChange}"
             ></crt-music-player>
           </div>

@@ -14,11 +14,15 @@ export type { Track };
 export class MusicPlayer extends LitElement {
   @property({ type: Array }) tracks: Track[] = [];
   @property({ type: Number }) currentIndex = 0;
+  @property({ type: Boolean }) autoplay = false;
+  @property({ type: Number }) autoplayDelay = 500;
   
   @state() private isPlaying = false;
   @state() private currentTime = 0;
   @state() private duration = 0;
   @state() private volume = 80;
+  @state() private autoplayMuted = false;
+
 
   @query('audio') private audio!: HTMLAudioElement;
   @query('crt-visualizer') private visualizer!: Visualizer;
@@ -193,9 +197,18 @@ export class MusicPlayer extends LitElement {
 
   updated(changedProps: Map<string, unknown>) {
     if (changedProps.has('tracks') && this.tracks.length > 0) {
-      if (changedProps.get('tracks') === undefined || 
+      if (changedProps.get('tracks') === undefined ||
           (changedProps.get('tracks') as Track[])?.length === 0) {
         this.loadTrack(0);
+      }
+
+      // If autoplay is enabled, attempt to play after configured delay
+      if (this.autoplay && this.tracks.length > 0) {
+        const delay = Math.max(0, Number(this.autoplayDelay) || 0);
+        setTimeout(() => {
+          // Only attempt if not already playing
+          if (!this.isPlaying) this.play();
+        }, delay);
       }
     }
   }
@@ -234,15 +247,38 @@ export class MusicPlayer extends LitElement {
     }));
   }
 
-  private play() {
+  private async play() {
     const track = this.tracks[this.currentIndex];
     if (!track?.url || this.tracks.length === 0) return;
-    if (!this.audio?.src) return;
-    
+    if (!this.audio) return;
+
     this.visualizer?.connectAudio(this.audio);
-    this.audio.play();
-    this.isPlaying = true;
-    this.visualizer?.start();
+
+    try {
+      const playResult = this.audio.play();
+      if (playResult instanceof Promise) await playResult;
+      this.isPlaying = true;
+      this.autoplayMuted = false;
+      this.visualizer?.start();
+      // Ensure audio is unmuted if it was previously muted
+      try { this.audio.muted = false; } catch (e) {}
+    } catch (err: any) {
+      console.warn('Playback failed:', err);
+      // Try muted autoplay fallback
+      try {
+        this.audio.muted = true;
+        const mutedResult = this.audio.play();
+        if (mutedResult instanceof Promise) await mutedResult;
+        this.isPlaying = true;
+        this.autoplayMuted = true;
+        this.visualizer?.start();
+        console.info('Muted autoplay succeeded as fallback.');
+      } catch (err2) {
+        console.warn('Muted autoplay also failed:', err2);
+        this.isPlaying = false;
+        this.visualizer?.stop();
+      }
+    }
   }
 
   private pause() {
@@ -251,13 +287,29 @@ export class MusicPlayer extends LitElement {
     this.visualizer?.stop();
   }
 
-  private togglePlay = () => {
+  private togglePlay = async () => {
     if (this.isPlaying) {
       this.pause();
     } else {
-      this.play();
+      await this.play();
     }
   };
+
+  private async unmuteAndResume() {
+    if (!this.audio) return;
+    try {
+      this.audio.muted = false;
+      try { (this.visualizer as any)?.audioContext?.resume?.(); } catch (e) {}
+      const r = this.audio.play();
+      if (r instanceof Promise) await r;
+      this.autoplayMuted = false;
+      this.isPlaying = true;
+    } catch (err) {
+      console.warn('Unmute / resume failed:', err);
+    }
+  }
+
+
 
   previousTrack = () => {
     if (this.tracks.length === 0) return;
@@ -373,6 +425,12 @@ export class MusicPlayer extends LitElement {
                   @change="${this.handleVolumeChange}"
                 ></crt-slider>
               </div>
+              ${this.autoplayMuted ? html`
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <crt-button variant="success" @click="${() => this.unmuteAndResume()}">UNMUTE</crt-button>
+                  <crt-text muted style="font-size:12px;">Autoplay started muted — click to unmute</crt-text>
+                </div>
+              ` : ''}
             </div>
           </div>
         ` : html`
