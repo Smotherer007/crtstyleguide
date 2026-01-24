@@ -1,4 +1,8 @@
 import { html } from 'lit';
+
+// Build-time aware track URL so GitHub Pages and other bases work correctly
+const BASE_URL = (import.meta as any).env?.BASE_URL || '/';
+const TRACK_URL = encodeURI(new URL('patimwep - Verrostete Terminals.mp3', BASE_URL).href);
 import '../src/components/atoms/spinner';
 import '../src/components/atoms/icon';
 import { ICON_NAMES } from '../src/components/atoms/icon';
@@ -1007,7 +1011,7 @@ document.body.appendChild(spinner);
             code='<crt-music-station></crt-music-station>'
           >
             <crt-music-station
-              .tracks=${[{ title: 'VERROSTETE TERMINALS', artist: 'PATIMWEP', url: '/patimwep - Verrostete Terminals.mp3' }]}
+              .tracks=${[{ title: 'VERROSTETE TERMINALS', artist: 'PATIMWEP', url: TRACK_URL }]}
               .currentIndex=${0}
               .autoplay=${true}
               .autoplayDelay=${700}
