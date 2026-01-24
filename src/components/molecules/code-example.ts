@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import '../atoms/tabs';
+import '../atoms/typography';
 
 /**
  * Code Example Component
@@ -26,16 +27,10 @@ export class CodeExample extends LitElement {
     }
 
     .example-title {
-      font-family: var(--crt-font-family);
-      font-size: var(--crt-font-size-lg);
-      color: var(--crt-primary);
       margin: 0;
     }
 
     .example-description {
-      font-family: var(--crt-font-family);
-      color: var(--crt-text-muted);
-      font-size: var(--crt-font-size-sm);
       margin: var(--crt-spacing-xs) 0 var(--crt-spacing-md) 0;
     }
 
@@ -189,9 +184,9 @@ export class CodeExample extends LitElement {
   render() {
     return html`
       <div class="example-header">
-        <h4 class="example-title">${this.title}</h4>
+        <crt-heading level="4" class="example-title">${this.title}</crt-heading>
       </div>
-      ${this.description ? html`<p class="example-description">${this.description}</p>` : ''}
+      ${this.description ? html`<crt-text muted class="example-description">${this.description}</crt-text>` : ''}
       
       <div class="tabs-wrapper">
         <div class="tab-header">

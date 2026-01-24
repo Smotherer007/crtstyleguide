@@ -25,19 +25,19 @@ body {
   font-size: var(--crt-font-size-base);
   line-height: var(--crt-line-height);
   /* CRT Default Cursor - blinking block */
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><rect width="8" height="16" fill="%2333ff33"/></svg>'), auto;
+  cursor: var(--crt-cursor-default);
 }
 
 /* CRT Pointer Cursor - small square for clickable elements */
 button, .btn, a, [role="button"], [tabindex]:not([tabindex="-1"]),
 crt-button, crt-link, crt-tabs, crt-file-upload, crt-date-picker {
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"><rect width="12" height="12" fill="%2333ff33"/></svg>') 6 6, pointer;
+  cursor: var(--crt-cursor-pointer);
 }
 
 /* CRT Text Cursor - I-beam for text inputs */
 input, textarea, select,
 crt-input input, crt-textarea textarea, crt-input, crt-textarea {
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="24" viewBox="0 0 16 24"><rect x="2" y="0" width="12" height="2" fill="%2333ff33"/><rect x="7" y="2" width="2" height="20" fill="%2333ff33"/><rect x="2" y="22" width="12" height="2" fill="%2333ff33"/></svg>') 8 12, text;
+  cursor: var(--crt-cursor-text);
 }
 
 /* Ensure placeholders are green and legible across native inputs and custom input atoms */
@@ -55,7 +55,7 @@ crt-search .input::placeholder {
 
 :root {
   --crt-scan-width: 1px;
-  --crt-scan-color: rgba(51, 255, 51, var(--crt-scanline-opacity, 0.04));
+  --crt-scan-color: color-mix(in srgb, var(--crt-primary) calc(var(--crt-scanline-opacity, 0.04) * 100%), transparent);
 }
 
 /* Phosphor glow / text bleeding effect moved to `crt-screen` component; keep
@@ -92,7 +92,7 @@ h1, h2, h3, h4, .sg-header crt-heading {
   width: 100%;
   height: 12px; /* visible band */
   z-index: 99999;
-  background: linear-gradient(180deg, rgba(51,255,51,0) 0%, rgba(51,255,51,0.95) 50%, rgba(51,255,51,0) 100%);
+  background: linear-gradient(180deg, transparent 0%, var(--crt-primary) 50%, transparent 100%);
   opacity: 0; /* shown when active */
   pointer-events: none;
   transform: translateY(-120%);
@@ -108,7 +108,7 @@ h1, h2, h3, h4, .sg-header crt-heading {
   bottom: 0;
   left: 0;
   z-index: 99998;
-  background: linear-gradient(to bottom, transparent 50%, rgba(51,255,51,0.04) 51%);
+  background: linear-gradient(to bottom, transparent 50%, color-mix(in srgb, var(--crt-primary) 4%, transparent) 51%);
   background-size: 100% 4px;
   opacity: 0.6;
   pointer-events: none;
@@ -135,7 +135,7 @@ h1, h2, h3, h4, .sg-header crt-heading {
    regardless of clip-path/pseudo-element behavior. This ensures a visible
    band passes over the .screen when #switch is checked. */
 #switch:checked ~ .screen.scanlines {
-  background-image: linear-gradient(180deg, rgba(51,255,51,0) 0%, rgba(51,255,51,0.95) 50%, rgba(51,255,51,0) 100%);
+  background-image: linear-gradient(180deg, transparent 0%, var(--crt-primary) 50%, transparent 100%);
   background-repeat: no-repeat;
   background-position: 0 100%;
   background-size: 100% 12px; /* thickness of the moving band */

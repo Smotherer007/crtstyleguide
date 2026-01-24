@@ -66,10 +66,10 @@
 }
 
 :root {
-  /* Colors - Primary Neon Green */
-  --crt-primary: #33ff33;
-  --crt-primary-light: #44ff44;
-  --crt-primary-dark: #22cc22;
+  /* Colors - Primary Green Phosphor (P1/P31) - Global Default */
+  --crt-primary: #8aff8a;
+  --crt-primary-light: #b4ffb4;
+  --crt-primary-dark: #33ff33;
   
   /* Colors - Backgrounds */
   --crt-bg-dark: #0a0a0a;
@@ -77,9 +77,9 @@
   --crt-bg-light: #1a1a1a;
   
   /* Colors - Text */
-  --crt-text-primary: #33ff33;
-  --crt-text-secondary: rgba(51, 255, 51, 0.7);
-  --crt-text-muted: rgba(51, 255, 51, 0.5);
+  --crt-text-primary: #8aff8a;
+  --crt-text-secondary: rgba(138, 255, 138, 0.7);
+  --crt-text-muted: rgba(138, 255, 138, 0.5);
   
   /* Colors - Variants */
   --crt-success: #00ff00;
@@ -96,15 +96,10 @@
   --crt-radius: 0px;
   
   /* Shadows - Glow Effects */
-  --crt-glow-sm: 0 0 5px rgba(51, 255, 51, 0.3);
-  --crt-glow: 0 0 10px rgba(51, 255, 51, 0.5);
-  --crt-glow-lg: 0 0 20px rgba(51, 255, 51, 0.7);
-  --crt-glow-inset: inset 0 0 10px rgba(51, 255, 51, 0.1);
-  /* Component-scoped glow: default to none so effects are opt-in via `crt-screen` */
-  --crt-component-glow-sm: none;
-  --crt-component-glow: none;
-  --crt-component-glow-lg: none;
-  --crt-component-glow-inset: none;
+  --crt-glow-sm: 0 0 5px rgba(138, 255, 138, 0.3);
+  --crt-glow: 0 0 10px rgba(138, 255, 138, 0.5);
+  --crt-glow-lg: 0 0 20px rgba(138, 255, 138, 0.7);
+  --crt-glow-inset: inset 0 0 10px rgba(138, 255, 138, 0.1);
   
   /* Typography */
   --crt-font-family: 'IBM Plex Mono', 'Monaco', 'Courier New', monospace;
@@ -131,10 +126,10 @@
   --crt-transition: all 0.3s ease;
   
   /* CRT Cursors */
-  --crt-cursor-default: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><rect width="8" height="16" fill="%2333ff33"/></svg>'), auto;
-  --crt-cursor-pointer: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"><rect width="12" height="12" fill="%2333ff33"/></svg>') 6 6, pointer;
+  --crt-cursor-default: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><rect width="8" height="16" fill="%238aff8a"/></svg>'), auto;
+  --crt-cursor-pointer: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"><rect width="12" height="12" fill="%238aff8a"/></svg>') 6 6, pointer;
   --crt-cursor-pointer-dark: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"><rect width="12" height="12" fill="%230a0a0a"/></svg>') 6 6, pointer;
-  --crt-cursor-text: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="24" viewBox="0 0 16 24"><rect x="2" y="0" width="12" height="2" fill="%2333ff33"/><rect x="7" y="2" width="2" height="20" fill="%2333ff33"/><rect x="2" y="22" width="12" height="2" fill="%2333ff33"/></svg>') 8 12, text;
+  --crt-cursor-text: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="24" viewBox="0 0 16 24"><rect x="2" y="0" width="12" height="2" fill="%238aff8a"/><rect x="7" y="2" width="2" height="20" fill="%238aff8a"/><rect x="2" y="22" width="12" height="2" fill="%238aff8a"/></svg>') 8 12, text;
 }
 
 /* Base Styles */

@@ -9,46 +9,50 @@
 </p>
 
 <p align="center">
-  <b>Eine moderne Web Component Library im Retro-CRT-Look</b><br>
-  Basierend auf Lit, TypeScript und Vite<br><br>
-  <a href="https://smotherer007.github.io/crtstyleguide/">🖥️ Live Demo ansehen</a>
+  <b>A modern Web Component Library with retro CRT aesthetic</b><br>
+  Built with Lit, TypeScript and Vite<br><br>
+  <a href="https://smotherer007.github.io/crtstyleguide/">🖥️ View Live Demo</a>
 </p>
 
 ---
 
 ## ✨ Features
 
-| Feature | Beschreibung |
+| Feature | Description |
 |---------|-------------|
-| 🖥️ **CRT-Ästhetik** | Retro-Look mit Neon-Glow-Effekten und Monospace-Fonts |
-| ⚡ **Lit Web Components** | Moderne, performante und leichtgewichtige Komponenten |
-| 🎨 **Design Tokens** | Konsistentes Theming über CSS Custom Properties |
-| 📦 **NPM-Ready** | Als wiederverwendbares Paket veröffentlichbar |
-| 🔒 **TypeScript** | Vollständige Typisierung für bessere DX |
-| 📚 **Living Style Guide** | Interaktive Dokumentation aller Komponenten |
-| ⚙️ **Vite** | Blitzschnelle Entwicklung und optimierte Builds |
+| 🖥️ **CRT Aesthetic** | Retro look with neon glow effects and monospace fonts |
+| ⚡ **Lit Web Components** | Modern, performant and lightweight components |
+| 🎨 **Design Tokens** | Consistent theming via CSS Custom Properties |
+| 📦 **NPM-Ready** | Publishable as reusable package |
+| 🔒 **TypeScript** | Full typing for better DX |
+| 📚 **Living Style Guide** | Interactive documentation of all components |
+| ⚙️ **Vite** | Lightning-fast development and optimized builds |
+| 🎨 **Multiple CRT Colors** | Green, Amber, and Blue phosphor variants |
+| ✨ **Authentic Effects** | Scanlines, flicker, chromatic aberration |
 
 ---
 
-## 📁 Projekt-Struktur
+## 📁 Project Structure
 
 ```
 crtstyleguide/
 ├── src/
 │   ├── components/
-│   │   ├── atoms/           # Grundbausteine (Button, Input, Badge, etc.)
-│   │   ├── molecules/       # Zusammengesetzte Komponenten (Card, Modal, Table)
-│   │   └── organisms/       # Komplexe UI-Bereiche (MusicStation)
+│   │   ├── atoms/           # Basic building blocks (Button, Input, Badge, etc.)
+│   │   ├── molecules/       # Composite components (Card, Modal, Table)
+│   │   └── organisms/       # Complex UI areas (MusicStation)
 │   ├── styles/
 │   │   ├── design-tokens.css  # CSS Custom Properties
-│   │   └── index.css          # Globale Styles
-│   ├── utils/               # Hilfsfunktionen
+│   │   └── index.css          # Global Styles
+│   ├── utils/               # Helper functions
 │   └── index.ts             # Library Entry Point
 ├── styleguide/              # Living Style Guide App
 │   ├── index.html
 │   ├── main.ts
 │   ├── template.ts
 │   └── style.css
+├── public/
+│   └── fonts/               # IBM Plex Mono font files
 ├── vite.config.ts           # Dev & Style Guide Build
 ├── vite.lib.config.ts       # Library Build
 └── tsconfig.json
@@ -70,34 +74,34 @@ npm install
 npm run dev
 ```
 
-Öffnet den Style Guide unter: **http://localhost:5173/styleguide/**
+Opens the Style Guide at: **http://localhost:5173/styleguide/**
 
 ---
 
-## 📜 Verfügbare Scripts
+## 📜 Available Scripts
 
-| Script | Beschreibung |
+| Script | Description |
 |--------|-------------|
-| `npm run dev` | Startet den Entwicklungsserver |
-| `npm run build` | Baut Style Guide + Library |
-| `npm run build:lib` | Baut nur die Library für npm |
-| `npm run preview` | Vorschau des Builds |
-| `npm run type-check` | TypeScript-Prüfung ohne Build |
-| `npm run lint` | ESLint Codeprüfung |
+| `npm run dev` | Start development server |
+| `npm run build` | Build Style Guide + Library |
+| `npm run build:lib` | Build only library for npm |
+| `npm run preview` | Preview production build |
+| `npm run type-check` | TypeScript check without build |
+| `npm run lint` | ESLint code check |
 
 ---
 
-## 🧩 Komponenten-Übersicht
+## 🧩 Component Overview
 
-### Atoms (Grundbausteine)
+### Atoms (Basic Building Blocks)
 
-| Komponente | Tag | Beschreibung |
+| Component | Tag | Description |
 |------------|-----|-------------|
-| Button | `<crt-button>` | Interaktiver Button mit Glow-Effekt |
-| Badge | `<crt-badge>` | Status-Labels und Tags |
-| Input | `<crt-input>` | Textfelder und Textarea |
-| Select | `<crt-select>` | Dropdown-Auswahl |
-| Checkbox | `<crt-checkbox>` | Checkbox-Eingabe |
+| Button | `<crt-button>` | Interactive button with glow effect |
+| Badge | `<crt-badge>` | Status labels and tags |
+| Input | `<crt-input>` | Text fields and textarea |
+| Select | `<crt-select>` | Dropdown selection |
+| Checkbox | `<crt-checkbox>` | Checkbox input |
 | Radio | `<crt-radio>` | Radio-Button |
 | Toggle | `<crt-toggle>` | On/Off-Schalter |
 | Slider | `<crt-slider>` | Wertebereich-Regler |

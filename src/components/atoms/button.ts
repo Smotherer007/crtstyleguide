@@ -12,8 +12,8 @@ export class Button extends LitElement {
 
     button {
       background-color: transparent;
-      color: #33ff33;
-      border: 2px solid #33ff33;
+      color: var(--crt-primary);
+      border: 2px solid var(--crt-primary);
       box-sizing: border-box;
       height: 100%;
       padding: 16px 32px;
@@ -23,7 +23,7 @@ export class Button extends LitElement {
       cursor: var(--crt-cursor-pointer);
       text-transform: uppercase;
       transition: all 0.3s ease;
-      box-shadow: 0 0 5px rgba(51, 255, 51, 0.3);
+      box-shadow: var(--crt-glow-sm);
       position: relative;
       overflow: hidden;
       display: inline-flex;
@@ -37,7 +37,7 @@ export class Button extends LitElement {
 
     button:hover:not(:disabled) {
       background-color: transparent;
-      color: #33ff33;
+      color: var(--crt-primary);
       box-shadow: none;
       cursor: var(--crt-cursor-pointer);
     }
@@ -103,7 +103,7 @@ export class Button extends LitElement {
 
     :host([variant="link"]) button:hover:not(:disabled) {
       background: transparent;
-      color: #33ff33;
+      color: var(--crt-primary);
       box-shadow: none;
       transform: none;
       text-shadow: none;

@@ -49,7 +49,7 @@ export class Search extends LitElement {
 
     .input:focus {
       outline: none;
-      box-shadow: inset 0 0 10px rgba(51,255,51,0.2);
+      box-shadow: var(--crt-glow-inset);
     }
 
     .list {

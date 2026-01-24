@@ -395,7 +395,7 @@ export class MusicPlayer extends LitElement {
             <div class="progress-section progress-clickable" @click="${this.handleProgressClick}">
               <crt-progress
                 .value="${this.progressPercent}"
-                variant="success"
+                variant="primary"
                 .showValue="${true}"
               ></crt-progress>
               <div class="time-display">

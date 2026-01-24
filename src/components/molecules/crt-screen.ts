@@ -4,31 +4,70 @@ import { customElement, property } from 'lit/decorators.js';
 /**
  * CRT Screen Component
  * 
- * Ein Container mit authentischem CRT-Monitor-Effekt.
- * Unterstützt Power-On-Animation, Scanlines und Clip-Path für gerundete Bildschirmkanten.
+ * A container with authentic CRT monitor effects.
+ * Supports power-on animation, scanlines and clip-path for rounded screen edges.
  * 
  * @element crt-screen
  * 
- * @slot - Standard-Slot für beliebige Inhalte
+ * @slot - Default slot for any content
  * 
- * @property {boolean} active - Steuert den Power-On/Off-Effekt (Standard: true)
+ * @property {boolean} active - Controls the power-on/off effect (default: true)
+ * @property {string} color - CRT phosphor color: 'green', 'amber', or 'blue' (default: 'green')
  * 
  * @example
  * ```html
- * <crt-screen>
- *   <h1>Dein Content hier</h1>
+ * <crt-screen color="amber">
+ *   <h1>Your content here</h1>
  * </crt-screen>
  * ```
  */
 @customElement('crt-screen')
 export class CRTScreen extends LitElement {
   @property({ type: Boolean }) active = true;
+  @property({ type: String, reflect: true }) color: 'green' | 'amber' | 'blue' = 'green';
 
   static styles = css`
     :host {
       display: block;
       width: 100%;
       height: 100%;
+    }
+
+    /* CRT Color Variables - only set color-specific variables, inherit global colors */
+    :host([color="green"]) {
+      --crt-color: #8aff8a;
+      --crt-color-light: #b4ffb4;
+      --crt-color-dark: #33ff33;
+      --crt-primary: #8aff8a;
+      --crt-text-primary: #8aff8a;
+      --crt-border-color: #8aff8a;
+      --crt-rgb-r: 0.3;
+      --crt-rgb-g: 0.3;
+      --crt-rgb-b: 0.3;
+    }
+
+    :host([color="amber"]) {
+      --crt-color: #ffd700;
+      --crt-color-light: #ffe680;
+      --crt-color-dark: #ffb000;
+      --crt-primary: #ffd700;
+      --crt-text-primary: #ffd700;
+      --crt-border-color: #ffd700;
+      --crt-rgb-r: 0.4;
+      --crt-rgb-g: 0.2;
+      --crt-rgb-b: 0.1;
+    }
+
+    :host([color="blue"]) {
+      --crt-color: #66ffff;
+      --crt-color-light: #99ffff;
+      --crt-color-dark: #00cccc;
+      --crt-primary: #66ffff;
+      --crt-text-primary: #66ffff;
+      --crt-border-color: #66ffff;
+      --crt-rgb-r: 0.2;
+      --crt-rgb-g: 0.3;
+      --crt-rgb-b: 0.4;
     }
 
     .screen {
@@ -38,6 +77,11 @@ export class CRTScreen extends LitElement {
       background-color: transparent;
       clip-path: url(#crtPath);
       overflow: hidden;
+    }
+
+    /* CRT Barrel Distortion - Leichte Wölbung */
+    .screen.active {
+      animation: crt-flicker 0.1s infinite, barrel-distortion 4s ease-in-out infinite;
     }
 
     .screen::after {
@@ -134,6 +178,11 @@ export class CRTScreen extends LitElement {
       background-color: transparent;
       overflow-y: auto;
       overflow-x: hidden;
+      color: var(--crt-color-light);
+      text-shadow: 
+        0.08em 0 0 rgba(255, 0, 0, var(--crt-rgb-r)),
+        -0.04em 0 0 rgba(0, 255, 0, var(--crt-rgb-g)),
+        -0.08em 0 0 rgba(0, 0, 255, var(--crt-rgb-b));
     }
 
     /* Custom Scrollbar - unauffällig und mit Abstand vom Rand */
@@ -216,6 +265,29 @@ export class CRTScreen extends LitElement {
       100% {
         transform: scale(0.000, 0.0001) translate3d(0, 0, 0);
         filter: brightness(50);
+      }
+    }
+
+    /* Subtiles Flackern - wie bei alten CRTs */
+    @keyframes crt-flicker {
+      0% {
+        opacity: 0.95;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0.97;
+      }
+    }
+
+    /* Leichte Bildwölbung (Barrel Distortion) */
+    @keyframes barrel-distortion {
+      0%, 100% {
+        transform: scale(1.0);
+      }
+      50% {
+        transform: scale(1.003);
       }
     }
   `;

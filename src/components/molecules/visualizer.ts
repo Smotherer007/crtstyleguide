@@ -62,7 +62,7 @@ export class Visualizer extends LitElement {
       padding: 4px 10px;
       cursor: var(--crt-cursor-pointer);
       transition: var(--crt-transition);
-      box-shadow: 0 0 5px rgba(51, 255, 51, 0.3);
+      box-shadow: var(--crt-glow-sm);
       z-index: 10;
       text-transform: uppercase;
     }

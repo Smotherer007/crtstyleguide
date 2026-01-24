@@ -33,7 +33,7 @@ export class Input extends LitElement {
 
     input:focus:not(:disabled) {
       outline: none;
-      box-shadow: inset 0 0 10px rgba(51, 255, 51, 0.3);
+      box-shadow: var(--crt-glow-inset);
     }
 
     input:disabled {
@@ -103,7 +103,7 @@ export class Textarea extends LitElement {
 
     textarea:focus:not(:disabled) {
       outline: none;
-      box-shadow: inset 0 0 10px rgba(51, 255, 51, 0.3);
+      box-shadow: var(--crt-glow-inset);
     }
 
     textarea:disabled {

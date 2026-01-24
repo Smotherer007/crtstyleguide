@@ -34,7 +34,8 @@ export class Table extends LitElement {
     }
 
     tbody tr {
-      border-bottom: 1px solid rgba(51, 255, 51, 0.2);
+      border-bottom: 1px solid var(--crt-border-color);
+      opacity: 0.2;
       transition: var(--crt-transition);
     }
 

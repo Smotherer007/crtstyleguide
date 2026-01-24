@@ -17,7 +17,7 @@ export class Terminal extends LitElement {
       width: 100%;
       max-width: none;
       background: transparent;
-      color: #8aff8a;
+      color: var(--crt-text-primary);
       padding: 12px;
       border: none;
       min-height: calc(var(--crt-font-size-md, 16px) * 1.2 * 6);

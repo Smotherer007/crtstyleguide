@@ -59,26 +59,27 @@ export class Playlist extends LitElement {
     thead th:nth-child(2) { width: auto; }
 
     tbody tr {
-      border-bottom: 1px solid rgba(51, 255, 51, 0.2);
+      border-bottom: 1px solid var(--crt-border-color);
       transition: var(--crt-transition);
       cursor: var(--crt-cursor-pointer);
     }
 
     tbody tr:hover {
-      background-color: transparent;
+      background-color: color-mix(in srgb, var(--crt-primary) 5%, transparent);
       box-shadow: none;
     }
 
     tbody tr.active {
-      background-color: transparent;
+      background-color: color-mix(in srgb, var(--crt-primary) 10%, transparent);
     }
 
     tbody tr.active td {
-      color: var(--crt-success);
+      color: var(--crt-text-primary);
+      font-weight: 600;
     }
 
     td {
-      color: var(--crt-primary);
+      color: var(--crt-text-primary);
       padding: var(--crt-spacing-md);
     }
 

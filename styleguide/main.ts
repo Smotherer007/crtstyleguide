@@ -124,6 +124,61 @@ customElements.whenDefined('crt-button').then(() => {
         // initialize state
         sync();
       }
+
+      // Global CRT Screen wrapper functionality
+      let globalScreen: any = null;
+      let currentColor: 'green' | 'amber' | 'blue' = 'green';
+      const appContainer = document.getElementById('app');
+      let originalContent: Node[] = [];
+      
+      // Use event delegation on document level to ensure events work after DOM changes
+      document.addEventListener('screen-toggle', (e: any) => {
+        const active = e.detail.active;
+        
+        if (active && !globalScreen) {
+          // Store original DOM nodes
+          originalContent = Array.from(appContainer?.childNodes || []);
+          
+          // Create and wrap content in CRT screen
+          globalScreen = document.createElement('crt-screen');
+          globalScreen.color = currentColor;
+          globalScreen.active = true;
+          globalScreen.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; z-index: 1; background: #000;';
+          
+          // Move nodes into screen
+          if (appContainer) {
+            originalContent.forEach(node => {
+              globalScreen.appendChild(node);
+            });
+            appContainer.appendChild(globalScreen);
+          }
+        } else if (!active && globalScreen) {
+          // Trigger power-off animation first
+          globalScreen.active = false;
+          
+          // Wait for power-off animation to complete (0.55s)
+          setTimeout(() => {
+            // Restore original content
+            if (appContainer && globalScreen && globalScreen.parentNode) {
+              // Move nodes back from screen to app container
+              const nodes = Array.from(globalScreen.childNodes);
+              globalScreen.remove();
+              nodes.forEach(node => {
+                appContainer.appendChild(node);
+              });
+            }
+            globalScreen = null;
+          }, 600); // 550ms animation + 50ms buffer
+        }
+      });
+
+      // Listen for color changes
+      document.addEventListener('color-change', (e: any) => {
+        currentColor = e.detail.color;
+        if (globalScreen) {
+          globalScreen.color = currentColor;
+        }
+      });
     }, 50);
   }
 });
