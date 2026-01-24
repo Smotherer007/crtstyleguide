@@ -72,13 +72,11 @@ export class Slider extends LitElement {
       background: var(--crt-primary);
       border: 2px solid var(--crt-bg-dark);
       cursor: var(--crt-cursor-pointer);
-      box-shadow: var(--crt-component-glow);
       transition: var(--crt-transition);
     }
 
     input[type="range"]::-webkit-slider-thumb:hover {
       transform: scale(1.1);
-      box-shadow: var(--crt-component-glow-lg);
     }
 
     input[type="range"]::-moz-range-thumb {
@@ -88,7 +86,6 @@ export class Slider extends LitElement {
       border: 2px solid var(--crt-bg-dark);
       border-radius: 0;
       cursor: var(--crt-cursor-pointer);
-      box-shadow: var(--crt-component-glow);
     }
 
     input[type="range"]::-moz-range-track {
@@ -102,7 +99,7 @@ export class Slider extends LitElement {
     }
 
     input[type="range"]:focus::-webkit-slider-thumb {
-      box-shadow: var(--crt-component-glow-lg);
+      box-shadow: none;
     }
 
     .slider-marks {
@@ -125,7 +122,6 @@ export class Slider extends LitElement {
       transform: translateY(-50%);
       height: 4px;
       background: var(--crt-primary);
-      box-shadow: var(--crt-component-glow-sm);
       pointer-events: none;
     }
 

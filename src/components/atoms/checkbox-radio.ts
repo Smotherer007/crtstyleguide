@@ -47,16 +47,14 @@ export class Checkbox extends LitElement {
       align-items: center;
       justify-content: center;
       transition: var(--crt-transition);
-      box-shadow: var(--crt-component-glow-inset);
     }
 
     :host(:hover:not([disabled])) .checkbox-box {
-      box-shadow: var(--crt-component-glow-inset), var(--crt-component-glow-sm);
+      box-shadow: none;
     }
 
     input:checked + .checkbox-box {
       background: var(--crt-primary);
-      box-shadow: var(--crt-component-glow-sm);
     }
 
     .checkmark {
@@ -170,11 +168,10 @@ export class Radio extends LitElement {
       align-items: center;
       justify-content: center;
       transition: var(--crt-transition);
-      box-shadow: var(--crt-component-glow-inset);
     }
 
     :host(:hover:not([disabled])) .radio-circle {
-      box-shadow: var(--crt-component-glow-inset), var(--crt-component-glow-sm);
+      box-shadow: none;
     }
 
     .radio-dot {
@@ -185,7 +182,6 @@ export class Radio extends LitElement {
       opacity: 0;
       transform: scale(0);
       transition: all 0.15s ease;
-      box-shadow: var(--crt-component-glow-sm);
     }
 
     input:checked + .radio-circle .radio-dot {
@@ -194,7 +190,7 @@ export class Radio extends LitElement {
     }
 
     input:checked + .radio-circle {
-      box-shadow: var(--crt-component-glow-sm);
+      box-shadow: none;
     }
 
     .label {

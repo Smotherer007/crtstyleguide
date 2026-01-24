@@ -11,7 +11,8 @@ export class Terminal extends LitElement {
   
 
   static styles = css`
-    :host { display: block; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace; width: 100%; max-width: none; box-sizing: border-box; min-width: 0; }
+    :host { display: block; font-family: var(--crt-font-family); width: 100%; max-width: none; box-sizing: border-box; min-width: 0; outline: none; }
+    :host(:focus) { outline: none; }
     .term {
       width: 100%;
       max-width: none;
@@ -24,7 +25,9 @@ export class Terminal extends LitElement {
       overflow: auto;
       box-sizing: border-box;
       border-radius: 0;
+      outline: none;
     }
+    .term:focus { outline: none; }
     :host([no-border]) .term {
       padding: 0;
       background: transparent;

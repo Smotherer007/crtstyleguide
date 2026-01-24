@@ -53,7 +53,8 @@ export class Toast extends LitElement {
     }
 
     .toast {
-      background: transparent;
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(10px);
       border: 2px solid var(--crt-primary);
       padding: var(--crt-spacing-md) var(--crt-spacing-lg);
       font-family: var(--crt-font-family);
@@ -65,7 +66,6 @@ export class Toast extends LitElement {
       align-items: center;
       gap: var(--crt-spacing-md);
       animation: toast-in 0.3s ease;
-      box-shadow: var(--crt-component-glow-sm);
     }
 
     .toast.removing {

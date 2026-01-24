@@ -43,7 +43,6 @@ export class CodeExample extends LitElement {
       border: 2px solid var(--crt-primary);
       background: transparent !important;
       background-image: none !important;
-      box-shadow: var(--crt-component-glow-inset);
       width: 100%;
       box-sizing: border-box;
     }
@@ -77,7 +76,6 @@ export class CodeExample extends LitElement {
     .tab-btn.active {
       color: var(--crt-primary);
       border-bottom-color: var(--crt-primary);
-      text-shadow: var(--crt-component-glow-sm);
     }
 
     .tab-content {

@@ -19,7 +19,6 @@ export class Input extends LitElement {
       font-size: var(--crt-font-size-base);
       letter-spacing: 1px;
       transition: var(--crt-transition);
-      box-shadow: var(--crt-component-glow-inset);
       box-sizing: border-box;
       cursor: var(--crt-cursor-text);
     }
@@ -29,12 +28,12 @@ export class Input extends LitElement {
     }
 
     input:hover:not(:disabled) {
-      box-shadow: inset 0 0 10px rgba(51, 255, 51, 0.2), var(--crt-component-glow-sm);
+      box-shadow: none;
     }
 
     input:focus:not(:disabled) {
       outline: none;
-      box-shadow: inset 0 0 10px rgba(51, 255, 51, 0.3), var(--crt-component-glow);
+      box-shadow: inset 0 0 10px rgba(51, 255, 51, 0.3);
     }
 
     input:disabled {
@@ -88,7 +87,6 @@ export class Textarea extends LitElement {
       font-size: var(--crt-font-size-base);
       letter-spacing: 1px;
       transition: var(--crt-transition);
-      box-shadow: var(--crt-component-glow-inset);
       resize: vertical;
       min-height: 120px;
       box-sizing: border-box;
@@ -100,12 +98,12 @@ export class Textarea extends LitElement {
     }
 
     textarea:hover:not(:disabled) {
-      box-shadow: inset 0 0 10px rgba(51, 255, 51, 0.2), var(--crt-component-glow-sm);
+      box-shadow: none;
     }
 
     textarea:focus:not(:disabled) {
       outline: none;
-      box-shadow: inset 0 0 10px rgba(51, 255, 51, 0.3), var(--crt-component-glow);
+      box-shadow: inset 0 0 10px rgba(51, 255, 51, 0.3);
     }
 
     textarea:disabled {

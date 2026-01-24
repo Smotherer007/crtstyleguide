@@ -115,7 +115,6 @@ export class Spinner extends LitElement {
       font-family: var(--crt-font-family);
       font-size: var(--crt-font-size-lg);
       letter-spacing: 4px;
-      text-shadow: var(--crt-component-glow);
       animation: blink 1s ease-in-out infinite;
     }
 

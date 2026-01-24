@@ -36,13 +36,11 @@ export class Pagination extends LitElement {
 
     .page-btn:hover:not(:disabled):not(.active) {
       background: transparent;
-      box-shadow: var(--crt-component-glow-sm);
     }
 
     .page-btn.active {
       background: var(--crt-primary);
       color: var(--crt-bg-dark);
-      box-shadow: var(--crt-component-glow);
     }
 
     .page-btn:disabled {

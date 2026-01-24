@@ -32,7 +32,6 @@ export class Calendar extends LitElement {
       font-size: var(--crt-font-size-base);
       min-width: 180px;
       cursor: var(--crt-cursor-pointer);
-      box-shadow: var(--crt-component-glow-inset);
       transition: var(--crt-transition);
     }
 
@@ -42,12 +41,12 @@ export class Calendar extends LitElement {
     }
 
     .input-field:hover {
-      box-shadow: var(--crt-component-glow-inset), var(--crt-component-glow-sm);
+      box-shadow: none;
     }
 
     .input-field:focus {
       outline: none;
-      box-shadow: var(--crt-component-glow-inset), var(--crt-component-glow);
+      box-shadow: none;
     }
 
     .calendar-toggle {
@@ -63,7 +62,6 @@ export class Calendar extends LitElement {
     .calendar-toggle:hover {
       background: var(--crt-primary);
       color: var(--crt-bg-dark);
-      box-shadow: var(--crt-glow);
     }
 
     .calendar-dropdown {
@@ -76,8 +74,7 @@ export class Calendar extends LitElement {
       -webkit-backdrop-filter: blur(10px);
       border: 3px double var(--crt-primary);
       box-shadow: 
-        0 0 20px color-mix(in srgb, var(--crt-primary) 30%, transparent),
-        var(--crt-component-glow-inset);
+        0 0 20px color-mix(in srgb, var(--crt-primary) 30%, transparent);
       z-index: 1000;
       display: none;
       min-width: 280px;
@@ -176,7 +173,6 @@ export class Calendar extends LitElement {
     .day.selected {
       background: var(--crt-primary);
       color: var(--crt-bg-dark);
-      box-shadow: var(--crt-component-glow-sm);
     }
 
     .day.other-month {

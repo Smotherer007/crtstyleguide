@@ -38,13 +38,12 @@ export class Select extends LitElement {
       font-family: var(--crt-font-family);
       font-size: var(--crt-font-size-base);
       cursor: var(--crt-cursor-pointer);
-      box-shadow: var(--crt-component-glow-inset);
       transition: var(--crt-transition);
       width: 100%;
     }
 
     .select-trigger:hover:not(.disabled) {
-      box-shadow: var(--crt-component-glow-inset), var(--crt-component-glow-sm);
+      box-shadow: none;
     }
 
     .select-trigger.open {
@@ -93,8 +92,7 @@ export class Select extends LitElement {
       z-index: 1000;
       display: none;
       box-shadow: 
-        0 10px 20px color-mix(in srgb, var(--crt-primary) 20%, transparent),
-        var(--crt-component-glow-inset);
+        0 10px 20px color-mix(in srgb, var(--crt-primary) 20%, transparent);
     }
 
     .select-dropdown.open {
@@ -163,7 +161,6 @@ export class Select extends LitElement {
 
     .select-dropdown::-webkit-scrollbar-thumb {
       background: var(--crt-primary);
-      box-shadow: var(--crt-component-glow-sm);
     }
   `;
 

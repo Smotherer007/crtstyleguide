@@ -40,8 +40,7 @@ export class Modal extends LitElement {
       border: 3px double var(--crt-primary);
       box-shadow: 
         0 0 20px color-mix(in srgb, var(--crt-primary) 30%, transparent),
-        0 0 40px color-mix(in srgb, var(--crt-primary) 15%, transparent),
-        var(--crt-component-glow-inset);
+        0 0 40px color-mix(in srgb, var(--crt-primary) 15%, transparent);
       max-width: 90vw;
       max-height: 90vh;
       min-width: 300px;
@@ -96,7 +95,6 @@ export class Modal extends LitElement {
     .close-btn:hover {
       background: transparent;
       color: var(--crt-primary);
-      box-shadow: var(--crt-component-glow);
     }
 
     .modal-body {

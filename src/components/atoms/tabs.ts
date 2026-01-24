@@ -32,20 +32,17 @@ export class Tabs extends LitElement {
 
     .tab-button:hover:not(.active) {
       color: var(--crt-text-primary);
-      box-shadow: var(--crt-glow-sm);
     }
 
     .tab-button.active {
       color: var(--crt-primary);
       border-bottom-color: var(--crt-primary);
-      box-shadow: var(--crt-glow);
     }
 
     .tabs-content {
       background: transparent;
       border: 1px solid var(--crt-primary);
       padding: var(--crt-spacing-lg);
-      box-shadow: var(--crt-glow-inset);
     }
 
     .tab-pane {

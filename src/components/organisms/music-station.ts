@@ -44,7 +44,6 @@ export class MusicStation extends LitElement {
     .station-title {
       font-size: 1.2rem;
       color: var(--crt-primary);
-      text-shadow: var(--crt-glow);
       letter-spacing: 2px;
     }
 
@@ -54,15 +53,9 @@ export class MusicStation extends LitElement {
     }
 
     .main-content {
-      display: grid;
-      grid-template-columns: 1fr;
+      display: flex;
+      flex-direction: column;
       gap: var(--crt-spacing-md);
-    }
-
-    @media (min-width: 900px) {
-      .main-content {
-        grid-template-columns: 2fr 1fr;
-      }
     }
 
     .player-section {

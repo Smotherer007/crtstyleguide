@@ -71,7 +71,6 @@ export class Alert extends LitElement {
       flex-shrink: 0;
       font-size: 1.2em;
       color: var(--crt-primary);
-      text-shadow: var(--crt-component-glow);
     }
 
     .alert-content {
@@ -83,7 +82,6 @@ export class Alert extends LitElement {
       font-weight: bold;
       margin-bottom: var(--crt-spacing-xs);
       color: var(--crt-primary);
-      text-shadow: var(--crt-component-glow);
       text-transform: uppercase;
       letter-spacing: 1px;
     }
@@ -107,7 +105,6 @@ export class Alert extends LitElement {
 
     .alert-close:hover {
       color: var(--crt-primary);
-      text-shadow: var(--crt-component-glow);
     }
 
     .alert-actions {

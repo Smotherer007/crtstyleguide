@@ -29,7 +29,6 @@ export class Navbar extends LitElement {
       padding: var(--crt-spacing-md) var(--crt-spacing-lg);
       background: transparent;
       border-bottom: 2px solid var(--crt-primary);
-      box-shadow: var(--crt-component-glow-inset);
     }
 
     .brand {
@@ -37,7 +36,6 @@ export class Navbar extends LitElement {
       gap: 12px;
       align-items: center;
       color: var(--crt-primary);
-      text-shadow: var(--crt-component-glow);
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 2px;
@@ -65,12 +63,10 @@ export class Navbar extends LitElement {
 
     .link:hover {
       background: transparent;
-      box-shadow: var(--crt-component-glow-sm);
     }
 
     .link[aria-current="true"] {
       background: transparent;
-      box-shadow: var(--crt-component-glow);
       color: var(--crt-bg-dark);
     }
 

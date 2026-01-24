@@ -1,51 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+/* Import Design Tokens from component library */
+@import '../src/styles/design-tokens.css';
 
-/* Design Tokens */
+/* Styleguide-specific overrides */
 :root {
-  /* Primary Green (Fallout Style) */
-  --crt-primary: #33ff33;
-  --crt-primary-light: #44ff44;
-  --crt-primary-dark: #22cc22;
-  
-  /* Alternative Amber Theme (uncomment to use) */
-  /* --crt-primary: #ffb000;
-  --crt-primary-light: #ffc033;
-  --crt-primary-dark: #cc8c00; */
-  
-  --crt-bg-dark: #0a0a0a;
-  --crt-bg-darker: #000000;
-  --crt-bg-light: #1a1a1a;
-  --crt-text-primary: var(--crt-primary);
-  --crt-text-secondary: color-mix(in srgb, var(--crt-primary) 70%, transparent);
-  --crt-text-muted: color-mix(in srgb, var(--crt-primary) 50%, transparent);
-  --crt-success: #00ff00;
-  --crt-warning: #ffff00;
-  --crt-error: #ff0000;
-  --crt-info: #00ffff;
-  --crt-border-width: 2px;
-  --crt-border-color: var(--crt-primary);
-  --crt-border: var(--crt-border-width) solid var(--crt-border-color);
-  /* Subtler glow values for more legible phosphor look */
-  --crt-glow-sm: 0 0 3px color-mix(in srgb, var(--crt-primary) 25%, transparent);
-  --crt-glow: 0 0 6px color-mix(in srgb, var(--crt-primary) 40%, transparent);
-  --crt-glow-lg: 0 0 12px color-mix(in srgb, var(--crt-primary) 55%, transparent);
-  --crt-glow-inset: inset 0 0 6px color-mix(in srgb, var(--crt-primary) 6%, transparent);
   --crt-scanline-opacity: 0; /* Neutralize scanline darkness */
-  --crt-font-family: 'VT323', 'Courier New', monospace;
-  --crt-font-size-base: 1rem;
-  --crt-font-size-lg: 1.25rem;
-  --crt-font-size-xl: 1.5rem;
-  --crt-font-size-2xl: 2rem;
-  --crt-font-size-3xl: 2.5rem;
-  --crt-line-height: 1.4;
-  --crt-letter-spacing: 2px;
-  --crt-spacing-xs: 4px;
-  --crt-spacing-sm: 8px;
-  --crt-spacing-md: 16px;
-  --crt-spacing-lg: 24px;
-  --crt-spacing-xl: 32px;
-  --crt-spacing-2xl: 48px;
-  --crt-transition: all 0.3s ease;
 }
 
 * {

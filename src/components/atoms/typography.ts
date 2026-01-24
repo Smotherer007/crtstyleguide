@@ -8,7 +8,7 @@ export class Heading extends LitElement {
       font-family: var(--crt-font-family);
       color: var(--crt-text-primary);
       letter-spacing: var(--crt-letter-spacing);
-      text-shadow: 0 0 5px var(--crt-primary);
+      text-shadow: none;
       margin: var(--crt-spacing-lg) 0 var(--crt-spacing-md) 0;
     }
 

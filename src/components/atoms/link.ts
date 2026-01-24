@@ -28,7 +28,7 @@ export class Link extends LitElement {
 
     a:hover {
       color: var(--crt-primary-light);
-      text-shadow: 0 0 10px var(--crt-primary);
+      text-shadow: none;
     }
 
     a:active {

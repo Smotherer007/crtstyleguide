@@ -17,7 +17,7 @@ export class Button extends LitElement {
       box-sizing: border-box;
       height: 100%;
       padding: 16px 32px;
-      font-family: 'VT323', 'Courier New', monospace;
+      font-family: var(--crt-font-family);
       font-size: 1rem;
       letter-spacing: 2px;
       cursor: var(--crt-cursor-pointer);
@@ -38,12 +38,7 @@ export class Button extends LitElement {
     button:hover:not(:disabled) {
       background-color: transparent;
       color: #33ff33;
-      box-shadow: 
-        0 0 10px rgba(51, 255, 51, 0.7), 
-        0 0 20px rgba(51, 255, 51, 0.5),
-        0 0 40px rgba(51, 255, 51, 0.3),
-        inset 0 0 10px rgba(0, 0, 0, 0.2);
-      transform: scale(1.05);
+      box-shadow: none;
       cursor: var(--crt-cursor-pointer);
     }
 
@@ -67,11 +62,7 @@ export class Button extends LitElement {
     :host([variant="success"]) button:hover:not(:disabled) {
       background-color: transparent;
       color: var(--crt-success, #00ff00);
-      box-shadow: 
-        0 0 10px rgba(0, 255, 0, 0.7), 
-        0 0 20px rgba(0, 255, 0, 0.5),
-        0 0 40px rgba(0, 255, 0, 0.3),
-        inset 0 0 10px rgba(0, 0, 0, 0.2);
+      box-shadow: none;
     }
 
     /* Warning variant */
@@ -84,11 +75,7 @@ export class Button extends LitElement {
     :host([variant="warning"]) button:hover:not(:disabled) {
       background-color: transparent;
       color: var(--crt-warning, #ffcc00);
-      box-shadow: 
-        0 0 10px rgba(255, 204, 0, 0.7), 
-        0 0 20px rgba(255, 204, 0, 0.5),
-        0 0 40px rgba(255, 204, 0, 0.3),
-        inset 0 0 10px rgba(0, 0, 0, 0.2);
+      box-shadow: none;
     }
 
     /* Error variant */
@@ -101,11 +88,7 @@ export class Button extends LitElement {
     :host([variant="error"]) button:hover:not(:disabled) {
       background-color: transparent;
       color: var(--crt-danger, #ff3333);
-      box-shadow: 
-        0 0 10px rgba(255, 51, 51, 0.7), 
-        0 0 20px rgba(255, 51, 51, 0.5),
-        0 0 40px rgba(255, 51, 51, 0.3),
-        inset 0 0 10px rgba(0, 0, 0, 0.2);
+      box-shadow: none;
     }
 
     /* Link variant */
@@ -123,7 +106,7 @@ export class Button extends LitElement {
       color: #33ff33;
       box-shadow: none;
       transform: none;
-      text-shadow: 0 0 10px rgba(51, 255, 51, 0.7);
+      text-shadow: none;
     }
 
     /* Size variants */

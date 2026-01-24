@@ -31,7 +31,6 @@ export class Menu extends LitElement {
       right: 0;
       background: transparent;
       border: 2px solid var(--crt-primary);
-      box-shadow: var(--crt-glow-sm);
       margin-top: 8px;
       min-width: 160px;
       display: none;
@@ -52,7 +51,6 @@ export class Menu extends LitElement {
 
     .item[aria-selected='true'] {
       background: transparent;
-      box-shadow: var(--crt-glow-sm);
       color: var(--crt-bg-dark);
     }
   `;

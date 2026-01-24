@@ -16,7 +16,6 @@ export class Header extends LitElement {
       padding: var(--crt-spacing-lg) var(--crt-spacing-md);
       background: transparent;
       border-bottom: 2px solid var(--crt-primary);
-      box-shadow: var(--crt-glow-inset);
       display: flex;
       align-items: center;
       justify-content: space-between;

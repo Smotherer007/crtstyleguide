@@ -31,7 +31,6 @@ export class FileUpload extends LitElement {
     .file-manager {
       border: 3px double var(--crt-primary);
       background: transparent;
-      box-shadow: var(--crt-component-glow-inset);
     }
 
     /* Header */
@@ -49,7 +48,6 @@ export class FileUpload extends LitElement {
       text-transform: uppercase;
       letter-spacing: 2px;
       font-size: var(--crt-font-size-sm);
-      text-shadow: var(--crt-component-glow);
       display: flex;
       align-items: center;
       gap: var(--crt-spacing-sm);
@@ -81,7 +79,6 @@ export class FileUpload extends LitElement {
     .drop-zone.dragging {
       background: transparent;
       border-color: var(--crt-primary);
-      box-shadow: var(--crt-component-glow);
     }
 
     .drop-zone.dragging {
@@ -91,7 +88,6 @@ export class FileUpload extends LitElement {
     .drop-zone-icon {
       font-size: 3rem;
       color: var(--crt-primary);
-      text-shadow: var(--crt-glow);
       animation: float 2s ease-in-out infinite;
     }
 
@@ -249,7 +245,7 @@ export class FileUpload extends LitElement {
     .file-remove:hover {
       background: var(--crt-error);
       color: var(--crt-bg-dark);
-      box-shadow: 0 0 10px var(--crt-error);
+      box-shadow: none;
     }
 
     /* Footer */
@@ -296,7 +292,6 @@ export class FileUpload extends LitElement {
 
     .file-list::-webkit-scrollbar-thumb {
       background: var(--crt-primary);
-      box-shadow: var(--crt-glow-sm);
     }
 
     /* Progress bar for uploading */
@@ -311,7 +306,6 @@ export class FileUpload extends LitElement {
     .progress-fill {
       height: 100%;
       background: var(--crt-primary);
-      box-shadow: var(--crt-glow-sm);
       transition: width 0.3s ease;
     }
   `;

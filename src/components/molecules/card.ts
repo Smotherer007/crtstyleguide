@@ -18,15 +18,11 @@ export class Card extends LitElement {
       border: 3px double var(--crt-primary);
       padding: var(--crt-spacing-lg);
       background-color: transparent;
-      box-shadow: var(--crt-component-glow-sm), var(--crt-component-glow-inset);
       transition: var(--crt-transition);
     }
 
     .card:hover {
-      box-shadow: 
-        0 0 15px color-mix(in srgb, var(--crt-primary) 40%, transparent),
-        0 0 30px color-mix(in srgb, var(--crt-primary) 20%, transparent),
-        var(--crt-component-glow-inset);
+      box-shadow: none;
     }
 
     .card-header {

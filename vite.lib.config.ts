@@ -18,6 +18,18 @@ export default defineConfig({
         globals: {
           lit: 'Lit',
         },
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name && assetInfo.name.endsWith('.woff2')) {
+            return 'fonts/[name][extname]';
+          }
+          if (assetInfo.name && assetInfo.name.endsWith('.woff')) {
+            return 'fonts/[name][extname]';
+          }
+          if (assetInfo.name && assetInfo.name.endsWith('.ttf')) {
+            return 'fonts/[name][extname]';
+          }
+          return 'assets/[name][extname]';
+        },
       },
     },
   },

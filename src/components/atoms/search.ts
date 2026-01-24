@@ -37,7 +37,6 @@ export class Search extends LitElement {
       background: transparent;
       color: var(--crt-text-primary);
       border: 2px solid var(--crt-primary);
-      box-shadow: var(--crt-component-glow-inset);
       box-sizing: border-box;
       transition: var(--crt-transition);
       cursor: var(--crt-cursor-text);
@@ -50,7 +49,7 @@ export class Search extends LitElement {
 
     .input:focus {
       outline: none;
-      box-shadow: inset 0 0 10px rgba(51,255,51,0.2), var(--crt-component-glow);
+      box-shadow: inset 0 0 10px rgba(51,255,51,0.2);
     }
 
     .list {
@@ -60,7 +59,7 @@ export class Search extends LitElement {
       right: 0;
       background: transparent;
       border: 2px solid var(--crt-primary);
-      box-shadow: 0 10px 20px color-mix(in srgb, var(--crt-primary) 20%, transparent), var(--crt-component-glow-inset);
+      box-shadow: 0 10px 20px color-mix(in srgb, var(--crt-primary) 20%, transparent);
       max-height: 240px;
       overflow-y: auto;
       z-index: 1000;
@@ -82,7 +81,6 @@ export class Search extends LitElement {
     .item:hover,
     .item[aria-selected="true"] {
       background: transparent;
-      box-shadow: var(--crt-component-glow-sm);
       color: var(--crt-primary);
     }
 

@@ -40,6 +40,24 @@ export class CRTScreen extends LitElement {
       overflow: hidden;
     }
 
+    .screen::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background: radial-gradient(
+        ellipse at center,
+        transparent 0%,
+        transparent 60%,
+        rgba(0, 0, 0, 0.3) 90%,
+        rgba(0, 0, 0, 0.6) 100%
+      );
+      z-index: 2147483647;
+    }
+
     .screen.scanlines {
       position: relative;
     }
@@ -53,10 +71,10 @@ export class CRTScreen extends LitElement {
       top: 0;
       left: 0;
       width: 100%;
-      height: 0.2rem;
+      height: 2px;
       z-index: 2147483649;
-      opacity: 0.75;
-      background: transparent;
+      opacity: 0.5;
+      background: rgba(255, 255, 255, 0.1);
     }
 
     /* Scanline-Effekt: statische Linien */
@@ -111,8 +129,7 @@ export class CRTScreen extends LitElement {
       left: 0;
       width: 100%;
       height: 100%;
-      padding: 2rem;
-      padding-right: 2.5rem;
+      padding: 3rem 2.5rem 3rem 2rem;
       box-sizing: border-box;
       background-color: transparent;
       overflow-y: auto;
@@ -199,7 +216,6 @@ export class CRTScreen extends LitElement {
       100% {
         transform: scale(0.000, 0.0001) translate3d(0, 0, 0);
         filter: brightness(50);
-        opacity: 0;
       }
     }
   `;
@@ -209,7 +225,7 @@ export class CRTScreen extends LitElement {
       <!-- SVG Clip Path für gerundete CRT-Bildschirmkanten -->
       <svg height="0" width="0" viewBox="0 0 93.88 76.19" style="position: absolute;">
         <clipPath id="crtPath" clipPathUnits="objectBoundingBox" transform="scale(0.01065 0.01312)">
-          <path d="M47.78.5c11.65,0,38,.92,41.81,4,3.59,3,3.79,22.28,3.79,34.19,0,11.67-.08,27.79-3.53,31.24S60.3,75.69,47.78,75.69c-11.2,0-39.89-1.16-44-5.27S.57,52.42.57,38.73.31,8.56,4,4.88,34.77.5,47.78.5Z" />
+          <path d="M8,0.5 L85.88,0.5 Q93.38,0.5 93.38,8 L93.38,68.19 Q93.38,75.69 85.88,75.69 L8,75.69 Q0.5,75.69 0.5,68.19 L0.5,8 Q0.5,0.5 8,0.5 Z" />
         </clipPath>
       </svg>
 

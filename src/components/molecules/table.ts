@@ -17,7 +17,6 @@ export class Table extends LitElement {
       font-family: var(--crt-font-family);
       font-size: var(--crt-font-size-sm);
       border: 2px solid var(--crt-primary);
-      box-shadow: var(--crt-component-glow-sm);
     }
 
     thead {
@@ -41,17 +40,12 @@ export class Table extends LitElement {
 
     tbody tr:hover {
       background-color: transparent;
-      box-shadow: inset 0 0 20px rgba(51, 255, 51, 0.1);
+      box-shadow: none;
     }
 
     td {
       color: var(--crt-primary);
       padding: var(--crt-spacing-md);
-      border-right: 1px solid rgba(51, 255, 51, 0.1);
-    }
-
-    td:last-child {
-      border-right: none;
     }
 
     tbody tr:last-child {

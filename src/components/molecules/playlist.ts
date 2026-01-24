@@ -30,7 +30,6 @@ export class Playlist extends LitElement {
       font-family: var(--crt-font-family);
       font-size: var(--crt-font-size-sm);
       border: 2px solid var(--crt-primary);
-      box-shadow: var(--crt-component-glow-sm);
       box-sizing: border-box;
       table-layout: fixed;
     }
@@ -47,7 +46,6 @@ export class Playlist extends LitElement {
       text-transform: uppercase;
       letter-spacing: var(--crt-letter-spacing);
       font-weight: 600;
-      text-shadow: var(--crt-component-glow);
     }
 
     th.actions {
@@ -68,27 +66,20 @@ export class Playlist extends LitElement {
 
     tbody tr:hover {
       background-color: transparent;
-      box-shadow: inset 0 0 20px rgba(51, 255, 51, 0.1);
+      box-shadow: none;
     }
 
     tbody tr.active {
       background-color: transparent;
-      box-shadow: inset 0 0 30px rgba(51, 255, 51, 0.2);
     }
 
     tbody tr.active td {
       color: var(--crt-success);
-      text-shadow: var(--crt-component-glow);
     }
 
     td {
       color: var(--crt-primary);
       padding: var(--crt-spacing-md);
-      border-right: 1px solid rgba(51, 255, 51, 0.1);
-    }
-
-    td:last-child {
-      border-right: none;
     }
 
     tbody tr:last-child {
@@ -113,6 +104,8 @@ export class Playlist extends LitElement {
 
     td.track-artist {
       opacity: 0.8;
+      white-space: normal;
+      word-break: break-word;
     }
 
     td.actions {
@@ -152,7 +145,6 @@ export class Playlist extends LitElement {
       font-size: 3rem;
       margin-bottom: var(--crt-spacing-md);
       color: var(--crt-primary);
-      text-shadow: var(--crt-component-glow);
     }
 
     /* Scrollbar wrapper */
@@ -183,7 +175,6 @@ export class Playlist extends LitElement {
 
     .table-wrapper::-webkit-scrollbar-thumb {
       background: rgba(0, 255, 0, 0.5);
-      box-shadow: var(--crt-component-glow-sm);
     }
   `;
 

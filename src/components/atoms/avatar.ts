@@ -20,7 +20,6 @@ export class Avatar extends LitElement {
       border: 2px solid var(--crt-primary);
       color: var(--crt-primary);
       overflow: hidden;
-      box-shadow: var(--crt-component-glow-sm);
     }
 
     /* Sizes */
@@ -80,7 +79,6 @@ export class Avatar extends LitElement {
       font-weight: bold;
       text-transform: uppercase;
       letter-spacing: 1px;
-      text-shadow: var(--crt-component-glow);
     }
 
     .fallback-icon {
@@ -208,7 +206,6 @@ export class AvatarGroup extends LitElement {
       font-family: var(--crt-font-family);
       font-size: 12px;
       margin-left: -12px;
-      box-shadow: var(--crt-component-glow-sm);
     }
   `;
 

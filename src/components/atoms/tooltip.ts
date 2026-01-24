@@ -32,7 +32,6 @@ export class Tooltip extends LitElement {
       opacity: 0;
       transition: opacity 0.2s ease;
       box-shadow: 
-        var(--crt-glow-sm),
         0 5px 15px rgba(0, 0, 0, 0.5);
     }
 
