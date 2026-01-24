@@ -19,7 +19,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "build:lib": "tsc && vite build --config vite.lib.config.ts",
+    "build:lib": "tsc && vite build --config vite.lib.config.ts && npm run postbuild:lib",
+    "postbuild:lib": "rm -f \"dist/lib/patimwep - Verrostete Terminals.mp3\" || true",
     "preview": "vite preview",
     "lint": "eslint src --ext .ts,.tsx",
     "type-check": "tsc --noEmit"
