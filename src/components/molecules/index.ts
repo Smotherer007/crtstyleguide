@@ -9,4 +9,8 @@ export { Visualizer } from './visualizer';
 export { Playlist } from './playlist';
 export { MusicPlayer } from './music-player';
 export { Terminal } from './terminal';
+export { Navbar } from './navbar';
+export { Header } from './header';
+export { Footer } from './footer';
+export { Menu } from './menu';
 export type { Track } from './playlist';

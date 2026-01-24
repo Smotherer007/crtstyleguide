@@ -8,6 +8,7 @@ export { Link } from './link';
 export { FileUpload } from './file-upload';
 export { Calendar } from './calendar';
 export { Select } from './select';
+export { Search } from './search';
 export { Checkbox, Radio, RadioGroup } from './checkbox-radio';
 export { Progress } from './progress';
 export { Tooltip } from './tooltip';

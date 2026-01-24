@@ -36,9 +36,21 @@ export class Link extends LitElement {
     }
   `;
 
+  private _onClick(e: MouseEvent) {
+    // If internal hash link, prevent default and dispatch a composed navigate event
+    if (this.href && this.href.startsWith('#')) {
+      e.preventDefault();
+      this.dispatchEvent(new CustomEvent('navigate', {
+        detail: { href: this.href },
+        bubbles: true,
+        composed: true
+      }));
+    }
+  }
+
   render() {
     return html`
-      <a href="${this.href}" ${this.target ? `target="${this.target}"` : ''}>
+      <a href="${this.href}" ${this.target ? `target="${this.target}"` : ''} @click="${(e: MouseEvent) => this._onClick(e)}">
         ${this.iconLeft ? html`<crt-icon name="${this.icon}"></crt-icon>` : ''}
         <slot></slot>
         ${this.iconRight ? html`<crt-icon name="${this.icon}"></crt-icon>` : ''}

@@ -31,26 +31,24 @@ export const styleGuideTemplate = () => html`
     <div class="sg-container">
       
       <!-- HEADER (responsive) -->
-      <header class="sg-header" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px;">
-        <crt-heading level="1" style="text-align:center;white-space:normal;word-break:break-word;">CRT LIVING STYLE GUIDE</crt-heading>
-        <crt-text muted style="font-size:var(--crt-font-size-sm);text-align:center;">Component Library · Lit Web Components · Atomic Design</crt-text>
-      </header>
+      <crt-header slot="header" title="CRT LIVING STYLE GUIDE">
+        <span slot="title">CRT LIVING STYLE GUIDE</span>
+        <span slot="subtitle">Component Library · Lit Web Components · Atomic Design</span>
+        <div slot="actions">
+          <crt-search placeholder="Search styleguide..." style="width:240px;"></crt-search>
+        </div>
+      </crt-header>
 
       <!-- NAVIGATION -->
-      <nav class="sg-nav" style="margin-bottom: 40px; background: rgba(0, 0, 0, 0.75); padding: 16px; border-bottom: 2px solid var(--crt-primary);">
-        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-          <a href="#typography" style="color: var(--crt-primary); text-decoration: none; font-family: var(--crt-font-family); text-transform: uppercase; letter-spacing: 1px;">01_Typography</a>
-          <a href="#spacing" style="color: var(--crt-primary); text-decoration: none; font-family: var(--crt-font-family); text-transform: uppercase; letter-spacing: 1px;">02_Spacing</a>
-          <a href="#forms" style="color: var(--crt-primary); text-decoration: none; font-family: var(--crt-font-family); text-transform: uppercase; letter-spacing: 1px;">03_Forms</a>
-          <a href="#actions" style="color: var(--crt-primary); text-decoration: none; font-family: var(--crt-font-family); text-transform: uppercase; letter-spacing: 1px;">04_Actions</a>
-          <a href="#feedback" style="color: var(--crt-primary); text-decoration: none; font-family: var(--crt-font-family); text-transform: uppercase; letter-spacing: 1px;">05_Feedback</a>
-          <a href="#layout" style="color: var(--crt-primary); text-decoration: none; font-family: var(--crt-font-family); text-transform: uppercase; letter-spacing: 1px;">06_Layout</a>
-          <a href="#navigation" style="color: var(--crt-primary); text-decoration: none; font-family: var(--crt-font-family); text-transform: uppercase; letter-spacing: 1px;">07_Navigation</a>
-          <a href="#overlays" style="color: var(--crt-primary); text-decoration: none; font-family: var(--crt-font-family); text-transform: uppercase; letter-spacing: 1px;">08_Overlays</a>
-          <a href="#media" style="color: var(--crt-primary); text-decoration: none; font-family: var(--crt-font-family); text-transform: uppercase; letter-spacing: 1px;">09_Media</a>
-          <a href="#organisms" style="color: var(--crt-primary); text-decoration: none; font-family: var(--crt-font-family); text-transform: uppercase; letter-spacing: 1px;">10_Organisms</a>
-        </div>
-      </nav>
+      <!-- Simplified primary nav for clarity -->
+      <crt-navbar id="sg-nav" .items=${[
+        { href: '#typography', label: 'Typography' },
+        { href: '#forms', label: 'Forms' },
+        { href: '#actions', label: 'Actions' },
+        { href: '#feedback', label: 'Feedback' },
+        { href: '#media', label: 'Media' },
+        { href: '#organisms', label: 'Organisms' }
+      ]}></crt-navbar>
 
       <main class="sg-main">
 
@@ -106,6 +104,30 @@ export const styleGuideTemplate = () => html`
         </section>
 
         <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- SECTION: HEADER & NAV (Preview) -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <section id="navigation" class="sg-section">
+          <crt-code-example
+            class="mb-lg"
+            title="Header & Navbar"
+            description="Kombinierter Header mit Navbar, Search slot und responsivem Collapse."
+            code='<crt-header title="CRT LIVING STYLE GUIDE">\n  <crt-search slot="actions" placeholder="Search..." style="width:220px"></crt-search>\n</crt-header>\n<crt-navbar .items=\${[{href: "#typography", label: "01_Typography"}, {href: "#forms", label: "03_Forms"}, {href: "#media", label: "09_Media"}]}></crt-navbar>'
+          >
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <crt-header title="CRT LIVING STYLE GUIDE">
+                <crt-search slot="actions" placeholder="Search..." style="width:220px"></crt-search>
+              </crt-header>
+
+              <crt-navbar .items=${[
+                { href: '#typography', label: '01_Typography' },
+                { href: '#forms', label: '03_Forms' },
+                { href: '#media', label: '09_Media' }
+              ]}></crt-navbar>
+            </div>
+          </crt-code-example>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
         <!-- SECTION: ICONS PREVIEW -->
         <!-- ═══════════════════════════════════════════════════════════════ -->
         <section id="icons" class="sg-section">
@@ -120,6 +142,61 @@ export const styleGuideTemplate = () => html`
           >
             <div style="display:flex;flex-wrap:wrap;gap:12px;">
               ${ICON_NAMES.map((name: string) => html`<div style="width:120px;display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px;border:1px dashed rgba(0,255,0,0.06);border-radius:6px;"><crt-icon name="${name}"></crt-icon><crt-text muted style="font-size:12px;word-break:break-word;text-align:center;width:100%;">${name}</crt-text></div>`) }
+            </div>
+          </crt-code-example>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- SECTION: COMPONENTS (Übersicht) -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <section id="components" class="sg-section">
+          <crt-heading level="2">COMPONENTS</crt-heading>
+          <crt-text muted class="mb-lg">Alle verfügbaren Komponenten (Atoms & Molecules). Klicke auf einen Eintrag, um zur Sektion zu springen.</crt-text>
+
+          <crt-code-example
+            class="mb-lg"
+            title="Component List"
+            description="Schnellübersicht der Komponenten mit Link zur jeweiligen Sektion."
+            code='<!-- Component list preview -->'
+          >
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;">
+              <div style="border:1px dashed var(--crt-primary);padding:12px;display:flex;flex-direction:column;gap:8px;align-items:flex-start;">
+                <crt-heading level="5">Atoms</crt-heading>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                  <crt-link href="#forms">Button</crt-link>
+                  <crt-link href="#forms">Badge</crt-link>
+                  <crt-link href="#forms">Input</crt-link>
+                  <crt-link href="#forms">Select</crt-link>
+                  <crt-link href="#forms">Checkbox</crt-link>
+                  <crt-link href="#forms">Radio</crt-link>
+                  <crt-link href="#forms">Toggle</crt-link>
+                  <crt-link href="#forms">Slider</crt-link>
+                  <crt-link href="#forms">Icon</crt-link>
+                  <crt-link href="#forms">Link</crt-link>
+                  <crt-link href="#forms">Tabs</crt-link>
+                  <crt-link href="#forms">Tooltip</crt-link>
+                  <crt-link href="#forms">Progress</crt-link>
+                  <crt-link href="#forms">Spinner</crt-link>
+                  <crt-link href="#forms">Avatar</crt-link>
+                </div>
+              </div>
+
+              <div style="border:1px dashed var(--crt-primary);padding:12px;display:flex;flex-direction:column;gap:8px;align-items:flex-start;">
+                <crt-heading level="5">Molecules</crt-heading>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                  <crt-link href="#media">Card</crt-link>
+                  <crt-link href="#overlays">Modal</crt-link>
+                  <crt-link href="#media">Table</crt-link>
+                  <crt-link href="#media">Grid</crt-link>
+                  <crt-link href="#actions">Accordion</crt-link>
+                  <crt-link href="#feedback">Toast</crt-link>
+                  <crt-link href="#media">CodeExample</crt-link>
+                  <crt-link href="#media">MusicPlayer</crt-link>
+                  <crt-link href="#media">Playlist</crt-link>
+                  <crt-link href="#media">Visualizer</crt-link>
+                  <crt-link href="#media">Terminal</crt-link>
+                </div>
+              </div>
             </div>
           </crt-code-example>
         </section>
@@ -336,6 +413,24 @@ export const styleGuideTemplate = () => html`
                   ]}
                 ]}
               ></crt-select>
+            </div>
+          </crt-code-example>
+
+          <crt-code-example
+            class="mb-lg"
+            title="Search / Autocomplete"
+            description="Search input mit Vorschlägen, Debounce und Tastaturunterstützung."
+            code='<crt-search placeholder="Search tracks..." .suggestions=\${[{value: "patimwep", label: "Patimwep - Verrostete Terminals"}, {value: "retro", label: "Retro Beats"}, {value: "synth", label: "Synthwave"}, {value: "chiptune", label: "Chiptune Classics"}, {value: "ambient", label: "Ambient Textures"}]}></crt-search>'
+          >
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+                <crt-search id="demo-search" class="demo-search" placeholder="Search tracks..." .suggestions=${[
+                  { value: 'patimwep', label: 'Patimwep - Verrostete Terminals' },
+                  { value: 'retro', label: 'Retro Beats' },
+                  { value: 'synth', label: 'Synthwave' }
+                ]} style="width:320px;"></crt-search>
+              </div>
+              <crt-text muted style="font-size:12px;">Demo: Tippe ein paar Buchstaben, die Vorschläge kommen asynchron (demo fetcher).</crt-text>
             </div>
           </crt-code-example>
 
@@ -999,6 +1094,25 @@ document.body.appendChild(spinner);
         </section>
 
         <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- SECTION: FOOTER -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <section id="footer" class="sg-section">
+          <crt-heading level="2">Footer</crt-heading>
+          <crt-text muted class="mb-lg">Footer-Vorlage für die App.</crt-text>
+
+          <crt-code-example
+            class="mb-lg"
+            title="Footer"
+            description="Footer mit Slots für Links und Copyright-Hinweis."
+            code='<crt-footer>\n  <span slot="left">© 2026 CRT Style Guide · <crt-link href="#spacing">Spacing</crt-link> · <crt-link href="#layout">Layout</crt-link> · <crt-link href="#navigation">Navigation</crt-link> · <crt-link href="#overlays">Overlays</crt-link> · <crt-link href="#icons">Icons</crt-link></span>\n  <span slot="right">Made with ♥ · <crt-link href="#" target="_blank">GitHub</crt-link></span>\n</crt-footer>'
+          >
+            <crt-footer>
+              <span slot="left">© 2026 CRT Style Guide · <crt-link href="#spacing">Spacing</crt-link> · <crt-link href="#layout">Layout</crt-link> · <crt-link href="#navigation">Navigation</crt-link> · <crt-link href="#overlays">Overlays</crt-link> · <crt-link href="#icons">Icons</crt-link></span>
+              <span slot="right">Made with ♥ · <crt-link href="#" target="_blank">GitHub</crt-link></span>
+            </crt-footer>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
         <!-- SECTION 10: ORGANISMS -->
         <!-- ═══════════════════════════════════════════════════════════════ -->
         <section id="organisms" class="sg-section">
@@ -1023,9 +1137,10 @@ document.body.appendChild(spinner);
       </main>
 
       <!-- FOOTER -->
-      <footer class="sg-footer">
-        <crt-text muted>CRT STYLE GUIDE v0.1.0 | © 2026</crt-text>
-      </footer>
+      <crt-footer class="sg-footer">
+        <span slot="left">CRT STYLE GUIDE v0.1.0 | © 2026</span>
+        <span slot="right"><crt-link href="#" target="_blank">GitHub</crt-link></span>
+      </crt-footer>
     </div>
   </div>
 `;

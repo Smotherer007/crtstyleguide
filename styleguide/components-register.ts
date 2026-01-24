@@ -12,6 +12,7 @@ import { Tabs } from '../src/components/atoms/tabs';
 import { Input, Textarea } from '../src/components/atoms/input';
 import { Icon } from '../src/components/atoms/icon';
 import { Link } from '../src/components/atoms/link';
+import { Search } from '../src/components/atoms/search';
 import { FileUpload } from '../src/components/atoms/file-upload';
 import { Calendar } from '../src/components/atoms/calendar';
 import { Spinner } from '../src/components/atoms/spinner';
@@ -23,6 +24,10 @@ import { Visualizer } from '../src/components/molecules/visualizer';
 import { Playlist } from '../src/components/molecules/playlist';
 import { MusicPlayer } from '../src/components/molecules/music-player';
 import { Terminal } from '../src/components/molecules/terminal';
+import { Navbar } from '../src/components/molecules/navbar';
+import { Header } from '../src/components/molecules/header';
+import { Footer } from '../src/components/molecules/footer';
+import { Menu } from '../src/components/molecules/menu';
 
 import { MusicStation } from '../src/components/organisms/music-station';
 
@@ -38,6 +43,7 @@ const _components = {
   Textarea,
   Icon,
   Link,
+  Search,
   FileUpload,
   Calendar,
   Spinner,
@@ -48,6 +54,10 @@ const _components = {
   Playlist,
   MusicPlayer,
   Terminal,
+  Navbar,
+  Header,
+  Footer,
+  Menu,
   MusicStation,
 };
 
@@ -55,6 +65,6 @@ const _components = {
 console.log('Component registry loaded:', Object.keys(_components).length, 'components');
 
 // Export for type checking
-export { Button, Badge, Heading, Text, Tabs, Input, Textarea, Icon, Link, FileUpload, Calendar, Spinner, Card, Table, Grid, Visualizer, Playlist, MusicPlayer, Terminal, MusicStation };
+export { Button, Badge, Heading, Text, Tabs, Input, Textarea, Icon, Link, FileUpload, Calendar, Spinner, Card, Table, Grid, Visualizer, Playlist, MusicPlayer, Terminal, Navbar, Header, Footer, Menu, MusicStation };
 
 

@@ -15,6 +15,7 @@ import '../src/components/atoms/tabs';
 import '../src/components/atoms/input';
 import '../src/components/atoms/icon';
 import '../src/components/atoms/link';
+import '../src/components/atoms/search';
 import '../src/components/atoms/file-upload';
 import '../src/components/atoms/calendar';
 import '../src/components/atoms/select';
@@ -39,6 +40,9 @@ import '../src/components/molecules/visualizer';
 import '../src/components/molecules/playlist';
 import '../src/components/molecules/music-player';
 import '../src/components/molecules/terminal';
+import '../src/components/molecules/navbar';
+import '../src/components/molecules/header';
+import '../src/components/molecules/footer';
 import '../src/components/organisms/music-station';
 
 // Import and render template
@@ -52,5 +56,64 @@ customElements.whenDefined('crt-button').then(() => {
   const root = document.getElementById('app');
   if (root) {
     render(styleGuideTemplate(), root);
+
+    // Attach a demo async fetcher to the search demo (simulated server)
+    setTimeout(() => {
+      const data = [
+        { value: 'patimwep', label: 'Patimwep - Verrostete Terminals' },
+        { value: 'retro', label: 'Retro Beats' },
+        { value: 'synth', label: 'Synthwave' },
+        { value: 'chiptune', label: 'Chiptune Classics' },
+        { value: 'ambient', label: 'Ambient Textures' }
+      ];
+
+      // Add clusters for sections
+      const sections = [
+        { value: '#typography', label: 'Typography', href: '#typography' },
+        { value: '#forms', label: 'Forms', href: '#forms' },
+        { value: '#actions', label: 'Actions', href: '#actions' },
+        { value: '#feedback', label: 'Feedback', href: '#feedback' },
+        { value: '#media', label: 'Media', href: '#media' },
+        { value: '#organisms', label: 'Organisms', href: '#organisms' },
+        { value: '#components', label: 'Components', href: '#components' }
+      ];
+
+      // Hardcoded components list (label, tag -> href to components section)
+      const components = [
+        'Button','Badge','Input','Select','Checkbox','Radio','Toggle','Slider','Icon','Link','Tabs','Tooltip','Progress','Spinner','Avatar','Alert','Skeleton','Pagination','Breadcrumb','Calendar','FileUpload',
+        'Card','Modal','Table','Grid','Accordion','Toast','CodeExample','MusicPlayer','Playlist','Visualizer','Terminal','MusicStation'
+      ].map(name => ({ value: name.toLowerCase(), label: `${name} (${'crt-' + name.toLowerCase()})`, href: '#components' }));
+
+      const suggestions = [...sections, ...components, ...data];
+
+      // Attach fetcher to all search instances in the styleguide (header + demo)
+      const searches = Array.from(document.querySelectorAll('crt-search')) as any[];
+      for (const sEl of searches) {
+        // Avoid overwriting an existing fetcher
+        if (!sEl.fetcher) {
+          sEl.fetcher = async (q: string) => {
+            await new Promise((r) => setTimeout(r, 200));
+            const s = (q || '').toLowerCase();
+            return suggestions.filter((item: any) => (item.label || item.value).toLowerCase().includes(s)).slice(0, 50);
+          };
+        }
+
+        sEl.addEventListener('select', (e: any) => {
+          const item = e.detail?.item;
+          console.log('Search select:', e.detail);
+          // Navigate to href if present
+          if (item?.href) {
+            const target = document.querySelector(item.href) as HTMLElement | null;
+            if (target) {
+              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              try { history.replaceState(null, '', item.href); } catch (err) { location.hash = item.href; }
+            }
+          }
+
+          const toast = document.querySelector('crt-toast') as any;
+          toast?.show?.({ message: `Selected: ${e.detail.label || e.detail.value}`, variant: 'success' });
+        });
+      }
+    }, 50);
   }
 });

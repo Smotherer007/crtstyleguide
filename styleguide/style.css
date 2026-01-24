@@ -120,28 +120,16 @@ body::after {
 
 /* Terminal Frame - The monitor housing */
 .crt-frame {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border: 8px solid #1a1a1a;
-  border-radius: 20px;
-  box-shadow: 
-    inset 0 0 50px rgba(0, 0, 0, 0.5),
-    inset 0 0 10px rgba(0, 0, 0, 0.8),
-    0 0 20px rgba(0, 0, 0, 0.8);
-  pointer-events: none;
-  z-index: 9997;
+  display: none !important;
 }
 
 /* Screen curvature effect */
 .crt-screen {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
   background: transparent;
   pointer-events: none;
   z-index: 9996;
@@ -162,10 +150,11 @@ body::after {
 /* Noise overlay for authentic CRT static */
 .crt-noise {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  /* inset the noise so it doesn't cover scrollbars or UI chrome */
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
   pointer-events: none;
   z-index: 9995;
   opacity: 0.03;
@@ -332,10 +321,12 @@ body::after {
 
 .sg-footer {
   text-align: center;
-  padding: var(--crt-spacing-xl);
-  border-top: 2px solid var(--crt-primary);
-  margin-top: var(--crt-spacing-2xl);
-  box-shadow: var(--crt-glow-sm);
+  padding: 0; /* removed outer padding to keep footer tight */
+  margin-top: var(--crt-spacing-lg);
+  /* Remove extra frame — footer component already provides visual separation */
+  border-top: none;
+  box-shadow: none;
+  background: transparent;
 }
 
 pre {
@@ -360,6 +351,34 @@ code {
 .sg-card-demo,
 .sg-button-group-demo {
   padding: var(--crt-spacing-lg) 0;
+}
+
+/* Scrollbar visual consistency with components (WebKit + Firefox) */
+/* Targets main styleguide scroll containers and overall page */
+.sg-container, .sg-main, pre, .table-wrapper, .file-list, .select-dropdown {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: var(--crt-primary) var(--crt-bg-dark);
+}
+
+/* WebKit scrollbar for page and specific containers */
+.sg-container::-webkit-scrollbar, .sg-main::-webkit-scrollbar, pre::-webkit-scrollbar, .table-wrapper::-webkit-scrollbar, .file-list::-webkit-scrollbar, .select-dropdown::-webkit-scrollbar {
+  width: 12px;
+}
+
+.sg-container::-webkit-scrollbar-track, .sg-main::-webkit-scrollbar-track, pre::-webkit-scrollbar-track, .table-wrapper::-webkit-scrollbar-track, .file-list::-webkit-scrollbar-track, .select-dropdown::-webkit-scrollbar-track {
+  background: var(--crt-bg-dark);
+  border: 1px solid var(--crt-primary);
+}
+
+.sg-container::-webkit-scrollbar-thumb, .sg-main::-webkit-scrollbar-thumb, pre::-webkit-scrollbar-thumb, .table-wrapper::-webkit-scrollbar-thumb, .file-list::-webkit-scrollbar-thumb, .select-dropdown::-webkit-scrollbar-thumb {
+  background: var(--crt-primary);
+  border: 1px solid var(--crt-bg-dark);
+  box-shadow: var(--crt-glow);
+}
+
+.sg-container::-webkit-scrollbar-thumb:hover, .sg-main::-webkit-scrollbar-thumb:hover, pre::-webkit-scrollbar-thumb:hover, .table-wrapper::-webkit-scrollbar-thumb:hover, .file-list::-webkit-scrollbar-thumb:hover, .select-dropdown::-webkit-scrollbar-thumb:hover {
+  background: var(--crt-primary-light);
+  box-shadow: var(--crt-glow-lg);
 }
 
 .sg-demo-row {
