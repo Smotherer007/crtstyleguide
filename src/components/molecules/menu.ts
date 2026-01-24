@@ -29,7 +29,7 @@ export class Menu extends LitElement {
     .dropdown {
       position: absolute;
       right: 0;
-      background: var(--crt-bg-dark);
+      background: transparent;
       border: 2px solid var(--crt-primary);
       box-shadow: var(--crt-glow-sm);
       margin-top: 8px;
@@ -51,7 +51,7 @@ export class Menu extends LitElement {
     .item[aria-disabled='true'] { opacity: 0.5; cursor: not-allowed; }
 
     .item[aria-selected='true'] {
-      background: color-mix(in srgb, var(--crt-primary) 18%, transparent);
+      background: transparent;
       box-shadow: var(--crt-glow-sm);
       color: var(--crt-bg-dark);
     }

@@ -30,13 +30,13 @@ export class Playlist extends LitElement {
       font-family: var(--crt-font-family);
       font-size: var(--crt-font-size-sm);
       border: 2px solid var(--crt-primary);
-      box-shadow: var(--crt-glow-sm);
+      box-shadow: var(--crt-component-glow-sm);
       box-sizing: border-box;
       table-layout: fixed;
     }
 
     thead {
-      background-color: rgba(51, 255, 51, 0.1);
+      background-color: transparent;
       border-bottom: 2px solid var(--crt-primary);
     }
 
@@ -47,7 +47,7 @@ export class Playlist extends LitElement {
       text-transform: uppercase;
       letter-spacing: var(--crt-letter-spacing);
       font-weight: 600;
-      text-shadow: var(--crt-glow);
+      text-shadow: var(--crt-component-glow);
     }
 
     th.actions {
@@ -67,18 +67,18 @@ export class Playlist extends LitElement {
     }
 
     tbody tr:hover {
-      background-color: rgba(51, 255, 51, 0.05);
+      background-color: transparent;
       box-shadow: inset 0 0 20px rgba(51, 255, 51, 0.1);
     }
 
     tbody tr.active {
-      background-color: rgba(51, 255, 51, 0.15);
+      background-color: transparent;
       box-shadow: inset 0 0 30px rgba(51, 255, 51, 0.2);
     }
 
     tbody tr.active td {
       color: var(--crt-success);
-      text-shadow: var(--crt-glow);
+      text-shadow: var(--crt-component-glow);
     }
 
     td {
@@ -145,14 +145,14 @@ export class Playlist extends LitElement {
     }
 
     .empty-state:hover {
-      background: color-mix(in srgb, var(--crt-primary) 5%, transparent);
+      background: transparent;
     }
 
     .empty-icon {
       font-size: 3rem;
       margin-bottom: var(--crt-spacing-md);
       color: var(--crt-primary);
-      text-shadow: var(--crt-glow);
+      text-shadow: var(--crt-component-glow);
     }
 
     /* Scrollbar wrapper */
@@ -177,13 +177,13 @@ export class Playlist extends LitElement {
     }
 
     .table-wrapper::-webkit-scrollbar-track {
-      background: var(--crt-bg-dark);
+      background: transparent;
       border: 1px solid var(--crt-primary);
     }
 
     .table-wrapper::-webkit-scrollbar-thumb {
-      background: var(--crt-primary);
-      box-shadow: var(--crt-glow-sm);
+      background: rgba(0, 255, 0, 0.5);
+      box-shadow: var(--crt-component-glow-sm);
     }
   `;
 

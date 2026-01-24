@@ -37,7 +37,7 @@ export class MusicStation extends LitElement {
       justify-content: space-between;
       align-items: center;
       padding: var(--crt-spacing-md);
-      background: var(--crt-bg-darker);
+      background: transparent;
       border: 2px solid var(--crt-primary);
     }
 

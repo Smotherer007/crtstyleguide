@@ -29,8 +29,8 @@ export class Visualizer extends LitElement {
       border: 2px solid var(--crt-primary);
       padding: var(--crt-spacing-md);
       position: relative;
-      background: var(--crt-bg-darker);
-      box-shadow: var(--crt-glow-inset);
+      background: transparent;
+      box-shadow: var(--crt-component-glow-inset);
       box-sizing: border-box;
       overflow: hidden;
     }
@@ -48,7 +48,7 @@ export class Visualizer extends LitElement {
       font-size: var(--crt-font-size-sm);
       letter-spacing: 2px;
       color: var(--crt-primary);
-      text-shadow: var(--crt-glow);
+      text-shadow: var(--crt-component-glow);
       z-index: 10;
     }
 
@@ -70,8 +70,8 @@ export class Visualizer extends LitElement {
     }
 
     .mode-toggle:hover {
-      background: color-mix(in srgb, var(--crt-primary) 20%, transparent);
-      box-shadow: var(--crt-glow);
+      background: transparent;
+      box-shadow: var(--crt-component-glow);
     }
 
     .bar {

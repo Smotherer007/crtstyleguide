@@ -43,6 +43,7 @@ import '../src/components/molecules/terminal';
 import '../src/components/molecules/navbar';
 import '../src/components/molecules/header';
 import '../src/components/molecules/footer';
+import '../src/components/molecules/crt-screen';
 import '../src/components/organisms/music-station';
 
 // Import and render template
@@ -113,6 +114,15 @@ customElements.whenDefined('crt-button').then(() => {
           const toast = document.querySelector('crt-toast') as any;
           toast?.show?.({ message: `Selected: ${e.detail.label || e.detail.value}`, variant: 'success' });
         });
+      }
+      
+      // Wire CRT power switch demo (if present in template)
+      const powerSwitch = document.getElementById('crt-power-switch') as HTMLInputElement | null;
+      if (powerSwitch) {
+        const sync = () => document.documentElement.classList.toggle('sg-authentic', powerSwitch.checked);
+        powerSwitch.addEventListener('change', sync);
+        // initialize state
+        sync();
       }
     }, 50);
   }

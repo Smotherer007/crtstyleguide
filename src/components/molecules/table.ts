@@ -17,11 +17,11 @@ export class Table extends LitElement {
       font-family: var(--crt-font-family);
       font-size: var(--crt-font-size-sm);
       border: 2px solid var(--crt-primary);
-      box-shadow: var(--crt-glow-sm);
+      box-shadow: var(--crt-component-glow-sm);
     }
 
     thead {
-      background-color: rgba(51, 255, 51, 0.1);
+      background-color: transparent;
       border-bottom: 2px solid var(--crt-primary);
     }
 
@@ -40,7 +40,7 @@ export class Table extends LitElement {
     }
 
     tbody tr:hover {
-      background-color: rgba(51, 255, 51, 0.05);
+      background-color: transparent;
       box-shadow: inset 0 0 20px rgba(51, 255, 51, 0.1);
     }
 

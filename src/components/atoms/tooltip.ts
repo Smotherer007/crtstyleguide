@@ -18,7 +18,9 @@ export class Tooltip extends LitElement {
 
     .tooltip {
       position: absolute;
-      background: var(--crt-bg-dark);
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border: 2px solid var(--crt-primary);
       color: var(--crt-primary);
       padding: var(--crt-spacing-sm) var(--crt-spacing-md);

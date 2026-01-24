@@ -17,7 +17,7 @@ export class AccordionItem extends LitElement {
       align-items: center;
       justify-content: space-between;
       padding: var(--crt-spacing-md) var(--crt-spacing-lg);
-      background: var(--crt-bg-dark);
+      background: transparent;
       border: 2px solid var(--crt-primary);
       border-bottom: none;
       cursor: var(--crt-cursor-pointer);
@@ -35,11 +35,11 @@ export class AccordionItem extends LitElement {
     }
 
     .accordion-header:hover {
-      background: color-mix(in srgb, var(--crt-primary) 10%, transparent);
+      background: transparent;
     }
 
     .accordion-header.open {
-      background: color-mix(in srgb, var(--crt-primary) 5%, transparent);
+      background: transparent;
       border-bottom: 1px solid var(--crt-primary);
     }
 
@@ -63,7 +63,7 @@ export class AccordionItem extends LitElement {
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.3s ease;
-      background: var(--crt-bg-dark);
+      background: transparent;
       border-left: 2px solid var(--crt-primary);
       border-right: 2px solid var(--crt-primary);
     }

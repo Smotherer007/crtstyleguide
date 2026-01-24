@@ -34,18 +34,23 @@ export class Search extends LitElement {
       width: 100%;
       padding: var(--crt-spacing-md);
       font-family: var(--crt-font-family);
-      background: var(--crt-bg-dark);
+      background: transparent;
       color: var(--crt-text-primary);
       border: 2px solid var(--crt-primary);
-      box-shadow: var(--crt-glow-inset);
+      box-shadow: var(--crt-component-glow-inset);
       box-sizing: border-box;
       transition: var(--crt-transition);
       cursor: var(--crt-cursor-text);
     }
 
+    .input::placeholder {
+      color: var(--crt-text-muted);
+      opacity: 1; /* ensure visible and consistent */
+    }
+
     .input:focus {
       outline: none;
-      box-shadow: inset 0 0 10px rgba(51,255,51,0.2), var(--crt-glow);
+      box-shadow: inset 0 0 10px rgba(51,255,51,0.2), var(--crt-component-glow);
     }
 
     .list {
@@ -53,9 +58,9 @@ export class Search extends LitElement {
       top: calc(100% + var(--crt-spacing-xs));
       left: 0;
       right: 0;
-      background: var(--crt-bg-dark);
+      background: transparent;
       border: 2px solid var(--crt-primary);
-      box-shadow: 0 10px 20px color-mix(in srgb, var(--crt-primary) 20%, transparent), var(--crt-glow-inset);
+      box-shadow: 0 10px 20px color-mix(in srgb, var(--crt-primary) 20%, transparent), var(--crt-component-glow-inset);
       max-height: 240px;
       overflow-y: auto;
       z-index: 1000;
@@ -76,8 +81,8 @@ export class Search extends LitElement {
 
     .item:hover,
     .item[aria-selected="true"] {
-      background: color-mix(in srgb, var(--crt-primary) 10%, transparent);
-      box-shadow: var(--crt-glow-sm);
+      background: transparent;
+      box-shadow: var(--crt-component-glow-sm);
       color: var(--crt-primary);
     }
 

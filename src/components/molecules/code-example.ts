@@ -41,8 +41,9 @@ export class CodeExample extends LitElement {
 
     .tabs-wrapper {
       border: 2px solid var(--crt-primary);
-      background: var(--crt-bg-light);
-      box-shadow: var(--crt-glow-inset);
+      background: transparent !important;
+      background-image: none !important;
+      box-shadow: var(--crt-component-glow-inset);
       width: 100%;
       box-sizing: border-box;
     }
@@ -51,7 +52,7 @@ export class CodeExample extends LitElement {
       display: flex;
       gap: 0;
       border-bottom: 2px solid var(--crt-primary);
-      background: var(--crt-bg-darker);
+      background: transparent;
     }
 
     .tab-btn {
@@ -76,7 +77,7 @@ export class CodeExample extends LitElement {
     .tab-btn.active {
       color: var(--crt-primary);
       border-bottom-color: var(--crt-primary);
-      text-shadow: var(--crt-glow-sm);
+      text-shadow: var(--crt-component-glow-sm);
     }
 
     .tab-content {
@@ -91,7 +92,12 @@ export class CodeExample extends LitElement {
       align-items: center;
       width: 100%;
       box-sizing: border-box;
+      background: var(--crt-bg-light) !important;
+      background-image: none;
     }
+
+     /* preview-pane and tab-content visuals are handled by the global
+       styleguide stylesheet to keep component CSS minimal. */
 
     /* Ensure embedded demo components stretch to the available width
        so examples don't get stuck at an intrinsic/narrow width. */
@@ -120,7 +126,7 @@ export class CodeExample extends LitElement {
       padding: var(--crt-spacing-lg);
       padding-right: 80px;
       overflow-x: auto;
-      background: var(--crt-bg-darker);
+      background: transparent;
       font-family: var(--crt-font-family);
       font-size: var(--crt-font-size-sm);
       color: var(--crt-text-primary);
@@ -136,7 +142,7 @@ export class CodeExample extends LitElement {
       position: absolute;
       top: var(--crt-spacing-sm);
       right: var(--crt-spacing-sm);
-      background: var(--crt-bg-light);
+      background: transparent;
       border: 1px solid var(--crt-primary);
       color: var(--crt-primary);
       padding: var(--crt-spacing-xs) var(--crt-spacing-sm);

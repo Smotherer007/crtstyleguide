@@ -15,18 +15,23 @@ export class Terminal extends LitElement {
     .term {
       width: 100%;
       max-width: none;
-      background: #0b0f0b;
+      background: transparent;
       color: #8aff8a;
       padding: 12px;
-      border: 2px solid var(--crt-primary);
+      border: none;
       min-height: calc(var(--crt-font-size-md, 16px) * 1.2 * 6);
       max-height: min(380px, 50vh);
       overflow: auto;
       box-sizing: border-box;
-      border-radius: 6px;
+      border-radius: 0;
+    }
+    :host([no-border]) .term {
+      padding: 0;
+      background: transparent;
     }
     @media (max-width: 480px) {
       .term { min-height: calc(var(--crt-font-size-md, 16px) * 1.2 * 4); max-height: 40vh; padding: 8px; }
+      :host([no-border]) .term { padding: 0; }
     }
     .term[aria-disabled="true"] {
       opacity: 0.65;

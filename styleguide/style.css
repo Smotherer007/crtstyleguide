@@ -25,10 +25,12 @@
   --crt-border-width: 2px;
   --crt-border-color: var(--crt-primary);
   --crt-border: var(--crt-border-width) solid var(--crt-border-color);
-  --crt-glow-sm: 0 0 5px color-mix(in srgb, var(--crt-primary) 30%, transparent);
-  --crt-glow: 0 0 10px color-mix(in srgb, var(--crt-primary) 50%, transparent);
-  --crt-glow-lg: 0 0 20px color-mix(in srgb, var(--crt-primary) 70%, transparent);
-  --crt-glow-inset: inset 0 0 10px color-mix(in srgb, var(--crt-primary) 10%, transparent);
+  /* Subtler glow values for more legible phosphor look */
+  --crt-glow-sm: 0 0 3px color-mix(in srgb, var(--crt-primary) 25%, transparent);
+  --crt-glow: 0 0 6px color-mix(in srgb, var(--crt-primary) 40%, transparent);
+  --crt-glow-lg: 0 0 12px color-mix(in srgb, var(--crt-primary) 55%, transparent);
+  --crt-glow-inset: inset 0 0 6px color-mix(in srgb, var(--crt-primary) 6%, transparent);
+  --crt-scanline-opacity: 0; /* Neutralize scanline darkness */
   --crt-font-family: 'VT323', 'Courier New', monospace;
   --crt-font-size-base: 1rem;
   --crt-font-size-lg: 1.25rem;
@@ -80,85 +82,28 @@ crt-input input, crt-textarea textarea, crt-input, crt-textarea {
   cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="24" viewBox="0 0 16 24"><rect x="2" y="0" width="12" height="2" fill="%2333ff33"/><rect x="7" y="2" width="2" height="20" fill="%2333ff33"/><rect x="2" y="22" width="12" height="2" fill="%2333ff33"/></svg>') 8 12, text;
 }
 
-/* CRT Effects - Scanlines (stronger for authentic look) */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: repeating-linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0.25),
-    rgba(0, 0, 0, 0.25) 1px,
-    transparent 1px,
-    transparent 3px
-  );
-  pointer-events: none;
-  z-index: 9999;
+/* Ensure placeholders are green and legible across native inputs and custom input atoms */
+input::placeholder, textarea::placeholder,
+crt-input input::placeholder, crt-textarea textarea::placeholder,
+crt-search .input::placeholder {
+  color: var(--crt-text-muted);
+  opacity: 1;
 }
 
-/* CRT Vignette Effect - Dark edges like real CRT */
-body::after {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: radial-gradient(
-    ellipse at center,
-    transparent 0%,
-    transparent 50%,
-    rgba(0, 0, 0, 0.3) 80%,
-    rgba(0, 0, 0, 0.6) 100%
-  );
-  pointer-events: none;
-  z-index: 9998;
+/* CRT visual overlays (scanlines, vignette, noise) have been moved into the
+   `crt-screen` component to avoid global styles leaking from the styleguide.
+   Keep a few CSS variables here for backwards compatibility and to allow
+   component configuration via CSS variables if needed. */
+
+:root {
+  --crt-scan-width: 1px;
+  --crt-scan-color: rgba(51, 255, 51, var(--crt-scanline-opacity, 0.04));
 }
 
-/* Terminal Frame - The monitor housing */
-.crt-frame {
-  display: none !important;
-}
-
-/* Screen curvature effect */
-.crt-screen {
-  position: fixed;
-  top: 8px;
-  left: 8px;
-  right: 8px;
-  bottom: 8px;
-  background: transparent;
-  pointer-events: none;
-  z-index: 9996;
-  /* Subtle barrel distortion illusion */
-  box-shadow: 
-    inset 0 0 100px rgba(0, 0, 0, 0.2),
-    inset 0 0 200px rgba(0, 0, 0, 0.1);
-}
-
-/* Phosphor glow / text bleeding effect */
+/* Phosphor glow / text bleeding effect moved to `crt-screen` component; keep
+   a very subtle fallback here for headings but prefer the component. */
 .sg-wrapper {
-  text-shadow: 
-    0 0 2px var(--crt-primary),
-    0 0 4px color-mix(in srgb, var(--crt-primary) 50%, transparent),
-    0 0 8px color-mix(in srgb, var(--crt-primary) 30%, transparent);
-}
-
-/* Noise overlay for authentic CRT static */
-.crt-noise {
-  position: fixed;
-  /* inset the noise so it doesn't cover scrollbars or UI chrome */
-  top: 8px;
-  left: 8px;
-  right: 8px;
-  bottom: 8px;
-  pointer-events: none;
-  z-index: 9995;
-  opacity: 0.03;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  text-shadow: 0 0 0.45px var(--crt-primary), 0 0 0.9px color-mix(in srgb, var(--crt-primary) 20%, transparent);
 }
 
 /* Style Guide Specific */
@@ -166,6 +111,83 @@ body::after {
   position: relative;
   min-height: 100vh;
   background-color: var(--crt-bg-dark);
+}
+
+/* Reduce heading glow for better legibility */
+h1, h2, h3, h4, .sg-header crt-heading {
+  text-shadow: 0 0 0.4px var(--crt-primary), 0 0 0.8px color-mix(in srgb, var(--crt-primary) 20%, transparent);
+}
+
+/* Legacy demo switch (#switch) compatibility
+   Supports the original markup where a checkbox `#switch` toggles
+   the scanline animation on the sibling `.screen.scanlines`. */
+#switch { display: none; }
+
+/* Ensure scanlines container clips children so moving line passes cleanly */
+.screen.scanlines { overflow: hidden; position: relative; }
+
+#switch ~ .screen.scanlines::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -20%;
+  width: 100%;
+  height: 12px; /* visible band */
+  z-index: 99999;
+  background: linear-gradient(180deg, rgba(51,255,51,0) 0%, rgba(51,255,51,0.95) 50%, rgba(51,255,51,0) 100%);
+  opacity: 0; /* shown when active */
+  pointer-events: none;
+  transform: translateY(-120%);
+  mix-blend-mode: screen;
+  filter: blur(0.6px);
+}
+
+#switch ~ .screen.scanlines::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99998;
+  background: linear-gradient(to bottom, transparent 50%, rgba(51,255,51,0.04) 51%);
+  background-size: 100% 4px;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Disable scanline effects */
+:root {
+  --crt-scanline-opacity: 0; /* Neutralize scanline darkness */
+}
+
+/* Remove scanline animations */
+.screen.scanlines::before,
+.screen.scanlines::after {
+  animation: none !important;
+  opacity: 0 !important;
+}
+
+#switch:checked ~ .screen.scanlines {
+  animation: none !important;
+  background-image: none !important;
+}
+
+/* Robust moving highlight using a background gradient so it appears reliably
+   regardless of clip-path/pseudo-element behavior. This ensures a visible
+   band passes over the .screen when #switch is checked. */
+#switch:checked ~ .screen.scanlines {
+  background-image: linear-gradient(180deg, rgba(51,255,51,0) 0%, rgba(51,255,51,0.95) 50%, rgba(51,255,51,0) 100%);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 12px; /* thickness of the moving band */
+  animation: scan-moving-bg 2.6s linear infinite;
+  mix-blend-mode: screen;
+}
+
+@keyframes scan-moving-bg {
+  from { background-position: 0 100%; }
+  to   { background-position: 0 -100%; }
 }
 
 .sg-corner {
@@ -211,9 +233,7 @@ body::after {
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(ellipse at center, 
-    rgba(51, 255, 51, 0.05) 0%, 
-    rgba(0, 0, 0, 0) 70%);
+  background: none !important;
   pointer-events: none;
   z-index: 1;
 }
@@ -310,13 +330,13 @@ body::after {
   justify-content: center;
   padding: var(--crt-spacing-lg);
   border: 1px dashed var(--crt-primary);
-  background: rgba(51, 255, 51, 0.02);
+  background: transparent; /* remove CRT green tint in preview boxes */
   transition: var(--crt-transition);
 }
 
 .sg-demo-item:hover {
-  background: rgba(51, 255, 51, 0.05);
-  box-shadow: var(--crt-glow-sm);
+  background: rgba(255, 255, 255, 0.02); /* subtle neutral hover */
+  box-shadow: none; /* disable CRT glow for previews */
 }
 
 .sg-footer {
@@ -396,14 +416,14 @@ code {
   justify-content: center;
   padding: var(--crt-spacing-lg);
   border: 1px dashed var(--crt-primary);
-  background: rgba(51, 255, 51, 0.02);
+  background: transparent; /* neutral preview background */
   transition: var(--crt-transition);
   min-width: 150px;
 }
 
 .sg-demo-item:hover {
-  background: rgba(51, 255, 51, 0.05);
-  box-shadow: var(--crt-glow-sm);
+  background: rgba(255, 255, 255, 0.02);
+  box-shadow: none;
 }
 
 .sg-demo-label {
@@ -449,19 +469,6 @@ crt-code-example,
   box-sizing: border-box;
 }
 
-/* Force the Terminal demo to take the available width in the styleguide preview.
-   This is a targeted override for the demo element with id="demo-term" and the
-   surrounding code example titled "Terminal" so that layout constraints do not
-   artificially cap its size while developing the component. */
-#demo-term,
-#demo-term .term,
-crt-code-example[title="Terminal"],
-crt-code-example[title="Terminal"] .preview-pane {
-  width: 100% !important;
-  max-width: none !important;
-  min-width: 0 !important;
-  box-sizing: border-box !important;
-}
 
 .sg-footer-text {
   font-size: 0.9rem !important;

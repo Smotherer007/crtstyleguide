@@ -12,7 +12,7 @@ export class Footer extends LitElement {
     .footer {
       padding: var(--crt-spacing-md) var(--crt-spacing-lg);
       border-top: 2px solid var(--crt-primary);
-      background: var(--crt-bg-darker);
+      background: transparent;
       color: var(--crt-text-muted);
       display: flex;
       align-items: center;

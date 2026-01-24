@@ -45,13 +45,13 @@ export class Breadcrumb extends LitElement {
 
     a:hover {
       color: var(--crt-primary);
-      text-shadow: var(--crt-glow-sm);
+      text-shadow: var(--crt-component-glow-sm);
     }
 
     .active a,
     .active .text {
       color: var(--crt-primary);
-      text-shadow: var(--crt-glow-sm);
+      text-shadow: var(--crt-component-glow-sm);
     }
 
     .separator {

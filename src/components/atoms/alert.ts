@@ -18,7 +18,7 @@ export class Alert extends LitElement {
       gap: var(--crt-spacing-md);
       padding: var(--crt-spacing-md);
       border: 3px double var(--crt-primary);
-      background: var(--crt-bg-dark);
+      background: transparent;
       position: relative;
     }
 
@@ -71,7 +71,7 @@ export class Alert extends LitElement {
       flex-shrink: 0;
       font-size: 1.2em;
       color: var(--crt-primary);
-      text-shadow: var(--crt-glow);
+      text-shadow: var(--crt-component-glow);
     }
 
     .alert-content {
@@ -83,7 +83,7 @@ export class Alert extends LitElement {
       font-weight: bold;
       margin-bottom: var(--crt-spacing-xs);
       color: var(--crt-primary);
-      text-shadow: var(--crt-glow);
+      text-shadow: var(--crt-component-glow);
       text-transform: uppercase;
       letter-spacing: 1px;
     }
@@ -107,7 +107,7 @@ export class Alert extends LitElement {
 
     .alert-close:hover {
       color: var(--crt-primary);
-      text-shadow: var(--crt-glow);
+      text-shadow: var(--crt-component-glow);
     }
 
     .alert-actions {
@@ -118,23 +118,23 @@ export class Alert extends LitElement {
 
     /* Filled variant */
     :host([filled]) .alert {
-      background: color-mix(in srgb, var(--crt-primary) 10%, transparent);
+      background: transparent;
     }
 
     :host([filled][variant="success"]) .alert {
-      background: color-mix(in srgb, var(--crt-success) 10%, transparent);
+      background: transparent;
     }
 
     :host([filled][variant="warning"]) .alert {
-      background: color-mix(in srgb, var(--crt-warning) 10%, transparent);
+      background: transparent;
     }
 
     :host([filled][variant="error"]) .alert {
-      background: color-mix(in srgb, var(--crt-error) 10%, transparent);
+      background: transparent;
     }
 
     :host([filled][variant="info"]) .alert {
-      background: color-mix(in srgb, var(--crt-info) 10%, transparent);
+      background: transparent;
     }
 
     /* Outlined variant */

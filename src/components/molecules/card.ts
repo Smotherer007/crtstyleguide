@@ -17,8 +17,8 @@ export class Card extends LitElement {
       box-sizing: border-box;
       border: 3px double var(--crt-primary);
       padding: var(--crt-spacing-lg);
-      background-color: var(--crt-bg-dark);
-      box-shadow: var(--crt-glow-sm), var(--crt-glow-inset);
+      background-color: transparent;
+      box-shadow: var(--crt-component-glow-sm), var(--crt-component-glow-inset);
       transition: var(--crt-transition);
     }
 
@@ -26,7 +26,7 @@ export class Card extends LitElement {
       box-shadow: 
         0 0 15px color-mix(in srgb, var(--crt-primary) 40%, transparent),
         0 0 30px color-mix(in srgb, var(--crt-primary) 20%, transparent),
-        var(--crt-glow-inset);
+        var(--crt-component-glow-inset);
     }
 
     .card-header {

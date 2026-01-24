@@ -28,6 +28,7 @@ import { Navbar } from '../src/components/molecules/navbar';
 import { Header } from '../src/components/molecules/header';
 import { Footer } from '../src/components/molecules/footer';
 import { Menu } from '../src/components/molecules/menu';
+import { CRTScreen } from '../src/components/molecules/crt-screen';
 
 import { MusicStation } from '../src/components/organisms/music-station';
 
@@ -58,6 +59,7 @@ const _components = {
   Header,
   Footer,
   Menu,
+  CRTScreen,
   MusicStation,
 };
 
@@ -65,6 +67,6 @@ const _components = {
 console.log('Component registry loaded:', Object.keys(_components).length, 'components');
 
 // Export for type checking
-export { Button, Badge, Heading, Text, Tabs, Input, Textarea, Icon, Link, FileUpload, Calendar, Spinner, Card, Table, Grid, Visualizer, Playlist, MusicPlayer, Terminal, Navbar, Header, Footer, Menu, MusicStation };
+export { Button, Badge, Heading, Text, Tabs, Input, Textarea, Icon, Link, FileUpload, Calendar, Spinner, Card, Table, Grid, Visualizer, Playlist, MusicPlayer, Terminal, Navbar, Header, Footer, Menu, CRTScreen, MusicStation };
 
 

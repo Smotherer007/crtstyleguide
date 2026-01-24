@@ -38,9 +38,9 @@ export class Progress extends LitElement {
 
     .progress-track {
       height: 20px;
-      background: var(--crt-bg-dark);
+      background: transparent;
       border: 2px solid var(--crt-primary);
-      box-shadow: var(--crt-glow-inset);
+      box-shadow: var(--crt-component-glow-inset);
       position: relative;
       overflow: hidden;
     }
@@ -50,7 +50,7 @@ export class Progress extends LitElement {
       background: var(--crt-primary);
       transition: width 0.3s ease;
       position: relative;
-      box-shadow: var(--crt-glow-sm);
+      box-shadow: var(--crt-component-glow-sm);
     }
 
     /* Animated striped effect */

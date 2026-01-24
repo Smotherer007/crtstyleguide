@@ -42,7 +42,7 @@ export class Tabs extends LitElement {
     }
 
     .tabs-content {
-      background: var(--crt-bg-light);
+      background: transparent;
       border: 1px solid var(--crt-primary);
       padding: var(--crt-spacing-lg);
       box-shadow: var(--crt-glow-inset);
@@ -57,7 +57,7 @@ export class Tabs extends LitElement {
     }
 
     pre {
-      background: var(--crt-bg-darker);
+      background: transparent;
       border: 1px dashed var(--crt-primary);
       padding: var(--crt-spacing-lg);
       overflow-x: auto;

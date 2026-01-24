@@ -13,4 +13,5 @@ export { Navbar } from './navbar';
 export { Header } from './header';
 export { Footer } from './footer';
 export { Menu } from './menu';
+export { CRTScreen } from './crt-screen';
 export type { Track } from './playlist';

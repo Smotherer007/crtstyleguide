@@ -37,8 +37,8 @@ export class MusicPlayer extends LitElement {
 
     .player {
       border: 3px double var(--crt-primary);
-      background: var(--crt-bg-dark);
-      box-shadow: var(--crt-glow-inset);
+      background: transparent;
+      box-shadow: var(--crt-component-glow-inset);
       width: 100%;
       box-sizing: border-box;
       overflow: hidden;
@@ -54,14 +54,14 @@ export class MusicPlayer extends LitElement {
       text-align: center;
       padding: var(--crt-spacing-md);
       border-bottom: 2px solid var(--crt-primary);
-      background: var(--crt-bg-darker);
+      background: transparent;
     }
 
     .player-title {
       font-size: 1.5rem;
       letter-spacing: 4px;
       color: var(--crt-primary);
-      text-shadow: var(--crt-glow);
+      text-shadow: var(--crt-component-glow);
     }
 
     /* Visualizer */
@@ -99,7 +99,7 @@ export class MusicPlayer extends LitElement {
     .track-title {
       font-size: var(--crt-font-size-lg);
       color: var(--crt-primary);
-      text-shadow: var(--crt-glow);
+      text-shadow: var(--crt-component-glow);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;

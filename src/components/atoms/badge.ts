@@ -20,7 +20,7 @@ export class Badge extends LitElement {
       font-size: var(--crt-font-size-sm);
       letter-spacing: 1px;
       text-transform: uppercase;
-      box-shadow: var(--crt-glow-sm);
+      box-shadow: var(--crt-component-glow-sm);
       white-space: nowrap;
     }
 

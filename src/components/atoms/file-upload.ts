@@ -30,8 +30,8 @@ export class FileUpload extends LitElement {
 
     .file-manager {
       border: 3px double var(--crt-primary);
-      background: var(--crt-bg-dark);
-      box-shadow: var(--crt-glow-inset);
+      background: transparent;
+      box-shadow: var(--crt-component-glow-inset);
     }
 
     /* Header */
@@ -40,7 +40,7 @@ export class FileUpload extends LitElement {
       align-items: center;
       justify-content: space-between;
       padding: var(--crt-spacing-sm) var(--crt-spacing-md);
-      background: var(--crt-bg-darker);
+      background: transparent;
       border-bottom: 2px solid var(--crt-primary);
     }
 
@@ -49,7 +49,7 @@ export class FileUpload extends LitElement {
       text-transform: uppercase;
       letter-spacing: 2px;
       font-size: var(--crt-font-size-sm);
-      text-shadow: var(--crt-glow);
+      text-shadow: var(--crt-component-glow);
       display: flex;
       align-items: center;
       gap: var(--crt-spacing-sm);
@@ -79,9 +79,9 @@ export class FileUpload extends LitElement {
 
     .drop-zone:hover,
     .drop-zone.dragging {
-      background: color-mix(in srgb, var(--crt-primary) 10%, transparent);
+      background: transparent;
       border-color: var(--crt-primary);
-      box-shadow: var(--crt-glow);
+      box-shadow: var(--crt-component-glow);
     }
 
     .drop-zone.dragging {
@@ -135,7 +135,7 @@ export class FileUpload extends LitElement {
       grid-template-columns: 2fr 80px 80px 50px;
       gap: var(--crt-spacing-md);
       padding: var(--crt-spacing-sm) var(--crt-spacing-md);
-      background: var(--crt-bg-darker);
+      background: transparent;
       border-bottom: 1px solid var(--crt-primary);
       color: var(--crt-text-muted);
       font-size: var(--crt-font-size-xs);
@@ -154,7 +154,7 @@ export class FileUpload extends LitElement {
     }
 
     .file-item:hover {
-      background: color-mix(in srgb, var(--crt-primary) 5%, transparent);
+      background: transparent;
     }
 
     .file-item:last-child {
@@ -258,7 +258,7 @@ export class FileUpload extends LitElement {
       align-items: center;
       justify-content: space-between;
       padding: var(--crt-spacing-md);
-      background: var(--crt-bg-darker);
+      background: transparent;
       border-top: 2px solid var(--crt-primary);
     }
 
@@ -291,7 +291,7 @@ export class FileUpload extends LitElement {
     }
 
     .file-list::-webkit-scrollbar-track {
-      background: var(--crt-bg-dark);
+      background: transparent;
     }
 
     .file-list::-webkit-scrollbar-thumb {
@@ -303,7 +303,7 @@ export class FileUpload extends LitElement {
     .progress-bar {
       width: 100%;
       height: 4px;
-      background: var(--crt-bg-dark);
+      background: transparent;
       border: 1px solid var(--crt-primary);
       margin-top: var(--crt-spacing-xs);
     }

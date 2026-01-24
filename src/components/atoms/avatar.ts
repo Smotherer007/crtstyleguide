@@ -16,11 +16,11 @@ export class Avatar extends LitElement {
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--crt-bg-dark);
+      background: transparent;
       border: 2px solid var(--crt-primary);
       color: var(--crt-primary);
       overflow: hidden;
-      box-shadow: var(--crt-glow-sm);
+      box-shadow: var(--crt-component-glow-sm);
     }
 
     /* Sizes */
@@ -80,7 +80,7 @@ export class Avatar extends LitElement {
       font-weight: bold;
       text-transform: uppercase;
       letter-spacing: 1px;
-      text-shadow: var(--crt-glow);
+      text-shadow: var(--crt-component-glow);
     }
 
     .fallback-icon {
@@ -202,13 +202,13 @@ export class AvatarGroup extends LitElement {
       justify-content: center;
       width: 48px;
       height: 48px;
-      background: var(--crt-bg-dark);
+      background: transparent;
       border: 2px solid var(--crt-primary);
       color: var(--crt-primary);
       font-family: var(--crt-font-family);
       font-size: 12px;
       margin-left: -12px;
-      box-shadow: var(--crt-glow-sm);
+      box-shadow: var(--crt-component-glow-sm);
     }
   `;
 

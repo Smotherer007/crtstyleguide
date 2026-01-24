@@ -12,14 +12,14 @@ export class Input extends LitElement {
       display: block;
       width: 100%;
       padding: var(--crt-spacing-md);
-      background-color: var(--crt-bg-dark);
+      background-color: transparent;
       color: var(--crt-text-primary);
       border: 2px solid var(--crt-primary);
       font-family: var(--crt-font-family);
       font-size: var(--crt-font-size-base);
       letter-spacing: 1px;
       transition: var(--crt-transition);
-      box-shadow: var(--crt-glow-inset);
+      box-shadow: var(--crt-component-glow-inset);
       box-sizing: border-box;
       cursor: var(--crt-cursor-text);
     }
@@ -29,12 +29,12 @@ export class Input extends LitElement {
     }
 
     input:hover:not(:disabled) {
-      box-shadow: inset 0 0 10px rgba(51, 255, 51, 0.2), var(--crt-glow-sm);
+      box-shadow: inset 0 0 10px rgba(51, 255, 51, 0.2), var(--crt-component-glow-sm);
     }
 
     input:focus:not(:disabled) {
       outline: none;
-      box-shadow: inset 0 0 10px rgba(51, 255, 51, 0.3), var(--crt-glow);
+      box-shadow: inset 0 0 10px rgba(51, 255, 51, 0.3), var(--crt-component-glow);
     }
 
     input:disabled {
@@ -81,14 +81,14 @@ export class Textarea extends LitElement {
       display: block;
       width: 100%;
       padding: var(--crt-spacing-md);
-      background-color: var(--crt-bg-dark);
+      background-color: transparent;
       color: var(--crt-text-primary);
       border: 2px solid var(--crt-primary);
       font-family: var(--crt-font-family);
       font-size: var(--crt-font-size-base);
       letter-spacing: 1px;
       transition: var(--crt-transition);
-      box-shadow: var(--crt-glow-inset);
+      box-shadow: var(--crt-component-glow-inset);
       resize: vertical;
       min-height: 120px;
       box-sizing: border-box;
@@ -100,12 +100,12 @@ export class Textarea extends LitElement {
     }
 
     textarea:hover:not(:disabled) {
-      box-shadow: inset 0 0 10px rgba(51, 255, 51, 0.2), var(--crt-glow-sm);
+      box-shadow: inset 0 0 10px rgba(51, 255, 51, 0.2), var(--crt-component-glow-sm);
     }
 
     textarea:focus:not(:disabled) {
       outline: none;
-      box-shadow: inset 0 0 10px rgba(51, 255, 51, 0.3), var(--crt-glow);
+      box-shadow: inset 0 0 10px rgba(51, 255, 51, 0.3), var(--crt-component-glow);
     }
 
     textarea:disabled {

@@ -39,11 +39,11 @@ export class Toggle extends LitElement {
     .toggle-track {
       width: 50px;
       height: 26px;
-      background: var(--crt-bg-dark);
+      background: transparent;
       border: 2px solid var(--crt-primary);
       position: relative;
       transition: var(--crt-transition);
-      box-shadow: var(--crt-glow-inset);
+      box-shadow: var(--crt-component-glow-inset);
     }
 
     .toggle-thumb {
@@ -57,17 +57,17 @@ export class Toggle extends LitElement {
     }
 
     input:checked + .toggle-track {
-      background: color-mix(in srgb, var(--crt-primary) 20%, transparent);
+      background: transparent;
     }
 
     input:checked + .toggle-track .toggle-thumb {
       left: 27px;
       background: var(--crt-primary);
-      box-shadow: var(--crt-glow);
+      box-shadow: var(--crt-component-glow);
     }
 
     :host(:hover:not([disabled])) .toggle-track {
-      box-shadow: var(--crt-glow-inset), var(--crt-glow-sm);
+      box-shadow: var(--crt-component-glow-inset), var(--crt-component-glow-sm);
     }
 
     .toggle-labels {

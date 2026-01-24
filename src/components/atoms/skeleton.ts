@@ -55,7 +55,7 @@ export class Skeleton extends LitElement {
     /* Animation variants */
     :host([animation="pulse"]) .skeleton {
       animation: pulse 1.5s ease-in-out infinite;
-      background: var(--crt-bg-dark);
+      background: transparent;
     }
 
     @keyframes pulse {
@@ -70,7 +70,7 @@ export class Skeleton extends LitElement {
     :host([animation="wave"]) .skeleton {
       position: relative;
       overflow: hidden;
-      background: var(--crt-bg-dark);
+      background: transparent;
     }
 
     :host([animation="wave"]) .skeleton::after {
@@ -100,7 +100,7 @@ export class Skeleton extends LitElement {
 
     :host([animation="none"]) .skeleton {
       animation: none;
-      background: var(--crt-bg-dark);
+      background: transparent;
     }
 
     /* CRT Scanline effect */
@@ -197,7 +197,7 @@ export class SkeletonCard extends LitElement {
     .card {
       border: 3px double var(--crt-primary);
       padding: var(--crt-spacing-md);
-      background: var(--crt-bg-dark);
+      background: transparent;
     }
 
     .image {

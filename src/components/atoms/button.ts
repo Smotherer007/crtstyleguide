@@ -36,15 +36,15 @@ export class Button extends LitElement {
     }
 
     button:hover:not(:disabled) {
-      background-color: #33ff33;
-      color: #0a0a0a;
+      background-color: transparent;
+      color: #33ff33;
       box-shadow: 
         0 0 10px rgba(51, 255, 51, 0.7), 
         0 0 20px rgba(51, 255, 51, 0.5),
         0 0 40px rgba(51, 255, 51, 0.3),
         inset 0 0 10px rgba(0, 0, 0, 0.2);
       transform: scale(1.05);
-      cursor: var(--crt-cursor-pointer-dark);
+      cursor: var(--crt-cursor-pointer);
     }
 
     button:active:not(:disabled) {
@@ -65,8 +65,8 @@ export class Button extends LitElement {
     }
 
     :host([variant="success"]) button:hover:not(:disabled) {
-      background-color: var(--crt-success, #00ff00);
-      color: #0a0a0a;
+      background-color: transparent;
+      color: var(--crt-success, #00ff00);
       box-shadow: 
         0 0 10px rgba(0, 255, 0, 0.7), 
         0 0 20px rgba(0, 255, 0, 0.5),
@@ -82,8 +82,8 @@ export class Button extends LitElement {
     }
 
     :host([variant="warning"]) button:hover:not(:disabled) {
-      background-color: var(--crt-warning, #ffcc00);
-      color: #0a0a0a;
+      background-color: transparent;
+      color: var(--crt-warning, #ffcc00);
       box-shadow: 
         0 0 10px rgba(255, 204, 0, 0.7), 
         0 0 20px rgba(255, 204, 0, 0.5),
@@ -99,8 +99,8 @@ export class Button extends LitElement {
     }
 
     :host([variant="error"]) button:hover:not(:disabled) {
-      background-color: var(--crt-danger, #ff3333);
-      color: #0a0a0a;
+      background-color: transparent;
+      color: var(--crt-danger, #ff3333);
       box-shadow: 
         0 0 10px rgba(255, 51, 51, 0.7), 
         0 0 20px rgba(255, 51, 51, 0.5),

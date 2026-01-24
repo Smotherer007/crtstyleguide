@@ -22,7 +22,7 @@ export class Pagination extends LitElement {
       min-width: 36px;
       height: 36px;
       padding: var(--crt-spacing-xs) var(--crt-spacing-sm);
-      background: var(--crt-bg-dark);
+      background: transparent;
       border: 2px solid var(--crt-primary);
       color: var(--crt-primary);
       font-family: var(--crt-font-family);
@@ -35,14 +35,14 @@ export class Pagination extends LitElement {
     }
 
     .page-btn:hover:not(:disabled):not(.active) {
-      background: color-mix(in srgb, var(--crt-primary) 20%, transparent);
-      box-shadow: var(--crt-glow-sm);
+      background: transparent;
+      box-shadow: var(--crt-component-glow-sm);
     }
 
     .page-btn.active {
       background: var(--crt-primary);
       color: var(--crt-bg-dark);
-      box-shadow: var(--crt-glow);
+      box-shadow: var(--crt-component-glow);
     }
 
     .page-btn:disabled {

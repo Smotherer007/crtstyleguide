@@ -7,6 +7,7 @@ const TRACK_URL = encodeURI(_base + 'patimwep - Verrostete Terminals.mp3');
 import '../src/components/atoms/spinner';
 import '../src/components/atoms/icon';
 import { ICON_NAMES } from '../src/components/atoms/icon';
+import '../src/components/molecules/crt-screen';
 
 // Global spinner helper
 (window as any).showSpinner = (message = 'LOADING...', duration = 3000) => {
@@ -47,6 +48,7 @@ export const styleGuideTemplate = () => html`
         { href: '#actions', label: 'Actions' },
         { href: '#feedback', label: 'Feedback' },
         { href: '#media', label: 'Media' },
+        { href: '#crt-screen', label: 'CRT Screen' },
         { href: '#organisms', label: 'Organisms' }
       ]}></crt-navbar>
 
@@ -491,6 +493,8 @@ export const styleGuideTemplate = () => html`
               <crt-slider label="CONTRAST" min="0" max="100" value="50" disabled></crt-slider>
             </div>
           </crt-code-example>
+
+         
 
           <crt-code-example
             class="mb-lg"
@@ -1110,6 +1114,197 @@ document.body.appendChild(spinner);
               <span slot="left">© 2026 CRT Style Guide · <crt-link href="#spacing">Spacing</crt-link> · <crt-link href="#layout">Layout</crt-link> · <crt-link href="#navigation">Navigation</crt-link> · <crt-link href="#overlays">Overlays</crt-link> · <crt-link href="#icons">Icons</crt-link></span>
               <span slot="right">Made with ♥ · <crt-link href="#" target="_blank">GitHub</crt-link></span>
             </crt-footer>
+          </crt-code-example>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- SECTION: CRT SCREEN -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <section id="crt-screen" class="sg-section">
+          <crt-heading level="2">CRT SCREEN CONTAINER</crt-heading>
+          <crt-text muted class="mb-lg">Ein Container mit authentischem CRT-Monitor-Effekt inklusive Power-On-Animation, Scanlines und gerundeten Bildschirmkanten.</crt-text>
+
+          <crt-code-example
+            class="mb-lg"
+            title="CRT Screen - Power Control"
+            description="Der CRT-Screen kann über die 'active' Property ein- und ausgeschaltet werden. Der Power-Button steuert die Animation."
+            code='<crt-button @click="toggleScreen()">Power</crt-button>
+<crt-screen id="screen1" active style="width: 100%; height: 400px;">
+  <div style="padding: 2rem;">
+    <crt-heading level="1">TERMINAL_OS v2.5</crt-heading>
+    <crt-text>System bereit...</crt-text>
+  </div>
+</crt-screen>'
+          >
+            <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%;">
+              <crt-screen id="demo-screen-1" active style="width: 100%; height: 400px;">
+                <div style="padding: 2rem;">
+                  <crt-heading level="1">TERMINAL_OS v2.5</crt-heading>
+                  <crt-text>System bereit...</crt-text>
+                  <crt-text muted style="margin-top: 1rem;">Typ 'help' für verfügbare Befehle</crt-text>
+                </div>
+              </crt-screen>
+              <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <crt-button 
+                  id="power-btn-1"
+                  variant="success"
+                  @click=${() => {
+                    const screen = document.getElementById('demo-screen-1') as any;
+                    if (screen) {
+                      screen.active = !screen.active;
+                      const btn = document.getElementById('power-btn-1') as any;
+                      btn.variant = screen.active ? 'success' : 'error';
+                      btn.textContent = screen.active ? '⚡ Power ON' : '○ Power OFF';
+                    }
+                  }}
+                >⚡ Power ON</crt-button>
+                <crt-text muted style="font-size: 0.9rem;">Klicke den Button zum Ein-/Ausschalten</crt-text>
+              </div>
+            </div>
+          </crt-code-example>
+
+          <crt-code-example
+            class="mb-lg"
+            title="CRT Screen - Mit Komponenten"
+            description="Verschiedene Komponenten im CRT-Screen Container mit Power-Steuerung."
+            code='<crt-button @click="toggleScreen()">Power</crt-button>
+<crt-screen style="width: 100%; height: 500px;">
+  <div style="padding: 2rem; display: flex; flex-direction: column; gap: 1.5rem;">
+    <crt-heading level="2">SYSTEM DASHBOARD</crt-heading>
+    <crt-button variant="primary">Start System</crt-button>
+    <crt-button variant="success">Load Program</crt-button>
+    <crt-progress value="75" max="100"></crt-progress>
+  </div>
+</crt-screen>'
+          >
+            <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%;">
+              <crt-screen id="demo-screen-2" active style="width: 100%; height: 500px;">
+                <div style="padding: 2rem; display: flex; flex-direction: column; gap: 1.5rem;">
+                  <crt-heading level="2">SYSTEM DASHBOARD</crt-heading>
+                  <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <crt-button variant="primary">Start System</crt-button>
+                    <crt-button variant="success">Load Program</crt-button>
+                    <crt-button variant="warning">Diagnostics</crt-button>
+                    <crt-button variant="error">Shutdown</crt-button>
+                  </div>
+                  <div style="margin-top: 1rem;">
+                    <crt-text muted>System Load:</crt-text>
+                    <crt-progress value="75" max="100" style="margin-top: 0.5rem;"></crt-progress>
+                  </div>
+                  <div style="margin-top: 1rem;">
+                    <crt-text muted>Memory Usage:</crt-text>
+                    <crt-progress value="45" max="100" style="margin-top: 0.5rem;"></crt-progress>
+                  </div>
+                </div>
+              </crt-screen>
+              <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <crt-button 
+                  id="power-btn-2"
+                  variant="success"
+                  @click=${() => {
+                    const screen = document.getElementById('demo-screen-2') as any;
+                    if (screen) {
+                      screen.active = !screen.active;
+                      const btn = document.getElementById('power-btn-2') as any;
+                      btn.variant = screen.active ? 'success' : 'error';
+                      btn.textContent = screen.active ? '⚡ Power ON' : '○ Power OFF';
+                    }
+                  }}
+                >⚡ Power ON</crt-button>
+                <crt-text muted style="font-size: 0.9rem;">Dashboard Power Control</crt-text>
+              </div>
+            </div>
+          </crt-code-example>
+
+          <crt-code-example
+            class="mb-lg"
+            title="CRT Screen - Mit Card Layout"
+            description="Cards und andere Layout-Komponenten innerhalb des CRT-Screens."
+            code='<crt-screen style="width: 100%; height: 600px;">
+  <div style="padding: 2rem;">
+    <crt-card>
+      <h3>Network Status</h3>
+      <crt-text>Connection: Active</crt-text>
+    </crt-card>
+  </div>
+</crt-screen>'
+          >
+            <crt-screen style="width: 100%; height: 600px;">
+              <div style="padding: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                <crt-card>
+                  <div style="padding: 1rem;">
+                    <crt-heading level="3">Network Status</crt-heading>
+                    <crt-text style="margin-top: 0.5rem;">Connection: Active</crt-text>
+                    <crt-badge variant="success" style="margin-top: 0.5rem;">Online</crt-badge>
+                  </div>
+                </crt-card>
+                <crt-card>
+                  <div style="padding: 1rem;">
+                    <crt-heading level="3">CPU Monitor</crt-heading>
+                    <crt-text style="margin-top: 0.5rem;">Usage: 47%</crt-text>
+                    <crt-badge variant="warning" style="margin-top: 0.5rem;">Medium Load</crt-badge>
+                  </div>
+                </crt-card>
+                <crt-card>
+                  <div style="padding: 1rem;">
+                    <crt-heading level="3">Disk Space</crt-heading>
+                    <crt-text style="margin-top: 0.5rem;">Free: 125 GB</crt-text>
+                    <crt-badge variant="primary" style="margin-top: 0.5rem;">OK</crt-badge>
+                  </div>
+                </crt-card>
+              </div>
+            </crt-screen>
+          </crt-code-example>
+
+          <crt-code-example
+            class="mb-lg"
+            title="CRT Screen - Mit Terminal"
+            description="Ein interaktives Terminal innerhalb des CRT-Screens."
+            code='<crt-screen style="width: 100%; height: 400px;">
+  <crt-terminal no-border></crt-terminal>
+</crt-screen>'
+          >
+            <crt-screen style="width: 100%; height: 400px;">
+              <div style="padding: 1rem; height: 100%; box-sizing: border-box;">
+                <crt-terminal id="crt-screen-terminal" no-border style="width: 100%; height: 100%;"></crt-terminal>
+              </div>
+            </crt-screen>
+          </crt-code-example>
+
+          <crt-code-example
+            class="mb-lg"
+            title="CRT Screen - Navigation Menu"
+            description="Ein Menü-System im Retro-CRT-Stil."
+            code='<crt-screen style="width: 100%; height: 450px;">
+  <div style="padding: 2rem;">
+    <crt-heading level="1">MAIN MENU</crt-heading>
+    <crt-menu>
+      <crt-link href="#">Dashboard</crt-link>
+      <crt-link href="#">Settings</crt-link>
+      <crt-link href="#">About</crt-link>
+    </crt-menu>
+  </div>
+</crt-screen>'
+          >
+            <crt-screen style="width: 100%; height: 450px;">
+              <div style="padding: 2rem; display: flex; flex-direction: column; gap: 2rem; height: 100%; box-sizing: border-box;">
+                <div>
+                  <crt-heading level="1">MAIN MENU</crt-heading>
+                  <crt-text muted style="margin-top: 0.5rem;">Select an option</crt-text>
+                </div>
+                <nav style="display: flex; flex-direction: column; gap: 1rem;">
+                  <crt-link href="#dashboard" style="font-size: 1.2rem;">> Dashboard</crt-link>
+                  <crt-link href="#programs" style="font-size: 1.2rem;">> Programs</crt-link>
+                  <crt-link href="#settings" style="font-size: 1.2rem;">> Settings</crt-link>
+                  <crt-link href="#network" style="font-size: 1.2rem;">> Network</crt-link>
+                  <crt-link href="#about" style="font-size: 1.2rem;">> About</crt-link>
+                </nav>
+                <div style="margin-top: auto;">
+                  <crt-text muted style="font-size: 0.9rem;">Press ENTER to select</crt-text>
+                </div>
+              </div>
+            </crt-screen>
+          </crt-code-example>
         </section>
 
         <!-- ═══════════════════════════════════════════════════════════════ -->

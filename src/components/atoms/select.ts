@@ -31,20 +31,20 @@ export class Select extends LitElement {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: var(--crt-bg-dark);
+      background: transparent;
       border: 2px solid var(--crt-primary);
       color: var(--crt-primary);
       padding: var(--crt-spacing-md);
       font-family: var(--crt-font-family);
       font-size: var(--crt-font-size-base);
       cursor: var(--crt-cursor-pointer);
-      box-shadow: var(--crt-glow-inset);
+      box-shadow: var(--crt-component-glow-inset);
       transition: var(--crt-transition);
       width: 100%;
     }
 
     .select-trigger:hover:not(.disabled) {
-      box-shadow: var(--crt-glow-inset), var(--crt-glow-sm);
+      box-shadow: var(--crt-component-glow-inset), var(--crt-component-glow-sm);
     }
 
     .select-trigger.open {
@@ -83,7 +83,9 @@ export class Select extends LitElement {
       top: 100%;
       left: 0;
       right: 0;
-      background: var(--crt-bg-dark);
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border: 2px solid var(--crt-primary);
       border-top: none;
       max-height: 200px;
@@ -92,7 +94,7 @@ export class Select extends LitElement {
       display: none;
       box-shadow: 
         0 10px 20px color-mix(in srgb, var(--crt-primary) 20%, transparent),
-        var(--crt-glow-inset);
+        var(--crt-component-glow-inset);
     }
 
     .select-dropdown.open {
@@ -123,11 +125,11 @@ export class Select extends LitElement {
     }
 
     .select-option:hover {
-      background: color-mix(in srgb, var(--crt-primary) 15%, transparent);
+      background: transparent;
     }
 
     .select-option.selected {
-      background: color-mix(in srgb, var(--crt-primary) 20%, transparent);
+      background: transparent;
       color: var(--crt-primary);
     }
 
@@ -147,7 +149,7 @@ export class Select extends LitElement {
       text-transform: uppercase;
       letter-spacing: 1px;
       border-bottom: 1px solid color-mix(in srgb, var(--crt-primary) 30%, transparent);
-      background: color-mix(in srgb, var(--crt-primary) 5%, transparent);
+      background: transparent;
     }
 
     /* Scrollbar styling */
@@ -156,12 +158,12 @@ export class Select extends LitElement {
     }
 
     .select-dropdown::-webkit-scrollbar-track {
-      background: var(--crt-bg-dark);
+      background: transparent;
     }
 
     .select-dropdown::-webkit-scrollbar-thumb {
       background: var(--crt-primary);
-      box-shadow: var(--crt-glow-sm);
+      box-shadow: var(--crt-component-glow-sm);
     }
   `;
 

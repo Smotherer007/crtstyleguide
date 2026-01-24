@@ -17,7 +17,7 @@ export class Spinner extends LitElement {
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.85);
+      background: transparent;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -115,7 +115,7 @@ export class Spinner extends LitElement {
       font-family: var(--crt-font-family);
       font-size: var(--crt-font-size-lg);
       letter-spacing: 4px;
-      text-shadow: var(--crt-glow);
+      text-shadow: var(--crt-component-glow);
       animation: blink 1s ease-in-out infinite;
     }
 

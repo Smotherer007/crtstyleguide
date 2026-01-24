@@ -14,7 +14,7 @@ export class Header extends LitElement {
     :host { display: block; }
     .header-wrap {
       padding: var(--crt-spacing-lg) var(--crt-spacing-md);
-      background: linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.75));
+      background: transparent;
       border-bottom: 2px solid var(--crt-primary);
       box-shadow: var(--crt-glow-inset);
       display: flex;

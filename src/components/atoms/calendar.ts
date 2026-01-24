@@ -24,7 +24,7 @@ export class Calendar extends LitElement {
     }
 
     .input-field {
-      background: var(--crt-bg-dark);
+      background: transparent;
       border: 2px solid var(--crt-primary);
       color: var(--crt-primary);
       padding: var(--crt-spacing-md);
@@ -32,17 +32,22 @@ export class Calendar extends LitElement {
       font-size: var(--crt-font-size-base);
       min-width: 180px;
       cursor: var(--crt-cursor-pointer);
-      box-shadow: var(--crt-glow-inset);
+      box-shadow: var(--crt-component-glow-inset);
       transition: var(--crt-transition);
     }
 
+    .input-field::placeholder {
+      color: var(--crt-text-muted);
+      opacity: 1;
+    }
+
     .input-field:hover {
-      box-shadow: var(--crt-glow-inset), var(--crt-glow-sm);
+      box-shadow: var(--crt-component-glow-inset), var(--crt-component-glow-sm);
     }
 
     .input-field:focus {
       outline: none;
-      box-shadow: var(--crt-glow-inset), var(--crt-glow);
+      box-shadow: var(--crt-component-glow-inset), var(--crt-component-glow);
     }
 
     .calendar-toggle {
@@ -66,11 +71,13 @@ export class Calendar extends LitElement {
       top: 100%;
       left: 0;
       margin-top: var(--crt-spacing-sm);
-      background: var(--crt-bg-dark);
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border: 3px double var(--crt-primary);
       box-shadow: 
         0 0 20px color-mix(in srgb, var(--crt-primary) 30%, transparent),
-        var(--crt-glow-inset);
+        var(--crt-component-glow-inset);
       z-index: 1000;
       display: none;
       min-width: 280px;
@@ -98,7 +105,7 @@ export class Calendar extends LitElement {
       align-items: center;
       padding: var(--crt-spacing-md);
       border-bottom: 1px solid var(--crt-primary);
-      background: color-mix(in srgb, var(--crt-primary) 5%, transparent);
+      background: transparent;
     }
 
     .calendar-nav-btn {
@@ -158,7 +165,7 @@ export class Calendar extends LitElement {
 
     .day:hover:not(.empty):not(.disabled) {
       border-color: var(--crt-primary);
-      background: color-mix(in srgb, var(--crt-primary) 10%, transparent);
+      background: transparent;
     }
 
     .day.today {
@@ -169,7 +176,7 @@ export class Calendar extends LitElement {
     .day.selected {
       background: var(--crt-primary);
       color: var(--crt-bg-dark);
-      box-shadow: var(--crt-glow-sm);
+      box-shadow: var(--crt-component-glow-sm);
     }
 
     .day.other-month {

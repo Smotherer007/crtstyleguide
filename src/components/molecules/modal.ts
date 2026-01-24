@@ -22,7 +22,7 @@ export class Modal extends LitElement {
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(0, 0, 0, 0.85);
+      background: transparent;
       z-index: 10000;
       display: flex;
       align-items: center;
@@ -36,12 +36,12 @@ export class Modal extends LitElement {
     }
 
     .modal {
-      background: var(--crt-bg-dark);
+      background: transparent;
       border: 3px double var(--crt-primary);
       box-shadow: 
         0 0 20px color-mix(in srgb, var(--crt-primary) 30%, transparent),
         0 0 40px color-mix(in srgb, var(--crt-primary) 15%, transparent),
-        var(--crt-glow-inset);
+        var(--crt-component-glow-inset);
       max-width: 90vw;
       max-height: 90vh;
       min-width: 300px;
@@ -66,7 +66,7 @@ export class Modal extends LitElement {
       align-items: center;
       padding: var(--crt-spacing-md) var(--crt-spacing-lg);
       border-bottom: 1px solid var(--crt-primary);
-      background: color-mix(in srgb, var(--crt-primary) 5%, transparent);
+      background: transparent;
     }
 
     .modal-title {
@@ -94,9 +94,9 @@ export class Modal extends LitElement {
     }
 
     .close-btn:hover {
-      background: var(--crt-primary);
-      color: var(--crt-bg-dark);
-      box-shadow: var(--crt-glow);
+      background: transparent;
+      color: var(--crt-primary);
+      box-shadow: var(--crt-component-glow);
     }
 
     .modal-body {
