@@ -172,16 +172,13 @@ export class Button extends LitElement {
 
   constructor() {
     super();
-    console.log('Button constructor called');
   }
 
   connectedCallback() {
     super.connectedCallback();
-    console.log('Button connected to DOM', this);
   }
 
   render() {
-    console.log('Button render called');
     
     // Icon-only mode: nur das Icon anzeigen (von icon-left oder icon-right)
     if (this.iconOnly) {

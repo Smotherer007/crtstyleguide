@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+// avoid using unsafeHTML directive to prevent runtime directive mismatches
+// when consumers may resolve a different Lit instance; use .innerHTML binding instead
 
 export const ICONS_MAP: { [key: string]: string } = {
   check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M20 6L9 17l-5-5"/></svg>',
@@ -68,7 +69,7 @@ export class Icon extends LitElement {
 
   render() {
     const svg = (ICONS_MAP as any)[this.name] || '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><text x="0" y="14">?</text></svg>';
-    return html`<span class="icon" aria-hidden="true">${unsafeHTML(svg)}</span>`;
+    return html`<span class="icon" aria-hidden="true" .innerHTML=${svg}></span>`;
   }
 }
 
