@@ -154,7 +154,9 @@ export class Slider extends LitElement {
     const input = e.target as HTMLInputElement;
     this.value = Number(input.value);
     this.dispatchEvent(new CustomEvent('input', {
-      detail: { value: this.value }
+      detail: { value: this.value },
+      bubbles: true,
+      composed: true
     }));
   }
 
@@ -162,7 +164,9 @@ export class Slider extends LitElement {
     const input = e.target as HTMLInputElement;
     this.value = Number(input.value);
     this.dispatchEvent(new CustomEvent('change', {
-      detail: { value: this.value }
+      detail: { value: this.value },
+      bubbles: true,
+      composed: true
     }));
   }
 
