@@ -2,7 +2,8 @@ import { html } from 'lit';
 
 // Build-time aware track URL so GitHub Pages and other bases work correctly
 const BASE_URL = (import.meta as any).env?.BASE_URL || '/';
-const TRACK_URL = encodeURI(new URL('patimwep - Verrostete Terminals.mp3', BASE_URL).href);
+const _base = BASE_URL.endsWith('/') ? BASE_URL : BASE_URL + '/';
+const TRACK_URL = encodeURI(_base + 'patimwep - Verrostete Terminals.mp3');
 import '../src/components/atoms/spinner';
 import '../src/components/atoms/icon';
 import { ICON_NAMES } from '../src/components/atoms/icon';
