@@ -161,9 +161,9 @@ customElements.whenDefined('crt-button').then(() => {
             // Restore original content
             if (appContainer && globalScreen && globalScreen.parentNode) {
               // Move nodes back from screen to app container
-              const nodes = Array.from(globalScreen.childNodes);
+              const nodes = Array.from(globalScreen.childNodes) as Node[];
               globalScreen.remove();
-              nodes.forEach(node => {
+              nodes.forEach((node: Node) => {
                 appContainer.appendChild(node);
               });
             }
