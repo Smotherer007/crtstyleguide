@@ -11,7 +11,9 @@
       "import": "./dist/lib/index.js"
     },
     "./styles": "./dist/lib/styles.css",
-    "./styles.css": "./dist/lib/styles.css"
+    "./styles.css": "./dist/lib/styles.css",
+    "./fonts/*": "./dist/lib/fonts/*",
+    "./assets/*": "./dist/lib/assets/*"
   },
   "files": [
     "dist/lib"

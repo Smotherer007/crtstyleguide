@@ -19,6 +19,9 @@ export default defineConfig({
           lit: 'Lit',
         },
         assetFileNames: (assetInfo) => {
+          if (assetInfo.name && assetInfo.name.endsWith('.css')) {
+            return '[name][extname]';
+          }
           if (assetInfo.name && assetInfo.name.endsWith('.woff2')) {
             return 'fonts/[name][extname]';
           }
