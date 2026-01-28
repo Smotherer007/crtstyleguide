@@ -32,6 +32,7 @@ export type ComponentDoc = {
   tag: string;
   category: string;
   description?: string;
+  hideHeader?: boolean;
   props?: PropDoc[];
   events?: EventDoc[];
   slots?: SlotDoc[];
@@ -1229,6 +1230,7 @@ export const componentDocs: ComponentDoc[] = [
     tag: 'composition',
     category: 'organisms',
     description: 'Organism-like table with pagination.',
+    hideHeader: true,
     examples: [
       {
         title: 'Dashboard Table',
@@ -1273,6 +1275,7 @@ export const componentDocs: ComponentDoc[] = [
     tag: 'crt-music-station',
     category: 'organisms',
     description: 'Full music station experience.',
+    hideHeader: true,
     examples: [
       {
         title: 'Music Station',

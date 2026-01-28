@@ -98,11 +98,13 @@ const renderSlotsTable = (slots: SlotDoc[] = []) => {
 
 const renderComponent = (component: ComponentDoc) => html`
   <article id="${component.id}" class="sg-component">
-    <div class="sg-component-header">
-      <crt-heading level="3">${component.name}</crt-heading>
-      <crt-text muted class="sg-component-tag">${component.tag}</crt-text>
-    </div>
-    ${component.description ? html`<crt-text class="sg-component-desc">${component.description}</crt-text>` : ''}
+    ${component.hideHeader ? '' : html`
+      <div class="sg-component-header">
+        <crt-heading level="3">${component.name}</crt-heading>
+        <crt-text muted class="sg-component-tag">${component.tag}</crt-text>
+      </div>
+      ${component.description ? html`<crt-text class="sg-component-desc">${component.description}</crt-text>` : ''}
+    `}
     <div class="sg-examples">
       ${component.examples.map((example) => html`
         <crt-code-example
