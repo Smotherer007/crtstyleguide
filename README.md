@@ -97,48 +97,82 @@ Opens the Style Guide at: **http://localhost:5175/styleguide/**
 
 | Component | Tag | Description |
 |------------|-----|-------------|
-| Button | `<crt-button>` | Interactive button with glow effect |
+| Button | `<crt-button>` | Interactive button |
 | Badge | `<crt-badge>` | Status labels and tags |
-| Input | `<crt-input>` | Text fields and textarea |
+| Heading | `<crt-heading>` | Typography headings |
+| Text | `<crt-text>` | Body text |
+| Tabs | `<crt-tabs>` | Tab navigation |
+| Input | `<crt-input>` | Text fields |
+| Textarea | `<crt-textarea>` | Multiline input |
+| Icon | `<crt-icon>` | Icon rendering |
+| Link | `<crt-link>` | Links |
+| FileUpload | `<crt-file-upload>` | File upload |
+| Calendar | `<crt-calendar>` | Date picker |
 | Select | `<crt-select>` | Dropdown selection |
+| Search | `<crt-search>` | Search input |
 | Checkbox | `<crt-checkbox>` | Checkbox input |
-| Radio | `<crt-radio>` | Radio-Button |
-| Toggle | `<crt-toggle>` | On/Off-Schalter |
-| Slider | `<crt-slider>` | Wertebereich-Regler |
-| Icon | `<crt-icon>` | Icon-Darstellung |
-| Link | `<crt-link>` | Verlinkungen |
-| Tabs | `<crt-tabs>` | Tab-Navigation |
-| Tooltip | `<crt-tooltip>` | Hover-Hinweise |
-| Progress | `<crt-progress>` | Fortschrittsanzeige |
-| Spinner | `<crt-spinner>` | Ladeanimation |
-| Avatar | `<crt-avatar>` | Benutzerbilder |
-| Alert | `<crt-alert>` | Hinweismeldungen |
-| Skeleton | `<crt-skeleton>` | Platzhalter beim Laden |
-| Pagination | `<crt-pagination>` | Seitennavigation |
-| Breadcrumb | `<crt-breadcrumb>` | Brotkrumen-Navigation |
-| Calendar | `<crt-calendar>` | Datumsauswahl |
-| FileUpload | `<crt-file-upload>` | Datei-Upload |
+| Radio | `<crt-radio>` | Radio button |
+| RadioGroup | `<crt-radio-group>` | Radio group |
+| Progress | `<crt-progress>` | Progress bar |
+| Tooltip | `<crt-tooltip>` | Hover hints |
+| Breadcrumb | `<crt-breadcrumb>` | Breadcrumb navigation |
+| Pagination | `<crt-pagination>` | Pagination |
+| Slider | `<crt-slider>` | Range slider |
+| Toggle | `<crt-toggle>` | On/Off switch |
+| Avatar | `<crt-avatar>` | User avatar |
+| AvatarGroup | `<crt-avatar-group>` | Grouped avatars |
+| Skeleton | `<crt-skeleton>` | Loading placeholder |
+| SkeletonText | `<crt-skeleton-text>` | Text placeholder |
+| SkeletonCard | `<crt-skeleton-card>` | Card placeholder |
+| Alert | `<crt-alert>` | Alert banners |
+| Spinner | `<crt-spinner>` | Loading spinner |
 
 ### Molecules (Zusammengesetzt)
 
 | Komponente | Tag | Beschreibung |
 |------------|-----|-------------|
-| Card | `<crt-card>` | Inhalts-Container |
-| Modal | `<crt-modal>` | Dialog-Fenster |
-| Table | `<crt-table>` | Datentabellen |
-| Grid | `<crt-grid>` | Layout-Raster |
-| Accordion | `<crt-accordion>` | Aufklappbare Bereiche |
-| Toast | `<crt-toast>` | Benachrichtigungen |
-| CodeExample | `<crt-code-example>` | Code-Darstellung |
-| MusicPlayer | `<crt-music-player>` | Audio-Player |
-| Playlist | `<crt-playlist>` | Playlist-Ansicht |
-| Visualizer | `<crt-visualizer>` | Audio-Visualisierung |
+| Card | `<crt-card>` | Content container |
+| Modal | `<crt-modal>` | Dialog modal |
+| Table | `<crt-table>` | Data tables |
+| Grid | `<crt-grid>` | Layout grid |
+| Accordion | `<crt-accordion>` | Collapsible sections |
+| AccordionItem | `<crt-accordion-item>` | Accordion item |
+| Toast | `<crt-toast>` | Notifications |
+| CodeExample | `<crt-code-example>` | Code preview |
+| MusicPlayer | `<crt-music-player>` | Audio player |
+| Playlist | `<crt-playlist>` | Playlist view |
+| Visualizer | `<crt-visualizer>` | Audio visualization |
+| Terminal | `<crt-terminal>` | Terminal simulator |
+| Navbar | `<crt-navbar>` | Navigation bar |
+| Header | `<crt-header>` | Header |
+| Footer | `<crt-footer>` | Footer |
+| Menu | `<crt-menu>` | Context menu |
+| CRTScreen | `<crt-screen>` | CRT screen container |
 
 ### Organisms (Komplex)
 
 | Komponente | Tag | Beschreibung |
 |------------|-----|-------------|
-| MusicStation | `<crt-music-station>` | Vollständige Musik-App |
+| MusicStation | `<crt-music-station>` | Full music station |
+
+---
+
+## 🎵 Music Player Tracks (Lyrics)
+
+Lyrics werden direkt im Track-Objekt übergeben:
+
+```html
+<crt-music-player
+  .tracks=${[
+    {
+      title: 'VERROSTETE TERMINALS',
+      artist: 'PATIMWEP',
+      url: 'patimwep - Verrostete Terminals.mp3',
+      lyrics: '[INTRO]\nSTATIC IN THE WIRES\nNEON HISS AND SOFT DESIRES\n\n[HOOK]\nVERROSTETE TERMINALS\nSIGNAL LOST, RETURNING CALLS',
+    },
+  ]}
+></crt-music-player>
+```
 
 ---
 
