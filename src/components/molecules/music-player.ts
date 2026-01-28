@@ -192,6 +192,7 @@ export class MusicPlayer extends LitElement {
       line-height: 1.5;
       color: var(--crt-text-primary);
       padding: var(--crt-spacing-md) 0;
+      text-align: center;
     }
   `;
 
