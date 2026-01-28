@@ -1,7 +1,7 @@
 # CRT Style Guide
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-0.1.0-33ff33?style=flat-square&labelColor=0a0a0a" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.0.25-33ff33?style=flat-square&labelColor=0a0a0a" alt="Version">
   <img src="https://img.shields.io/badge/lit-3.1.0-33ff33?style=flat-square&labelColor=0a0a0a" alt="Lit">
   <img src="https://img.shields.io/badge/typescript-5.3-33ff33?style=flat-square&labelColor=0a0a0a" alt="TypeScript">
   <img src="https://img.shields.io/badge/license-Apache%202.0-33ff33?style=flat-square&labelColor=0a0a0a" alt="License">
@@ -74,7 +74,7 @@ npm install
 npm run dev
 ```
 
-Opens the Style Guide at: **http://localhost:5173/styleguide/**
+Opens the Style Guide at: **http://localhost:5175/styleguide/**
 
 ---
 

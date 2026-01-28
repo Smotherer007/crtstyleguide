@@ -7,7 +7,8 @@ import { customElement, property, state } from 'lit/decorators.js';
  */
 @customElement('crt-calendar')
 export class Calendar extends LitElement {
-  static styles = css`
+  private readonly _id = `crt-calendar-${Math.random().toString(36).slice(2, 9)}`;
+  static readonly styles = css`
     :host {
       display: inline-block;
       font-family: var(--crt-font-family);
@@ -36,8 +37,7 @@ export class Calendar extends LitElement {
     }
 
     .input-field::placeholder {
-      color: var(--crt-text-muted);
-      opacity: 1;
+      color: var(--crt-text-primary);
     }
 
     .input-field:hover {
@@ -87,11 +87,9 @@ export class Calendar extends LitElement {
 
     @keyframes dropdown-in {
       from {
-        opacity: 0;
         transform: translateY(-10px);
       }
       to {
-        opacity: 1;
         transform: translateY(0);
       }
     }
@@ -177,11 +175,9 @@ export class Calendar extends LitElement {
 
     .day.other-month {
       color: var(--crt-text-muted);
-      opacity: 0.5;
     }
 
     .day.disabled {
-      opacity: 0.3;
       cursor: not-allowed;
     }
 
@@ -227,10 +223,10 @@ export class Calendar extends LitElement {
   @state() private _viewDate = new Date();
   @state() private _selectedDate: Date | null = null;
 
-  private _weekdays = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
-  private _months = [
-    'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
-    'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'
+  private readonly _weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  private readonly _months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
   connectedCallback() {
@@ -247,7 +243,7 @@ export class Calendar extends LitElement {
     document.removeEventListener('click', this._handleOutsideClick);
   }
 
-  private _handleOutsideClick = (e: MouseEvent) => {
+  private readonly _handleOutsideClick = (e: MouseEvent) => {
     if (!this.contains(e.target as Node)) {
       this._isOpen = false;
     }
@@ -389,6 +385,7 @@ export class Calendar extends LitElement {
 
   render() {
     const monthYear = `${this._months[this._viewDate.getMonth()]} ${this._viewDate.getFullYear()}`;
+    const dropdownId = `${this._id}-dropdown`;
     
     return html`
       <div class="calendar-wrapper">
@@ -400,22 +397,35 @@ export class Calendar extends LitElement {
             .value="${this.value}"
             placeholder="${this.placeholder}"
             ?disabled="${this.disabled}"
+            aria-haspopup="dialog"
+            aria-expanded="${this._isOpen ? 'true' : 'false'}"
+            aria-controls="${dropdownId}"
+            aria-label="${this.placeholder || 'Select date'}"
             @click="${this._toggleCalendar}"
           />
           <button 
             class="calendar-toggle" 
             @click="${this._toggleCalendar}"
             ?disabled="${this.disabled}"
+            aria-haspopup="dialog"
+            aria-expanded="${this._isOpen ? 'true' : 'false'}"
+            aria-controls="${dropdownId}"
+            aria-label="Toggle calendar"
           >
             ▼
           </button>
         </div>
         
-        <div class="calendar-dropdown ${this._isOpen ? 'open' : ''}">
+        <div
+          class="calendar-dropdown ${this._isOpen ? 'open' : ''}"
+          id="${dropdownId}"
+          role="dialog"
+          aria-hidden="${this._isOpen ? 'false' : 'true'}"
+        >
           <div class="calendar-header">
-            <button class="calendar-nav-btn" @click="${this._prevMonth}">◄</button>
+            <button class="calendar-nav-btn" @click="${this._prevMonth}" aria-label="Previous month">◄</button>
             <span class="calendar-title">${monthYear}</span>
-            <button class="calendar-nav-btn" @click="${this._nextMonth}">►</button>
+            <button class="calendar-nav-btn" @click="${this._nextMonth}" aria-label="Next month">►</button>
           </div>
           
           <div class="calendar-weekdays">
@@ -427,8 +437,8 @@ export class Calendar extends LitElement {
           </div>
           
           <div class="calendar-footer">
-            <button @click="${this._selectToday}">Heute</button>
-            <button @click="${this._clear}">Löschen</button>
+            <button @click="${this._selectToday}">Today</button>
+            <button @click="${this._clear}">Clear</button>
           </div>
         </div>
       </div>

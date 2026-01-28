@@ -40,6 +40,8 @@ export class CRTScreen extends LitElement {
       --crt-color-dark: #33ff33;
       --crt-primary: #8aff8a;
       --crt-text-primary: #8aff8a;
+      --crt-text-secondary: rgba(138, 255, 138, 0.8);
+      --crt-text-muted: rgba(138, 255, 138, 0.6);
       --crt-border-color: #8aff8a;
       --crt-rgb-r: 0.3;
       --crt-rgb-g: 0.3;
@@ -52,6 +54,8 @@ export class CRTScreen extends LitElement {
       --crt-color-dark: #ffb000;
       --crt-primary: #ffd700;
       --crt-text-primary: #ffd700;
+      --crt-text-secondary: rgba(255, 215, 0, 0.8);
+      --crt-text-muted: rgba(255, 215, 0, 0.6);
       --crt-border-color: #ffd700;
       --crt-rgb-r: 0.4;
       --crt-rgb-g: 0.2;
@@ -64,6 +68,8 @@ export class CRTScreen extends LitElement {
       --crt-color-dark: #00cccc;
       --crt-primary: #66ffff;
       --crt-text-primary: #66ffff;
+      --crt-text-secondary: rgba(102, 255, 255, 0.8);
+      --crt-text-muted: rgba(102, 255, 255, 0.6);
       --crt-border-color: #66ffff;
       --crt-rgb-r: 0.2;
       --crt-rgb-g: 0.3;
@@ -75,7 +81,7 @@ export class CRTScreen extends LitElement {
       width: 100%;
       height: 100%;
       background-color: transparent;
-      clip-path: url(#crtPath);
+      clip-path: var(--crt-clip, url(#crtPath));
       overflow: hidden;
     }
 
@@ -176,6 +182,8 @@ export class CRTScreen extends LitElement {
       padding: 3rem 2.5rem 3rem 2rem;
       box-sizing: border-box;
       background-color: transparent;
+      clip-path: var(--crt-clip, url(#crtPath));
+      scrollbar-gutter: stable;
       overflow-y: auto;
       overflow-x: hidden;
       color: var(--crt-color-light);

@@ -6,7 +6,7 @@ import { customElement, property } from 'lit/decorators.js';
  */
 @customElement('crt-alert')
 export class Alert extends LitElement {
-  static styles = css`
+  static readonly styles = css`
     :host {
       display: block;
       font-family: var(--crt-font-family);
@@ -189,7 +189,11 @@ export class Alert extends LitElement {
   }
 
   private _handleClose() {
-    this.dispatchEvent(new CustomEvent('close'));
+    this.dispatchEvent(new CustomEvent('close', {
+      detail: { closed: true },
+      bubbles: true,
+      composed: true,
+    }));
     this.remove();
   }
 
@@ -207,7 +211,7 @@ export class Alert extends LitElement {
           </div>
         </div>
         ${this.closable ? html`
-          <button class="alert-close" @click="${this._handleClose}">[X]</button>
+          <button class="alert-close" @click="${this._handleClose}" aria-label="Close alert">[X]</button>
         ` : ''}
       </div>
     `;

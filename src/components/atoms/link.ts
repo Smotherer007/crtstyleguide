@@ -9,7 +9,7 @@ export class Link extends LitElement {
   @property({ type: Boolean }) iconRight = false;
   @property({ type: String }) icon = '';
 
-  static styles = css`
+  static readonly styles = css`
     :host {
       --crt-link-color: var(--crt-primary);
     }
@@ -27,7 +27,6 @@ export class Link extends LitElement {
     }
 
     a:hover {
-      color: var(--crt-primary-light);
       text-shadow: none;
     }
 
@@ -38,7 +37,7 @@ export class Link extends LitElement {
 
   private _onClick(e: MouseEvent) {
     // If internal hash link, prevent default and dispatch a composed navigate event
-    if (this.href && this.href.startsWith('#')) {
+    if (this.href?.startsWith('#')) {
       e.preventDefault();
       this.dispatchEvent(new CustomEvent('navigate', {
         detail: { href: this.href },

@@ -62,7 +62,7 @@ export class Visualizer extends LitElement {
       padding: 4px 10px;
       cursor: var(--crt-cursor-pointer);
       transition: var(--crt-transition);
-      box-shadow: var(--crt-glow-sm);
+      box-shadow: none;
       z-index: 10;
       text-transform: uppercase;
     }
@@ -76,7 +76,7 @@ export class Visualizer extends LitElement {
       align-self: flex-end;
       min-width: 4px;
       background: linear-gradient(180deg, color-mix(in srgb, var(--crt-primary) 80%, white 20%), var(--crt-primary));
-      box-shadow: 0 0 8px color-mix(in srgb, var(--crt-primary) 40%, transparent);
+      box-shadow: none;
       transition: height 0.05s ease, background 0.2s ease;
       will-change: height;
       border-radius: 2px 2px 0 0;

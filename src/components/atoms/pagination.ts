@@ -6,7 +6,7 @@ import { customElement, property } from 'lit/decorators.js';
  */
 @customElement('crt-pagination')
 export class Pagination extends LitElement {
-  static styles = css`
+  static readonly styles = css`
     :host {
       display: block;
       font-family: var(--crt-font-family);
@@ -122,20 +122,22 @@ export class Pagination extends LitElement {
           ◄
         </button>
         
-        ${pages.map(page => 
-          page === '...'
-            ? html`<span class="page-ellipsis">...</span>`
-            : html`
-                <button 
-                  class="page-btn ${page === this.current ? 'active' : ''}"
-                  @click="${() => this._goToPage(page as number)}"
-                  aria-label="Page ${page}"
-                  aria-current="${page === this.current ? 'page' : 'false'}"
-                >
-                  ${page}
-                </button>
-              `
-        )}
+        ${pages.map((page) => {
+          if (page === '...') {
+            return html`<span class="page-ellipsis">...</span>`;
+          }
+          const isActive = page === this.current;
+          return html`
+            <button 
+              class="page-btn ${isActive ? 'active' : ''}"
+              @click="${() => this._goToPage(page as number)}"
+              aria-label="Page ${page}"
+              aria-current="${isActive ? 'page' : 'false'}"
+            >
+              ${page}
+            </button>
+          `;
+        })}
         
         <button 
           class="page-btn" 
@@ -147,7 +149,7 @@ export class Pagination extends LitElement {
         </button>
         
         ${this.showInfo ? html`
-          <span class="page-info">Seite ${this.current} von ${this.total}</span>
+          <span class="page-info">Page ${this.current} of ${this.total}</span>
         ` : ''}
       </nav>
     `;

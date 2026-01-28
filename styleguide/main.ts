@@ -27,8 +27,8 @@ import '../src/components/atoms/pagination';
 import '../src/components/atoms/slider';
 import '../src/components/atoms/toggle';
 import '../src/components/atoms/avatar';
-import '../src/components/atoms/skeleton';
 import '../src/components/atoms/alert';
+import '../src/components/atoms/spinner';
 import '../src/components/molecules/card';
 import '../src/components/molecules/table';
 import '../src/components/molecules/grid';
@@ -49,6 +49,7 @@ import '../src/components/organisms/music-station';
 // Import and render template
 import { render } from 'lit';
 import { styleGuideTemplate } from './template';
+import { categories, componentDocs, useCases } from './data/components';
 
 // Wait for custom elements to be defined, then render
 customElements.whenDefined('crt-button').then(() => {
@@ -68,24 +69,25 @@ customElements.whenDefined('crt-button').then(() => {
         { value: 'ambient', label: 'Ambient Textures' }
       ];
 
-      // Add clusters for sections
-      const sections = [
-        { value: '#typography', label: 'Typography', href: '#typography' },
-        { value: '#forms', label: 'Forms', href: '#forms' },
-        { value: '#actions', label: 'Actions', href: '#actions' },
-        { value: '#feedback', label: 'Feedback', href: '#feedback' },
-        { value: '#media', label: 'Media', href: '#media' },
-        { value: '#organisms', label: 'Organisms', href: '#organisms' },
-        { value: '#components', label: 'Components', href: '#components' }
-      ];
+      const sections = categories.map((category) => ({
+        value: `#${category.id}`,
+        label: category.label,
+        href: `#${category.id}`,
+      }));
 
-      // Hardcoded components list (label, tag -> href to components section)
-      const components = [
-        'Button','Badge','Input','Select','Checkbox','Radio','Toggle','Slider','Icon','Link','Tabs','Tooltip','Progress','Spinner','Avatar','Alert','Skeleton','Pagination','Breadcrumb','Calendar','FileUpload',
-        'Card','Modal','Table','Grid','Accordion','Toast','CodeExample','MusicPlayer','Playlist','Visualizer','Terminal','MusicStation'
-      ].map(name => ({ value: name.toLowerCase(), label: `${name} (${'crt-' + name.toLowerCase()})`, href: '#components' }));
+      const components = componentDocs.map((component) => ({
+        value: component.name.toLowerCase(),
+        label: `${component.name} (${component.tag})`,
+        href: `#${component.id}`,
+      }));
 
-      const suggestions = [...sections, ...components, ...data];
+      const cases = useCases.map((useCase) => ({
+        value: useCase.title.toLowerCase(),
+        label: `Use Case: ${useCase.title}`,
+        href: `#${useCase.id}`,
+      }));
+
+      const suggestions = [...sections, ...components, ...cases, ...data];
 
       // Attach fetcher to all search instances in the styleguide (header + demo)
       const searches = Array.from(document.querySelectorAll('crt-search')) as any[];

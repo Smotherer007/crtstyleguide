@@ -6,7 +6,7 @@ import { customElement, property } from 'lit/decorators.js';
  */
 @customElement('crt-slider')
 export class Slider extends LitElement {
-  static styles = css`
+  static readonly styles = css`
     :host {
       display: block;
       font-family: var(--crt-font-family);
@@ -119,7 +119,9 @@ export class Slider extends LitElement {
       position: absolute;
       left: 2px;
       top: 50%;
-      transform: translateY(-50%);
+      width: calc(100% - 4px);
+      transform: translateY(-50%) scaleX(var(--fill-scale, 0));
+      transform-origin: left center;
       height: 4px;
       background: var(--crt-primary);
       pointer-events: none;
@@ -145,6 +147,7 @@ export class Slider extends LitElement {
   @property({ type: Boolean, reflect: true }) disabled = false;
   @property({ type: Boolean }) showMarks = false;
   @property({ type: String }) unit = '';
+  @property({ attribute: 'aria-label' }) ariaLabel = '';
 
   private _handleInput(e: Event) {
     const input = e.target as HTMLInputElement;
@@ -181,7 +184,7 @@ export class Slider extends LitElement {
         ` : ''}
         
         <div class="slider-track">
-          <div class="slider-fill" style="width: calc(${this._getFillWidth()}% - 10px)"></div>
+          <div class="slider-fill" style="--fill-scale: ${this._getFillWidth() / 100}"></div>
           <input
             type="range"
             .value="${String(this.value)}"
@@ -189,6 +192,7 @@ export class Slider extends LitElement {
             max="${this.max}"
             step="${this.step}"
             ?disabled="${this.disabled}"
+            aria-label="${this.ariaLabel || this.label || 'Slider'}"
             @input="${this._handleInput}"
             @change="${this._handleChange}"
           />

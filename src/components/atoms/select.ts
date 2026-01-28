@@ -7,7 +7,8 @@ import { customElement, property, state } from 'lit/decorators.js';
  */
 @customElement('crt-select')
 export class Select extends LitElement {
-  static styles = css`
+  private readonly _id = `crt-select-${Math.random().toString(36).slice(2, 9)}`;
+  static readonly styles = css`
     :host {
       display: inline-block;
       font-family: var(--crt-font-family);
@@ -204,7 +205,7 @@ export class Select extends LitElement {
     document.removeEventListener('click', this._handleOutsideClick);
   }
 
-  private _handleOutsideClick = (e: MouseEvent) => {
+  private readonly _handleOutsideClick = (e: MouseEvent) => {
     if (!this.contains(e.target as Node)) {
       this._isOpen = false;
     }
@@ -222,7 +223,9 @@ export class Select extends LitElement {
     this.value = option.value;
     this._isOpen = false;
     this.dispatchEvent(new CustomEvent('change', {
-      detail: { value: option.value, label: option.label }
+      detail: { value: option.value, label: option.label },
+      bubbles: true,
+      composed: true,
     }));
   }
 
@@ -273,6 +276,9 @@ export class Select extends LitElement {
     return html`
       <div 
         class="select-option ${isSelected ? 'selected' : ''} ${option.disabled ? 'disabled' : ''}"
+        role="option"
+        aria-selected="${isSelected ? 'true' : 'false'}"
+        aria-disabled="${option.disabled ? 'true' : 'false'}"
         @click="${() => this._selectOption(option)}"
       >
         ${option.label}
@@ -282,21 +288,31 @@ export class Select extends LitElement {
 
   render() {
     const selectedLabel = this._getSelectedLabel();
+    const labelId = `${this._id}-label`;
+    const listboxId = `${this._id}-listbox`;
     
     return html`
-      ${this.label ? html`<label class="select-label">${this.label}</label>` : ''}
+      ${this.label ? html`<label class="select-label" id="${labelId}">${this.label}</label>` : ''}
       <div class="select-wrapper">
         <div 
           class="select-trigger ${this._isOpen ? 'open' : ''} ${this.disabled ? 'disabled' : ''}"
+          role="combobox"
+          aria-expanded="${this._isOpen ? 'true' : 'false'}"
+          aria-haspopup="listbox"
+          aria-controls="${listboxId}"
+          aria-labelledby="${this.label ? labelId : ''}"
+          aria-label="${this.label ? '' : (this.placeholder || 'Select')}"
+          aria-disabled="${this.disabled ? 'true' : 'false'}"
+          tabindex="${this.disabled ? '-1' : '0'}"
           @click="${this._toggle}"
         >
-          <span class="select-value ${!selectedLabel ? 'placeholder' : ''}">
+          <span class="select-value ${selectedLabel ? '' : 'placeholder'}">
             ${selectedLabel || this.placeholder}
           </span>
           <span class="select-arrow">▼</span>
         </div>
         
-        <div class="select-dropdown ${this._isOpen ? 'open' : ''}">
+        <div class="select-dropdown ${this._isOpen ? 'open' : ''}" role="listbox" id="${listboxId}">
           ${this._renderOptions()}
         </div>
       </div>

@@ -8,6 +8,11 @@ import { customElement, property } from 'lit/decorators.js';
 export class Toggle extends LitElement {
   static styles = css`
     :host {
+      --toggle-width: 54px;
+      --toggle-height: 26px;
+      --thumb-size: 16px;
+      --thumb-gap: 4px;
+      --label-size: 10px;
       display: inline-flex;
       align-items: center;
       gap: var(--crt-spacing-sm);
@@ -37,8 +42,8 @@ export class Toggle extends LitElement {
     }
 
     .toggle-track {
-      width: 50px;
-      height: 26px;
+      width: var(--toggle-width);
+      height: var(--toggle-height);
       background: transparent;
       border: 2px solid var(--crt-primary);
       position: relative;
@@ -47,10 +52,10 @@ export class Toggle extends LitElement {
 
     .toggle-thumb {
       position: absolute;
-      top: 3px;
-      left: 3px;
-      width: 16px;
-      height: 16px;
+      top: calc((var(--toggle-height) - var(--thumb-size)) / 2);
+      left: var(--thumb-gap);
+      width: var(--thumb-size);
+      height: var(--thumb-size);
       background: var(--crt-text-muted);
       transition: all 0.2s ease;
     }
@@ -60,7 +65,7 @@ export class Toggle extends LitElement {
     }
 
     input:checked + .toggle-track .toggle-thumb {
-      left: 27px;
+      left: calc(100% - var(--thumb-size) - var(--thumb-gap));
       background: var(--crt-primary);
     }
 
@@ -78,7 +83,7 @@ export class Toggle extends LitElement {
       align-items: center;
       justify-content: space-between;
       padding: 0 6px;
-      font-size: 10px;
+      font-size: var(--label-size);
       color: var(--crt-text-muted);
       pointer-events: none;
     }
@@ -98,32 +103,19 @@ export class Toggle extends LitElement {
 
     /* Size variants */
     :host([size="small"]) .toggle-track {
-      width: 36px;
-      height: 20px;
-    }
-
-    :host([size="small"]) .toggle-thumb {
-      width: 12px;
-      height: 12px;
-    }
-
-    :host([size="small"]) input:checked + .toggle-track .toggle-thumb {
-      left: 19px;
+      --toggle-width: 38px;
+      --toggle-height: 20px;
+      --thumb-size: 12px;
+      --thumb-gap: 3px;
+      --label-size: 9px;
     }
 
     :host([size="large"]) .toggle-track {
-      width: 64px;
-      height: 32px;
-    }
-
-    :host([size="large"]) .toggle-thumb {
-      width: 22px;
-      height: 22px;
-      top: 3px;
-    }
-
-    :host([size="large"]) input:checked + .toggle-track .toggle-thumb {
-      left: 35px;
+      --toggle-width: 66px;
+      --toggle-height: 32px;
+      --thumb-size: 22px;
+      --thumb-gap: 5px;
+      --label-size: 11px;
     }
   `;
 

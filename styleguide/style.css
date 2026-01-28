@@ -16,6 +16,7 @@ html, body {
   width: 100%;
   height: 100%;
   overflow-x: hidden;
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -26,6 +27,7 @@ body {
   line-height: var(--crt-line-height);
   /* CRT Default Cursor - blinking block */
   cursor: var(--crt-cursor-default);
+  overflow-y: scroll;
 }
 
 /* CRT Pointer Cursor - small square for clickable elements */
@@ -44,7 +46,7 @@ crt-input input, crt-textarea textarea, crt-input, crt-textarea {
 input::placeholder, textarea::placeholder,
 crt-input input::placeholder, crt-textarea textarea::placeholder,
 crt-search .input::placeholder {
-  color: var(--crt-text-muted);
+  color: var(--crt-text-primary);
   opacity: 1;
 }
 
@@ -204,6 +206,59 @@ h1, h2, h3, h4, .sg-header crt-heading {
   z-index: 2;
 }
 
+.sg-layout {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: var(--crt-spacing-xl);
+  align-items: start;
+}
+
+.sg-sidebar {
+  border: 2px solid var(--crt-primary);
+  padding: var(--crt-spacing-md);
+  background: transparent;
+}
+
+.sg-sidebar-inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--crt-spacing-md);
+}
+
+.sg-sidebar-title {
+  font-size: var(--crt-font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--crt-text-muted);
+}
+
+.sg-sidebar-nav,
+.sg-sidebar-group-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--crt-spacing-xs);
+}
+
+.sg-sidebar-nav a,
+.sg-sidebar-group-links a {
+  color: var(--crt-text-primary);
+  text-decoration: none;
+  padding: 2px 0;
+  font-size: var(--crt-font-size-sm);
+}
+
+.sg-sidebar-group-title {
+  font-size: var(--crt-font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--crt-text-muted);
+  margin-top: var(--crt-spacing-sm);
+}
+
+.sg-content {
+  min-width: 0;
+}
+
 .sg-header {
   text-align: center;
   margin-bottom: var(--crt-spacing-2xl);
@@ -262,12 +317,75 @@ h1, h2, h3, h4, .sg-header crt-heading {
   box-shadow: var(--crt-glow);
 }
 
-.sg-main {
-  padding: var(--crt-spacing-xl) 0;
-}
-
 .sg-section {
   margin-bottom: var(--crt-spacing-2xl);
+}
+
+.sg-section-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--crt-spacing-xs);
+  margin-bottom: var(--crt-spacing-lg);
+}
+
+.sg-component {
+  border-top: 1px solid color-mix(in srgb, var(--crt-primary) 30%, transparent);
+  padding-top: var(--crt-spacing-lg);
+  margin-top: var(--crt-spacing-lg);
+}
+
+.sg-component-header {
+  display: flex;
+  align-items: baseline;
+  gap: var(--crt-spacing-sm);
+  flex-wrap: wrap;
+}
+
+.sg-component-tag {
+  font-size: var(--crt-font-size-xs);
+}
+
+.sg-component-desc {
+  margin: var(--crt-spacing-xs) 0 var(--crt-spacing-md);
+}
+
+.sg-meta {
+  display: grid;
+  gap: var(--crt-spacing-md);
+  margin-top: var(--crt-spacing-md);
+}
+
+.sg-meta-block {
+  border: 1px dashed var(--crt-primary);
+  padding: var(--crt-spacing-md);
+}
+
+.sg-meta-title {
+  font-size: var(--crt-font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: var(--crt-spacing-sm);
+  color: var(--crt-text-muted);
+}
+
+.sg-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--crt-font-size-xs);
+}
+
+.sg-table th,
+.sg-table td {
+  text-align: left;
+  padding: 6px 8px;
+  border-bottom: 1px solid color-mix(in srgb, var(--crt-primary) 20%, transparent);
+}
+
+.sg-table th {
+  color: var(--crt-text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .sg-section crt-heading:first-child {
@@ -333,28 +451,28 @@ code {
 
 /* Scrollbar visual consistency with components (WebKit + Firefox) */
 /* Targets main styleguide scroll containers and overall page */
-.sg-container, .sg-main, pre, .table-wrapper, .file-list, .select-dropdown {
+.sg-container, .sg-content, pre, .table-wrapper, .file-list, .select-dropdown {
   scrollbar-width: thin; /* Firefox */
   scrollbar-color: var(--crt-primary) var(--crt-bg-dark);
 }
 
 /* WebKit scrollbar for page and specific containers */
-.sg-container::-webkit-scrollbar, .sg-main::-webkit-scrollbar, pre::-webkit-scrollbar, .table-wrapper::-webkit-scrollbar, .file-list::-webkit-scrollbar, .select-dropdown::-webkit-scrollbar {
+.sg-container::-webkit-scrollbar, .sg-content::-webkit-scrollbar, pre::-webkit-scrollbar, .table-wrapper::-webkit-scrollbar, .file-list::-webkit-scrollbar, .select-dropdown::-webkit-scrollbar {
   width: 12px;
 }
 
-.sg-container::-webkit-scrollbar-track, .sg-main::-webkit-scrollbar-track, pre::-webkit-scrollbar-track, .table-wrapper::-webkit-scrollbar-track, .file-list::-webkit-scrollbar-track, .select-dropdown::-webkit-scrollbar-track {
+.sg-container::-webkit-scrollbar-track, .sg-content::-webkit-scrollbar-track, pre::-webkit-scrollbar-track, .table-wrapper::-webkit-scrollbar-track, .file-list::-webkit-scrollbar-track, .select-dropdown::-webkit-scrollbar-track {
   background: var(--crt-bg-dark);
   border: 1px solid var(--crt-primary);
 }
 
-.sg-container::-webkit-scrollbar-thumb, .sg-main::-webkit-scrollbar-thumb, pre::-webkit-scrollbar-thumb, .table-wrapper::-webkit-scrollbar-thumb, .file-list::-webkit-scrollbar-thumb, .select-dropdown::-webkit-scrollbar-thumb {
+.sg-container::-webkit-scrollbar-thumb, .sg-content::-webkit-scrollbar-thumb, pre::-webkit-scrollbar-thumb, .table-wrapper::-webkit-scrollbar-thumb, .file-list::-webkit-scrollbar-thumb, .select-dropdown::-webkit-scrollbar-thumb {
   background: var(--crt-primary);
   border: 1px solid var(--crt-bg-dark);
   box-shadow: var(--crt-glow);
 }
 
-.sg-container::-webkit-scrollbar-thumb:hover, .sg-main::-webkit-scrollbar-thumb:hover, pre::-webkit-scrollbar-thumb:hover, .table-wrapper::-webkit-scrollbar-thumb:hover, .file-list::-webkit-scrollbar-thumb:hover, .select-dropdown::-webkit-scrollbar-thumb:hover {
+.sg-container::-webkit-scrollbar-thumb:hover, .sg-content::-webkit-scrollbar-thumb:hover, pre::-webkit-scrollbar-thumb:hover, .table-wrapper::-webkit-scrollbar-thumb:hover, .file-list::-webkit-scrollbar-thumb:hover, .select-dropdown::-webkit-scrollbar-thumb:hover {
   background: var(--crt-primary-light);
   box-shadow: var(--crt-glow-lg);
 }
@@ -416,7 +534,7 @@ code {
    addresses cases where embedded components (e.g. terminals)
    force their parent out of the viewport on small screens. */
 .sg-container,
-.sg-main,
+.sg-content,
 .sg-section,
 .sg-demo-row,
 .sg-demo-item,
@@ -440,6 +558,14 @@ crt-code-example,
 @media (max-width: 768px) {
   .sg-container {
     padding: var(--crt-spacing-lg) var(--crt-spacing-md);
+  }
+
+  .sg-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sg-sidebar {
+    position: static;
   }
 
   .sg-nav-list {

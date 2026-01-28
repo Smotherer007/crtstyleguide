@@ -6,7 +6,7 @@ import { customElement, property } from 'lit/decorators.js';
  */
 @customElement('crt-avatar')
 export class Avatar extends LitElement {
-  static styles = css`
+  static readonly styles = css`
     :host {
       display: inline-block;
       font-family: var(--crt-font-family);
@@ -109,8 +109,8 @@ export class Avatar extends LitElement {
     }
 
     :host([status="busy"]) .status-indicator {
-      background: var(--crt-danger);
-      box-shadow: 0 0 4px var(--crt-danger);
+      background: var(--crt-error);
+      box-shadow: 0 0 4px var(--crt-error);
     }
 
     :host([status="away"]) .status-indicator {
@@ -146,7 +146,7 @@ export class Avatar extends LitElement {
     if (parts.length === 1) {
       return parts[0].substring(0, 2);
     }
-    return parts[0][0] + parts[parts.length - 1][0];
+    return parts[0][0] + (parts.at(-1)?.[0] || '');
   }
 
   private _handleError() {
@@ -154,20 +154,23 @@ export class Avatar extends LitElement {
   }
 
   render() {
+    let content = html`<span class="fallback-icon">[?]</span>`;
+    if (this.src) {
+      content = html`
+        <img 
+          src="${this.src}" 
+          alt="${this.alt || this.name}"
+          @error="${this._handleError}"
+        />
+      `;
+    } else if (this.name) {
+      content = html`<span class="initials">${this._getInitials()}</span>`;
+    }
+
     return html`
       <div class="avatar-wrapper">
         <div class="avatar">
-          ${this.src ? html`
-            <img 
-              src="${this.src}" 
-              alt="${this.alt || this.name}"
-              @error="${this._handleError}"
-            />
-          ` : this.name ? html`
-            <span class="initials">${this._getInitials()}</span>
-          ` : html`
-            <span class="fallback-icon">[?]</span>
-          `}
+          ${content}
         </div>
         ${this.status ? html`<div class="status-indicator"></div>` : ''}
       </div>
@@ -180,7 +183,7 @@ export class Avatar extends LitElement {
  */
 @customElement('crt-avatar-group')
 export class AvatarGroup extends LitElement {
-  static styles = css`
+  static readonly styles = css`
     :host {
       display: inline-flex;
       align-items: center;

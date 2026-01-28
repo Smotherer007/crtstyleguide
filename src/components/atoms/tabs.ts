@@ -3,7 +3,9 @@ import { customElement, property, state } from 'lit/decorators.js';
 
 @customElement('crt-tabs')
 export class Tabs extends LitElement {
-  static styles = css`
+  private readonly _id = `crt-tabs-${Math.random().toString(36).slice(2, 9)}`;
+
+  static readonly styles = css`
     :host {
       display: block;
     }
@@ -18,7 +20,7 @@ export class Tabs extends LitElement {
     .tab-button {
       background: transparent;
       border: none;
-      color: var(--crt-text-secondary);
+      color: var(--crt-text-primary);
       padding: var(--crt-spacing-md) var(--crt-spacing-lg);
       cursor: pointer;
       font-family: var(--crt-font-family);
@@ -74,15 +76,27 @@ export class Tabs extends LitElement {
 
   selectTab(index: number) {
     this.activeTab = index;
+    const tab = this.tabs[index];
+    this.dispatchEvent(new CustomEvent('change', {
+      detail: { index, label: tab?.label },
+      bubbles: true,
+      composed: true,
+    }));
   }
 
   render() {
+    const listId = `${this._id}-list`;
     return html`
-      <div class="tabs-header">
+      <div class="tabs-header" role="tablist" id="${listId}">
         ${this.tabs.map(
           (tab, index) => html`
             <button
               class="tab-button ${index === this.activeTab ? 'active' : ''}"
+              id="${this._id}-tab-${index}"
+              role="tab"
+              aria-selected="${index === this.activeTab ? 'true' : 'false'}"
+              aria-controls="${this._id}-panel-${index}"
+              tabindex="${index === this.activeTab ? '0' : '-1'}"
               @click="${() => this.selectTab(index)}"
             >
               ${tab.label}
@@ -93,23 +107,21 @@ export class Tabs extends LitElement {
       <div class="tabs-content">
         ${this.tabs.map(
           (tab, index) => html`
-            <div class="tab-pane ${index === this.activeTab ? 'active' : ''}">
+            <div
+              class="tab-pane ${index === this.activeTab ? 'active' : ''}"
+              id="${this._id}-panel-${index}"
+              role="tabpanel"
+              aria-labelledby="${this._id}-tab-${index}"
+            >
               ${tab.label.toLowerCase() === 'code'
                 ? html`<pre><code>${tab.content}</code></pre>`
-                : html`<div>${unsafeHTML(tab.content)}</div>`}
+                : html`<div>${tab.content}</div>`}
             </div>
           `
         )}
       </div>
     `;
   }
-}
-
-// Helper to allow HTML in preview
-function unsafeHTML(html: string) {
-  const div = document.createElement('div');
-  div.innerHTML = html;
-  return div;
 }
 
 declare global {

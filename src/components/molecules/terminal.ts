@@ -18,11 +18,16 @@ export class Terminal extends LitElement {
       max-width: none;
       background: transparent;
       color: var(--crt-text-primary);
+      font-size: var(--crt-font-size-base);
+      line-height: 1.4;
       padding: 12px;
       border: none;
       min-height: calc(var(--crt-font-size-md, 16px) * 1.2 * 6);
       max-height: min(380px, 50vh);
       overflow: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
       box-sizing: border-box;
       border-radius: 0;
       outline: none;
@@ -41,21 +46,22 @@ export class Terminal extends LitElement {
       filter: grayscale(20%);
       pointer-events: none;
     }
-    .line { white-space: pre-wrap; word-break: break-word; margin: 2px 0; }
-    .input-line { display:flex; gap:4px; align-items:center; justify-content:flex-start; }
-    .prompt { opacity: 0.9; color: var(--crt-primary); }
+    .line { white-space: pre-wrap; word-break: break-word; margin: 0; }
+    .input-line { display:flex; gap:6px; align-items: baseline; justify-content:flex-start; }
+    .prompt { opacity: 0.9; color: var(--crt-primary); display:inline-block; min-width: 1ch; }
     .term[aria-disabled="true"] .prompt { opacity: 0.6; }
     .caret {
       display:inline-block;
-      width:10px;
-      margin-left:2px;
+      width:auto;
+      margin-left:0;
       animation: blink 1s steps(2,start) infinite;
       color: var(--crt-primary);
+      line-height: 1;
     }
     .term[aria-disabled="true"] .caret { visibility: hidden; }
     @keyframes blink { to { visibility: hidden; } }
-    .fake-input { outline: none; flex: 0 1 auto; min-width: 4px; display:inline-flex; align-items:center; gap:0; }
-    .fake-input .input-text { display:inline-block; white-space:pre; }
+    .fake-input { outline: none; flex: 0 1 auto; min-width: 0; display:inline-flex; align-items: baseline; gap:0; min-height: 1em; }
+    .fake-input .input-text { display:inline-block; white-space:pre; line-height: 1.4; }
     .muted { opacity: 0.7; font-size: 0.9em; }
   `;
 

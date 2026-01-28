@@ -7,7 +7,7 @@ import { customElement, property } from 'lit/decorators.js';
  */
 @customElement('crt-modal')
 export class Modal extends LitElement {
-  static styles = css`
+  static readonly styles = css`
     :host {
       display: none;
     }
@@ -22,7 +22,7 @@ export class Modal extends LitElement {
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: transparent;
+      background: color-mix(in srgb, var(--crt-bg-dark) 70%, transparent);
       z-index: 10000;
       display: flex;
       align-items: center;
@@ -36,11 +36,9 @@ export class Modal extends LitElement {
     }
 
     .modal {
-      background: transparent;
+      background: var(--crt-bg-dark);
       border: 3px double var(--crt-primary);
-      box-shadow: 
-        0 0 20px color-mix(in srgb, var(--crt-primary) 30%, transparent),
-        0 0 40px color-mix(in srgb, var(--crt-primary) 15%, transparent);
+      box-shadow: none;
       max-width: 90vw;
       max-height: 90vh;
       min-width: 300px;
@@ -136,6 +134,7 @@ export class Modal extends LitElement {
   @property({ type: Boolean, reflect: true }) open = false;
   @property({ type: String }) title = 'Modal';
   @property({ type: String }) size: 'small' | 'medium' | 'large' | 'fullscreen' = 'medium';
+  @property({ type: Boolean, reflect: true }) preventBackdropClose = false;
 
   connectedCallback() {
     super.connectedCallback();
@@ -147,20 +146,25 @@ export class Modal extends LitElement {
     document.removeEventListener('keydown', this._handleKeydown);
   }
 
-  private _handleKeydown = (e: KeyboardEvent) => {
+  private readonly _handleKeydown = (e: KeyboardEvent) => {
     if (e.key === 'Escape' && this.open) {
-      this.close();
+      this.close('escape');
     }
   };
 
-  close() {
+  close(reason: 'button' | 'backdrop' | 'escape' | 'programmatic' = 'programmatic') {
     this.open = false;
-    this.dispatchEvent(new CustomEvent('close'));
+    this.dispatchEvent(new CustomEvent('close', {
+      detail: { open: false, reason },
+      bubbles: true,
+      composed: true,
+    }));
   }
 
   private _handleBackdropClick(e: MouseEvent) {
+    if (this.preventBackdropClose) return;
     if ((e.target as HTMLElement).classList.contains('backdrop')) {
-      this.close();
+      this.close('backdrop');
     }
   }
 
@@ -170,7 +174,7 @@ export class Modal extends LitElement {
         <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
           <div class="modal-header">
             <h2 class="modal-title" id="modal-title">${this.title}</h2>
-            <button class="close-btn" @click="${this.close}" aria-label="Close">✕</button>
+            <button class="close-btn" @click="${() => this.close('button')}" aria-label="Close">✕</button>
           </div>
           <div class="modal-body">
             <slot></slot>

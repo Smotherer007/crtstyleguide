@@ -1,7 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-// avoid using unsafeHTML directive to prevent runtime directive mismatches
-// when consumers may resolve a different Lit instance; use .innerHTML binding instead
+// avoid innerHTML rendering; parse SVG markup into an element instead
 
 export const ICONS_MAP: { [key: string]: string } = {
   check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M20 6L9 17l-5-5"/></svg>',
@@ -40,13 +39,14 @@ export const ICONS_MAP: { [key: string]: string } = {
   volume: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19 5a4 4 0 0 1 0 14"/></svg>',
   'volume-mute': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/></svg>',
   music: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>',
+  unknown: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="20" fill="currentColor"/><text x="12" y="16" text-anchor="middle" font-size="14" fill="var(--crt-bg-dark)">?</text></svg>',
 };
 
 export const ICON_NAMES = Object.keys(ICONS_MAP);
 
 @customElement('crt-icon')
 export class Icon extends LitElement {
-  static styles = css`
+  static readonly styles = css`
     :host {
       display: inline-flex;
       align-items: center;
@@ -68,8 +68,9 @@ export class Icon extends LitElement {
   @property() size: 'sm' | 'md' | 'lg' = 'md';
 
   render() {
-    const svg = (ICONS_MAP as any)[this.name] || '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><text x="0" y="14">?</text></svg>';
-    return html`<span class="icon" aria-hidden="true" .innerHTML=${svg}></span>`;
+    const svgMarkup = (ICONS_MAP as any)[this.name] || ICONS_MAP.unknown;
+    const parsed = new DOMParser().parseFromString(svgMarkup, 'image/svg+xml');
+    return html`<span class="icon" aria-hidden="true">${parsed.documentElement}</span>`;
   }
 }
 

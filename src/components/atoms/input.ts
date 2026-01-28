@@ -24,7 +24,7 @@ export class Input extends LitElement {
     }
 
     input::placeholder {
-      color: var(--crt-text-muted);
+      color: var(--crt-text-primary);
     }
 
     input:hover:not(:disabled) {
@@ -33,7 +33,7 @@ export class Input extends LitElement {
 
     input:focus:not(:disabled) {
       outline: none;
-      box-shadow: var(--crt-glow-inset);
+      box-shadow: none;
     }
 
     input:disabled {
@@ -43,9 +43,18 @@ export class Input extends LitElement {
     }
 
     :host([type='search']) input {
-      border-radius: 20px;
       padding-left: var(--crt-spacing-lg);
       padding-right: var(--crt-spacing-lg);
+    }
+
+    /* Custom clear icon for search inputs */
+    :host([type='search']) input::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      background-color: var(--crt-primary);
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M18.3 5.7 12 12l6.3 6.3-1.4 1.4L10.6 13.4 4.3 19.7 2.9 18.3 9.2 12 2.9 5.7 4.3 4.3l6.3 6.3 6.3-6.3z'/%3E%3C/svg%3E") no-repeat center / contain;
     }
   `;
 
@@ -94,7 +103,7 @@ export class Textarea extends LitElement {
     }
 
     textarea::placeholder {
-      color: var(--crt-text-muted);
+      color: var(--crt-text-primary);
     }
 
     textarea:hover:not(:disabled) {
@@ -103,7 +112,7 @@ export class Textarea extends LitElement {
 
     textarea:focus:not(:disabled) {
       outline: none;
-      box-shadow: var(--crt-glow-inset);
+      box-shadow: none;
     }
 
     textarea:disabled {

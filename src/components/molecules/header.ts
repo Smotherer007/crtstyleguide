@@ -49,15 +49,11 @@ export class Header extends LitElement {
     document.documentElement.style.setProperty('--crt-text-muted', c.textMuted);
     document.documentElement.style.setProperty('--crt-border-color', c.primary);
     
-    // Update glow effects
-    const glowSm = `0 0 5px ${c.textSecondary}`;
-    const glow = `0 0 10px ${c.textSecondary}`;
-    const glowLg = `0 0 20px ${c.textSecondary}`;
-    const glowInset = `inset 0 0 10px ${c.textMuted}`;
-    document.documentElement.style.setProperty('--crt-glow-sm', glowSm);
-    document.documentElement.style.setProperty('--crt-glow', glow);
-    document.documentElement.style.setProperty('--crt-glow-lg', glowLg);
-    document.documentElement.style.setProperty('--crt-glow-inset', glowInset);
+    // Keep glow vars neutral for non-glow theme
+    document.documentElement.style.setProperty('--crt-glow-sm', 'none');
+    document.documentElement.style.setProperty('--crt-glow', 'none');
+    document.documentElement.style.setProperty('--crt-glow-lg', 'none');
+    document.documentElement.style.setProperty('--crt-glow-inset', 'none');
 
     // Update cursor colors
     const cursorColor = c.primary.replace('#', '%23');
@@ -105,6 +101,48 @@ export class Header extends LitElement {
 
     .actions { display: flex; align-items: center; gap: 12px; }
 
+    .switcher-block {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 8px;
+      border: 1px solid var(--crt-primary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: var(--crt-font-size-xs);
+    }
+
+    .switcher-title {
+      color: var(--crt-text-muted);
+      font-size: var(--crt-font-size-xs);
+    }
+
+    .power-btn {
+      background: transparent;
+      border: 1px solid var(--crt-primary);
+      color: var(--crt-primary);
+      font-family: var(--crt-font-family);
+      font-size: var(--crt-font-size-xs);
+      padding: 2px 6px;
+      cursor: var(--crt-cursor-pointer);
+    }
+
+    .power-btn.active {
+      background: var(--crt-primary);
+      color: var(--crt-bg-dark);
+    }
+
+    .power-led {
+      width: 10px;
+      height: 10px;
+      border: 1px solid var(--crt-primary);
+      display: inline-block;
+    }
+
+    .power-led.on {
+      background: var(--crt-primary);
+    }
+
     .color-switcher {
       display: flex;
       gap: 6px;
@@ -136,13 +174,24 @@ export class Header extends LitElement {
     .color-btn.blue { background: #66ffff; }
 
     .color-btn:hover {
-      box-shadow: var(--crt-glow-sm);
       transform: scale(1.1);
     }
 
     .color-btn.active {
-      box-shadow: 0 0 8px currentColor;
       transform: scale(1.15);
+    }
+
+    .color-chip {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .color-label {
+      font-size: 9px;
+      color: var(--crt-text-muted);
+      letter-spacing: 1px;
     }
 
     @media (max-width: 720px) {
@@ -165,42 +214,51 @@ export class Header extends LitElement {
 
         <div class="actions">
           <!-- CRT Screen Buttons with Colors -->
+          <div class="switcher-block">
+            <span class="switcher-title">CRT</span>
+            <button
+              class="power-btn ${this.screenActive ? 'active' : ''}"
+              @click="${() => this.screenActive ? this.disableScreen() : this.toggleScreenWithColor(this.currentColor)}"
+              aria-label="Toggle CRT power"
+            >
+              POWER
+            </button>
+            <span class="power-led ${this.screenActive ? 'on' : ''}" aria-hidden="true"></span>
+          </div>
+
           <div class="crt-switcher">
             <crt-tooltip text="${this.screenActive && this.currentColor === 'green' ? 'Disable CRT' : 'Green CRT Screen'}" position="bottom">
-              <button 
-                class="color-btn green ${this.screenActive && this.currentColor === 'green' ? 'active' : ''}" 
-                @click="${() => this.screenActive && this.currentColor === 'green' ? this.disableScreen() : this.toggleScreenWithColor('green')}" 
-                aria-label="Green CRT Screen">
-              </button>
+              <div class="color-chip">
+                <button 
+                  class="color-btn green ${this.screenActive && this.currentColor === 'green' ? 'active' : ''}" 
+                  @click="${() => this.screenActive && this.currentColor === 'green' ? this.disableScreen() : this.toggleScreenWithColor('green')}" 
+                  aria-label="Green CRT Screen">
+                </button>
+                <span class="color-label">GREEN</span>
+              </div>
             </crt-tooltip>
             <crt-tooltip text="${this.screenActive && this.currentColor === 'amber' ? 'Disable CRT' : 'Amber CRT Screen'}" position="bottom">
-              <button 
-                class="color-btn amber ${this.screenActive && this.currentColor === 'amber' ? 'active' : ''}" 
-                @click="${() => this.screenActive && this.currentColor === 'amber' ? this.disableScreen() : this.toggleScreenWithColor('amber')}" 
-                aria-label="Amber CRT Screen">
-              </button>
+              <div class="color-chip">
+                <button 
+                  class="color-btn amber ${this.screenActive && this.currentColor === 'amber' ? 'active' : ''}" 
+                  @click="${() => this.screenActive && this.currentColor === 'amber' ? this.disableScreen() : this.toggleScreenWithColor('amber')}" 
+                  aria-label="Amber CRT Screen">
+                </button>
+                <span class="color-label">AMBER</span>
+              </div>
             </crt-tooltip>
             <crt-tooltip text="${this.screenActive && this.currentColor === 'blue' ? 'Disable CRT' : 'Blue CRT Screen'}" position="bottom">
-              <button 
-                class="color-btn blue ${this.screenActive && this.currentColor === 'blue' ? 'active' : ''}" 
-                @click="${() => this.screenActive && this.currentColor === 'blue' ? this.disableScreen() : this.toggleScreenWithColor('blue')}" 
-                aria-label="Blue CRT Screen">
-              </button>
+              <div class="color-chip">
+                <button 
+                  class="color-btn blue ${this.screenActive && this.currentColor === 'blue' ? 'active' : ''}" 
+                  @click="${() => this.screenActive && this.currentColor === 'blue' ? this.disableScreen() : this.toggleScreenWithColor('blue')}" 
+                  aria-label="Blue CRT Screen">
+                </button>
+                <span class="color-label">BLUE</span>
+              </div>
             </crt-tooltip>
           </div>
 
-          <!-- Color Switcher (hidden when CRT active) -->
-          <div class="color-switcher ${this.screenActive ? 'hidden' : ''}">
-            <crt-tooltip text="Green Phosphor" position="bottom">
-              <button class="color-btn green" @click="${() => this.changeColor('green')}" aria-label="Green Phosphor"></button>
-            </crt-tooltip>
-            <crt-tooltip text="Amber Phosphor" position="bottom">
-              <button class="color-btn amber" @click="${() => this.changeColor('amber')}" aria-label="Amber Phosphor"></button>
-            </crt-tooltip>
-            <crt-tooltip text="Blue Phosphor" position="bottom">
-              <button class="color-btn blue" @click="${() => this.changeColor('blue')}" aria-label="Blue Phosphor"></button>
-            </crt-tooltip>
-          </div>
           <slot name="actions">
             <!-- default action: search -->
             <crt-search placeholder="Search styleguide..." style="width:220px;"></crt-search>

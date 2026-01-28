@@ -43,13 +43,12 @@ export class Search extends LitElement {
     }
 
     .input::placeholder {
-      color: var(--crt-text-muted);
-      opacity: 1; /* ensure visible and consistent */
+      color: var(--crt-text-primary);
     }
 
     .input:focus {
       outline: none;
-      box-shadow: var(--crt-glow-inset);
+      box-shadow: none;
     }
 
     .list {
@@ -59,7 +58,7 @@ export class Search extends LitElement {
       right: 0;
       background: transparent;
       border: 2px solid var(--crt-primary);
-      box-shadow: 0 10px 20px color-mix(in srgb, var(--crt-primary) 20%, transparent);
+      box-shadow: none;
       max-height: 240px;
       overflow-y: auto;
       z-index: 1000;

@@ -5,7 +5,7 @@ import './icon';
 @customElement('crt-button')
 export class Button extends LitElement {
   // Definiere styles als static property
-  static styles = css`
+  static readonly styles = css`
     :host {
       display: inline-block;
     }
@@ -23,7 +23,7 @@ export class Button extends LitElement {
       cursor: var(--crt-cursor-pointer);
       text-transform: uppercase;
       transition: all 0.3s ease;
-      box-shadow: var(--crt-glow-sm);
+      box-shadow: none;
       position: relative;
       overflow: hidden;
       display: inline-flex;
@@ -54,40 +54,40 @@ export class Button extends LitElement {
 
     /* Success variant */
     :host([variant="success"]) button {
-      color: var(--crt-success, #00ff00);
-      border-color: var(--crt-success, #00ff00);
-      box-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+      color: var(--crt-success);
+      border-color: var(--crt-success);
+      box-shadow: none;
     }
 
     :host([variant="success"]) button:hover:not(:disabled) {
       background-color: transparent;
-      color: var(--crt-success, #00ff00);
+      color: var(--crt-success);
       box-shadow: none;
     }
 
     /* Warning variant */
     :host([variant="warning"]) button {
-      color: var(--crt-warning, #ffcc00);
-      border-color: var(--crt-warning, #ffcc00);
-      box-shadow: 0 0 5px rgba(255, 204, 0, 0.3);
+      color: var(--crt-warning);
+      border-color: var(--crt-warning);
+      box-shadow: none;
     }
 
     :host([variant="warning"]) button:hover:not(:disabled) {
       background-color: transparent;
-      color: var(--crt-warning, #ffcc00);
+      color: var(--crt-warning);
       box-shadow: none;
     }
 
     /* Error variant */
     :host([variant="error"]) button {
-      color: var(--crt-danger, #ff3333);
-      border-color: var(--crt-danger, #ff3333);
-      box-shadow: 0 0 5px rgba(255, 51, 51, 0.3);
+      color: var(--crt-error);
+      border-color: var(--crt-error);
+      box-shadow: none;
     }
 
     :host([variant="error"]) button:hover:not(:disabled) {
       background-color: transparent;
-      color: var(--crt-danger, #ff3333);
+      color: var(--crt-error);
       box-shadow: none;
     }
 
@@ -152,6 +152,7 @@ export class Button extends LitElement {
   @property({ attribute: 'icon-only', type: Boolean }) iconOnly = false;
   @property({ attribute: 'icon-left' }) iconLeft: string = '';
   @property({ attribute: 'icon-right' }) iconRight: string = '';
+  @property({ attribute: 'aria-label' }) ariaLabel = '';
 
   constructor() {
     super();
@@ -167,7 +168,11 @@ export class Button extends LitElement {
     if (this.iconOnly) {
       const iconName = this.iconLeft || this.iconRight;
       return html`
-        <button type="${this.type}" ?disabled="${this.disabled}">
+        <button
+          type="${this.type}"
+          ?disabled="${this.disabled}"
+          aria-label="${this.ariaLabel || iconName || 'Button'}"
+        >
           ${iconName ? html`<crt-icon name="${iconName}"></crt-icon>` : html`<slot></slot>`}
         </button>
       `;

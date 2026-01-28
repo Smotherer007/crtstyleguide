@@ -20,7 +20,7 @@ export class FileUpload extends LitElement {
   
   @state() files: UploadedFile[] = [];
 
-  static styles = css`
+  static readonly styles = css`
     :host {
       display: block;
       font-family: var(--crt-font-family);
@@ -324,7 +324,7 @@ export class FileUpload extends LitElement {
 
   // Drag-and-drop removed: files are added via the file input only
 
-  private _handleFileSelect = (e: Event) => {
+  private readonly _handleFileSelect = (e: Event) => {
     const input = e.target as HTMLInputElement;
     if (input.files) {
       this._addFiles(Array.from(input.files));
@@ -377,19 +377,19 @@ export class FileUpload extends LitElement {
     }));
   }
 
-  private _handleUploadClick = () => {
+  private readonly _handleUploadClick = () => {
     const input = this.shadowRoot?.querySelector('input[type="file"]') as HTMLInputElement;
     input?.click();
   };
 
-  private _handleRemoveFile = (id: string) => {
+  private readonly _handleRemoveFile = (id: string) => {
     this.files = this.files.filter(f => f.id !== id);
     this.dispatchEvent(new CustomEvent('files-changed', {
       detail: { files: this.files.map(f => f.file) }
     }));
   };
 
-  private _handleClearAll = () => {
+  private readonly _handleClearAll = () => {
     this.files = [];
     this.dispatchEvent(new CustomEvent('files-changed', {
       detail: { files: [] }
@@ -406,7 +406,7 @@ export class FileUpload extends LitElement {
     const k = 1024;
     const sizes = ['B', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+    return Number.parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
   }
 
   private _getFileIcon(file: File): string {
@@ -476,6 +476,7 @@ export class FileUpload extends LitElement {
                     class="file-remove" 
                     @click="${() => this._handleRemoveFile(uploadedFile.id)}"
                     title="Remove file"
+                    aria-label="Remove file"
                   >X</button>
                 </div>
               </div>

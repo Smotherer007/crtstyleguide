@@ -1,1359 +1,209 @@
 import { html } from 'lit';
+import { categories, componentDocs, useCases, type ComponentDoc, type EventDoc, type PropDoc, type SlotDoc } from './data/components';
 
-// Build-time aware track URL so GitHub Pages and other bases work correctly
-const BASE_URL = (import.meta as any).env?.BASE_URL || '/';
-const _base = BASE_URL.endsWith('/') ? BASE_URL : BASE_URL + '/';
-const TRACK_URL = encodeURI(_base + 'patimwep - Verrostete Terminals.mp3');
-import '../src/components/atoms/spinner';
-import '../src/components/atoms/icon';
-import { ICON_NAMES } from '../src/components/atoms/icon';
-import '../src/components/molecules/crt-screen';
+const renderPropsTable = (props: PropDoc[] = []) => {
+  const rows = props.length
+    ? props.map((prop) => html`
+        <tr>
+          <td><code>${prop.name}</code></td>
+          <td>${prop.type}</td>
+          <td>${prop.default ?? '-'}</td>
+          <td>${prop.description ?? '-'}</td>
+        </tr>
+      `)
+    : html`
+        <tr>
+          <td colspan="4">None</td>
+        </tr>
+      `;
 
-// Global spinner helper
-(window as any).showSpinner = (message = 'LOADING...', duration = 3000) => {
-  const spinner = document.createElement('crt-spinner') as any;
-  spinner.message = message;
-  spinner.open = true;
-  document.body.appendChild(spinner);
-  setTimeout(() => spinner.remove(), duration);
+  return html`
+    <div class="sg-meta-block">
+      <div class="sg-meta-title">Attributes</div>
+      <table class="sg-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows}
+        </tbody>
+      </table>
+    </div>
+  `;
 };
 
-/**
- * CRT Living Style Guide Template
- * Components organized by category: Typography → Form Elements → Actions → Layout
- */
+const renderEventsTable = (events: EventDoc[] = []) => {
+  const rows = events.length
+    ? events.map((event) => html`
+        <tr>
+          <td><code>${event.name}</code></td>
+          <td>${event.detail ?? '-'}</td>
+          <td>${event.description ?? '-'}</td>
+        </tr>
+      `)
+    : html`
+        <tr>
+          <td colspan="3">None</td>
+        </tr>
+      `;
+
+  return html`
+    <div class="sg-meta-block">
+      <div class="sg-meta-title">Events</div>
+      <table class="sg-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Detail</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows}
+        </tbody>
+      </table>
+    </div>
+  `;
+};
+
+const renderSlotsTable = (slots: SlotDoc[] = []) => {
+  if (!slots.length) return html``;
+  return html`
+    <div class="sg-meta-block">
+      <div class="sg-meta-title">Slots</div>
+      <table class="sg-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${slots.map((slot) => html`
+            <tr>
+              <td><code>${slot.name}</code></td>
+              <td>${slot.description ?? '-'}</td>
+            </tr>
+          `)}
+        </tbody>
+      </table>
+    </div>
+  `;
+};
+
+const renderComponent = (component: ComponentDoc) => html`
+  <article id="${component.id}" class="sg-component">
+    <div class="sg-component-header">
+      <crt-heading level="3">${component.name}</crt-heading>
+      <crt-text muted class="sg-component-tag">${component.tag}</crt-text>
+    </div>
+    ${component.description ? html`<crt-text class="sg-component-desc">${component.description}</crt-text>` : ''}
+    <div class="sg-examples">
+      ${component.examples.map((example) => html`
+        <crt-code-example
+          class="mb-lg"
+          .title=${example.title}
+          .description=${example.description ?? ''}
+          .code=${example.code}
+        >
+          ${example.preview}
+        </crt-code-example>
+      `)}
+    </div>
+    <div class="sg-meta">
+      ${renderPropsTable(component.props)}
+      ${renderEventsTable(component.events)}
+      ${renderSlotsTable(component.slots)}
+    </div>
+  </article>
+`;
+
 export const styleGuideTemplate = () => html`
-  <!-- CRT Monitor Effects -->
-  <div class="crt-frame"></div>
-  <div class="crt-screen"></div>
-  <div class="crt-noise"></div>
-  
   <div class="sg-wrapper">
     <div class="sg-container">
-      
-      <!-- HEADER (responsive) -->
-      <crt-header slot="header" title="CRT LIVING STYLE GUIDE">
-        <span slot="title">CRT LIVING STYLE GUIDE</span>
-        <span slot="subtitle">Component Library · Lit Web Components · Atomic Design</span>
-        <div slot="actions">
-          <crt-search placeholder="Search styleguide..." style="width:240px;"></crt-search>
+      <div class="sg-layout">
+        <aside class="sg-sidebar">
+          <div class="sg-sidebar-inner">
+            <div class="sg-sidebar-title">Sections</div>
+            <nav class="sg-sidebar-nav">
+              ${categories.map((category) => html`
+                <a href="#${category.id}">${category.label}</a>
+              `)}
+            </nav>
+
+            <div class="sg-sidebar-title">Components</div>
+            ${categories
+              .filter((category) => category.id !== 'use-cases')
+              .map((category) => html`
+                <div class="sg-sidebar-group">
+                  <div class="sg-sidebar-group-title">${category.label}</div>
+                  <div class="sg-sidebar-group-links">
+                    ${componentDocs
+                      .filter((component) => component.category === category.id)
+                      .map((component) => html`
+                        <a href="#${component.id}">${component.name}</a>
+                      `)}
+                  </div>
+                </div>
+              `)}
+          </div>
+        </aside>
+
+        <div class="sg-content">
+          <crt-header class="sg-header" title="CRT LIVING STYLE GUIDE">
+            <span slot="title">CRT LIVING STYLE GUIDE</span>
+            <span slot="subtitle">Component Library · Lit Web Components · Atomic Design</span>
+            <div slot="actions">
+              <crt-search placeholder="Search styleguide..." style="width:240px;"></crt-search>
+            </div>
+          </crt-header>
+
+          ${categories
+            .filter((category) => category.id !== 'use-cases')
+            .map((category) => html`
+              <section id="${category.id}" class="sg-section">
+                <div class="sg-section-header">
+                  <crt-heading level="2">${category.label}</crt-heading>
+                  ${category.description ? html`<crt-text muted>${category.description}</crt-text>` : ''}
+                </div>
+                ${componentDocs
+                  .filter((component) => component.category === category.id)
+                  .map(renderComponent)}
+              </section>
+            `)}
+
+          <section id="use-cases" class="sg-section">
+            <div class="sg-section-header">
+              <crt-heading level="2">Use Cases</crt-heading>
+              <crt-text muted>Scenario-driven examples with real UI compositions.</crt-text>
+            </div>
+            ${useCases.map((useCase) => html`
+              <div id="${useCase.id}">
+                <crt-code-example
+                  class="mb-lg"
+                  .title=${useCase.title}
+                  .description=${useCase.description ?? ''}
+                  .code=${useCase.code}
+                >
+                  ${useCase.preview}
+                </crt-code-example>
+              </div>
+            `)}
+          </section>
+
+          <crt-footer class="sg-footer">
+            <span slot="left">Made with ♥</span>
+            <span slot="right">
+              <crt-link href="https://github.com/Smotherer007/crtstyleguide" target="_blank">GitHub</crt-link>
+            </span>
+          </crt-footer>
         </div>
-      </crt-header>
-
-      <!-- NAVIGATION -->
-      <!-- Simplified primary nav for clarity -->
-      <crt-navbar id="sg-nav" .items=${[
-        { href: '#basics', label: 'Basics' },
-        { href: '#forms', label: 'Forms' },
-        { href: '#components', label: 'Components' },
-        { href: '#navigation', label: 'Navigation' },
-        { href: '#layout', label: 'Layout' },
-        { href: '#media', label: 'Media' },
-        { href: '#crt-screen', label: 'CRT Screen' },
-        { href: '#organisms', label: 'Organisms' }
-      ]}></crt-navbar>
-
-      <main class="sg-main">
-
-        <!-- ═══════════════════════════════════════════════════════════════ -->
-        <!-- SECTION 1: BASICS (Typography, Icons, Spacing) -->
-        <!-- ═══════════════════════════════════════════════════════════════ -->
-        <section id="basics" class="sg-section">
-          <crt-heading level="2">01. BASICS</crt-heading>
-          <crt-text muted class="mb-lg">Text display and headings in terminal style.</crt-text>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Headings"
-            description="Hierarchical headings from level 1 to 4."
-            code='<crt-heading level="1">Heading Level 1</crt-heading>
-<crt-heading level="2">Heading Level 2</crt-heading>
-<crt-heading level="3">Heading Level 3</crt-heading>
-<crt-heading level="4">Heading Level 4</crt-heading>'
-          >
-            <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
-              <crt-heading level="1">Heading Level 1</crt-heading>
-              <crt-heading level="2">Heading Level 2</crt-heading>
-              <crt-heading level="3">Heading Level 3</crt-heading>
-              <crt-heading level="4">Heading Level 4</crt-heading>
-            </div>
-          </crt-code-example>
-
-
-
-          <crt-code-example
-            class="mb-lg"
-            title="Text"
-            description="Standard body text and muted variant."
-            code='<crt-text>This is a normal text paragraph with primary color.</crt-text>
-<crt-text muted>This is muted text for secondary information.</crt-text>'
-          >
-            <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
-              <crt-text>This is a normal text paragraph with primary color.</crt-text>
-              <crt-text muted>This is muted text for secondary information.</crt-text>
-            </div>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Links"
-            description="Links with optional icons."
-            code='<crt-link href="#">Standard Link</crt-link>
-<crt-link href="#" icon-right>Mehr erfahren →</crt-link>'
-          >
-            <crt-link href="#">Standard Link</crt-link>
-            <crt-link href="#">Mehr erfahren →</crt-link>
-          </crt-code-example>
-        </section>
-
-        <!-- Navigation examples moved to Basics section -->
-        <section id="basics-navigation-preview" class="sg-section" style="display:none;">
-          <crt-code-example
-            class="mb-lg"
-            title="Header & Navbar"
-            description="Combined header with navbar, search slot and responsive collapse."
-            code='<crt-header title="CRT LIVING STYLE GUIDE">\n  <crt-search slot="actions" placeholder="Search..." style="width:220px"></crt-search>\n</crt-header>\n<crt-navbar .items=\${[{href: "#typography", label: "01_Typography"}, {href: "#forms", label: "03_Forms"}, {href: "#media", label: "09_Media"}]}></crt-navbar>'
-          >
-            <div style="display:flex;flex-direction:column;gap:12px;width:100%;">
-              <crt-header title="CRT LIVING STYLE GUIDE">
-                <crt-search slot="actions" placeholder="Search..." style="width:220px"></crt-search>
-              </crt-header>
-
-              <crt-navbar .items=${[
-                { href: '#typography', label: '01_Typography' },
-                { href: '#forms', label: '03_Forms' },
-                { href: '#media', label: '09_Media' }
-              ]}></crt-navbar>
-            </div>
-          </crt-code-example>
-        </section>
-
-        <!-- Icons now part of Basics section -->
-        <section id="basics-icons" class="sg-section" style="display:none;">
-          <crt-heading level="2">ICONS</crt-heading>
-          <crt-text muted class="mb-lg">Alle verfügbaren Icons (Name als Referenz).</crt-text>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Icons Preview"
-            description="Overview of all available icons with labels."
-            code='<!-- All icons preview -->'
-          >
-            <div style="display:flex;flex-wrap:wrap;gap:12px;">
-              ${ICON_NAMES.map((name: string) => html`<div style="width:120px;display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px;border:1px dashed var(--crt-primary);border-radius:6px;"><crt-icon name="${name}"></crt-icon><crt-text muted style="font-size:12px;word-break:break-word;text-align:center;width:100%;">${name}</crt-text></div>`) }
-            </div>
-          </crt-code-example>
-        </section>
-
-        <!-- Components overview removed -->
-        <section id="removed-components-overview" class="sg-section" style="display:none;">
-          <crt-heading level="2">COMPONENTS</crt-heading>
-          <crt-text muted class="mb-lg">All available components (Atoms & Molecules). Click an entry to jump to the section.</crt-text>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Component List"
-            description="Quick overview of components with links to their respective sections."
-            code='<!-- Component list preview -->'
-          >
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;">
-              <div style="border:1px dashed var(--crt-primary);padding:12px;display:flex;flex-direction:column;gap:8px;align-items:flex-start;">
-                <crt-heading level="5">Atoms</crt-heading>
-                <div style="display:flex;flex-wrap:wrap;gap:8px;">
-                  <crt-link href="#forms">Button</crt-link>
-                  <crt-link href="#forms">Badge</crt-link>
-                  <crt-link href="#forms">Input</crt-link>
-                  <crt-link href="#forms">Select</crt-link>
-                  <crt-link href="#forms">Checkbox</crt-link>
-                  <crt-link href="#forms">Radio</crt-link>
-                  <crt-link href="#forms">Toggle</crt-link>
-                  <crt-link href="#forms">Slider</crt-link>
-                  <crt-link href="#forms">Icon</crt-link>
-                  <crt-link href="#forms">Link</crt-link>
-                  <crt-link href="#forms">Tabs</crt-link>
-                  <crt-link href="#forms">Tooltip</crt-link>
-                  <crt-link href="#forms">Progress</crt-link>
-                  <crt-link href="#forms">Spinner</crt-link>
-                  <crt-link href="#forms">Avatar</crt-link>
-                </div>
-              </div>
-
-              <div style="border:1px dashed var(--crt-primary);padding:12px;display:flex;flex-direction:column;gap:8px;align-items:flex-start;">
-                <crt-heading level="5">Molecules</crt-heading>
-                <div style="display:flex;flex-wrap:wrap;gap:8px;">
-                  <crt-link href="#media">Card</crt-link>
-                  <crt-link href="#overlays">Modal</crt-link>
-                  <crt-link href="#media">Table</crt-link>
-                  <crt-link href="#media">Grid</crt-link>
-                  <crt-link href="#actions">Accordion</crt-link>
-                  <crt-link href="#feedback">Toast</crt-link>
-                  <crt-link href="#media">CodeExample</crt-link>
-                  <crt-link href="#media">MusicPlayer</crt-link>
-                  <crt-link href="#media">Playlist</crt-link>
-                  <crt-link href="#media">Visualizer</crt-link>
-                  <crt-link href="#media">Terminal</crt-link>
-                </div>
-              </div>
-            </div>
-          </crt-code-example>
-        </section>
-
-        <!-- Spacing now part of Basics -->
-        <section id="basics-spacing" class="sg-section" style="display:none;">
-          <crt-heading level="2">02. SPACING UTILITIES</crt-heading>
-          <crt-text muted class="mb-lg">CSS-Klassen für Abstände. Größen: xs (4px), sm (8px), md (16px), lg (24px), xl (32px), 2xl (48px)</crt-text>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Margin - Alle Seiten"
-            description="Adds spacing around the entire element."
-            code='<div class="m-xs">m-xs (4px)</div>
-<div class="m-sm">m-sm (8px)</div>
-<div class="m-md">m-md (16px)</div>
-<div class="m-lg">m-lg (24px)</div>
-<div class="m-xl">m-xl (32px)</div>'
-          >
-            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-              <div class="m-xs" style="border: 1px dashed var(--crt-primary); padding: 8px;">.m-xs</div>
-              <div class="m-sm" style="border: 1px dashed var(--crt-primary); padding: 8px;">.m-sm</div>
-              <div class="m-md" style="border: 1px dashed var(--crt-primary); padding: 8px;">.m-md</div>
-              <div class="m-lg" style="border: 1px dashed var(--crt-primary); padding: 8px;">.m-lg</div>
-              <div class="m-xl" style="border: 1px dashed var(--crt-primary); padding: 8px;">.m-xl</div>
-            </div>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Margin - Richtungen"
-            description="Margin for specific sides: mt (top), mr (right), mb (bottom), ml (left)."
-            code='<div class="mt-md">mt-md (margin-top)</div>
-<div class="mr-md">mr-md (margin-right)</div>
-<div class="mb-md">mb-md (margin-bottom)</div>
-<div class="ml-md">ml-md (margin-left)</div>
-<div class="mx-md">mx-md (horizontal)</div>
-<div class="my-md">my-md (vertical)</div>'
-          >
-            <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-              <div style="background: color-mix(in srgb, var(--crt-primary) 10%, transparent);">
-                <div class="mt-lg" style="border: 1px solid var(--crt-primary); padding: 8px;">.mt-lg</div>
-              </div>
-              <div style="background: color-mix(in srgb, var(--crt-primary) 10%, transparent);">
-                <div class="ml-lg" style="border: 1px solid var(--crt-primary); padding: 8px;">.ml-lg</div>
-              </div>
-              <div style="background: color-mix(in srgb, var(--crt-primary) 10%, transparent);">
-                <div class="mx-lg" style="border: 1px solid var(--crt-primary); padding: 8px;">.mx-lg</div>
-              </div>
-              <div style="background: color-mix(in srgb, var(--crt-primary) 10%, transparent);">
-                <div class="my-lg" style="border: 1px solid var(--crt-primary); padding: 8px;">.my-lg</div>
-              </div>
-            </div>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Padding - Alle Seiten"
-            description="Adds inner spacing."
-            code='<div class="p-xs">p-xs (4px)</div>
-<div class="p-sm">p-sm (8px)</div>
-<div class="p-md">p-md (16px)</div>
-<div class="p-lg">p-lg (24px)</div>
-<div class="p-xl">p-xl (32px)</div>'
-          >
-            <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start;">
-              <div class="p-xs" style="border: 1px solid var(--crt-primary);">.p-xs</div>
-              <div class="p-sm" style="border: 1px solid var(--crt-primary);">.p-sm</div>
-              <div class="p-md" style="border: 1px solid var(--crt-primary);">.p-md</div>
-              <div class="p-lg" style="border: 1px solid var(--crt-primary);">.p-lg</div>
-              <div class="p-xl" style="border: 1px solid var(--crt-primary);">.p-xl</div>
-            </div>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Padding - Richtungen"
-            description="Padding for specific sides: pt (top), pr (right), pb (bottom), pl (left)."
-            code='<div class="pt-md">pt-md (padding-top)</div>
-<div class="pr-md">pr-md (padding-right)</div>
-<div class="pb-md">pb-md (padding-bottom)</div>
-<div class="pl-md">pl-md (padding-left)</div>
-<div class="px-md">px-md (horizontal)</div>
-<div class="py-md">py-md (vertical)</div>'
-          >
-            <div style="display: flex; flex-wrap: wrap; gap: 15px; align-items: flex-start;">
-              <div class="pt-lg" style="border: 1px solid var(--crt-primary);">.pt-lg</div>
-              <div class="pl-lg" style="border: 1px solid var(--crt-primary);">.pl-lg</div>
-              <div class="px-lg" style="border: 1px solid var(--crt-primary);">.px-lg</div>
-              <div class="py-lg" style="border: 1px solid var(--crt-primary);">.py-lg</div>
-            </div>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Kombinationen"
-            description="Utility classes can be combined."
-            code='<div class="mt-lg mb-sm px-md">Kombiniert: mt-lg mb-sm px-md</div>
-<crt-button class="mr-md">Button mit mr-md</crt-button>
-<crt-badge class="ml-lg">Badge mit ml-lg</crt-badge>'
-          >
-            <div style="display: flex; align-items: center; background: color-mix(in srgb, var(--crt-primary) 5%, transparent);">
-              <crt-button class="mr-md">Button</crt-button>
-              <crt-button class="mr-lg">+ mr-lg</crt-button>
-              <crt-badge class="ml-xl">+ ml-xl Badge</crt-badge>
-            </div>
-          </crt-code-example>
-
-          <crt-card style="margin-top: 20px;">
-            <crt-heading level="4">[+] Spacing Reference</crt-heading>
-            <crt-table>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Suffix</th>
-                    <th>CSS Variable</th>
-                    <th>Wert</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td>-xs</td><td>--crt-spacing-xs</td><td>4px</td></tr>
-                  <tr><td>-sm</td><td>--crt-spacing-sm</td><td>8px</td></tr>
-                  <tr><td>-md</td><td>--crt-spacing-md</td><td>16px</td></tr>
-                  <tr><td>-lg</td><td>--crt-spacing-lg</td><td>24px</td></tr>
-                  <tr><td>-xl</td><td>--crt-spacing-xl</td><td>32px</td></tr>
-                  <tr><td>-2xl</td><td>--crt-spacing-2xl</td><td>48px</td></tr>
-                </tbody>
-              </table>
-            </crt-table>
-          </crt-card>
-        </section>
-
-        <!-- ═══════════════════════════════════════════════════════════════ -->
-        <!-- SECTION 2: FORM ELEMENTS -->
-        <!-- ═══════════════════════════════════════════════════════════════ -->
-        <section id="forms" class="sg-section">
-          <crt-heading level="2">02. FORMS</crt-heading>
-          <crt-text muted class="mb-lg">Input fields and form components.</crt-text>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Text Input"
-            description="Standard text input field."
-            code='<crt-input placeholder="Enter text..."></crt-input>
-<crt-input type="email" placeholder="Email address"></crt-input>
-<crt-input type="password" placeholder="Password"></crt-input>'
-          >
-            <crt-input placeholder="Enter text..." style="width: 250px;"></crt-input>
-            <crt-input type="email" placeholder="Email address" style="width: 250px;"></crt-input>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Textarea"
-            description="Multi-line text field."
-            code='<crt-textarea placeholder="Enter your message..."></crt-textarea>'
-          >
-            <crt-textarea placeholder="Enter your message..." style="width: 100%; max-width: 400px;"></crt-textarea>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Select / Dropdown"
-            description="Dropdown menu with option groups."
-            code='<!-- Einfaches Select -->
-<crt-select
-  label="Priority"
-  placeholder="Select priority..."
-  .options=\${[
-    { value: "low", label: "LOW" },
-    { value: "medium", label: "MEDIUM" },
-    { value: "high", label: "HIGH" }
-  ]}
-></crt-select>
-
-<!-- Mit Gruppen -->
-<crt-select
-  label="Category"
-  .options=\${[
-    { group: "System", options: [
-      { value: "cpu", label: "CPU" },
-      { value: "memory", label: "MEMORY" }
-    ]},
-    { group: "Network", options: [
-      { value: "lan", label: "LAN" },
-      { value: "wan", label: "WAN" }
-    ]}
-  ]}
-></crt-select>'
-          >
-            <div style="display: flex; gap: 48px; flex-wrap: wrap;">
-              <crt-select
-                label="Priority"
-                placeholder="Select priority..."
-                .options=${[
-                  { value: 'low', label: 'LOW' },
-                  { value: 'medium', label: 'MEDIUM' },
-                  { value: 'high', label: 'HIGH' },
-                  { value: 'critical', label: 'CRITICAL' }
-                ]}
-              ></crt-select>
-              <crt-select
-                label="Category"
-                .options=${[
-                  { group: 'System', options: [
-                    { value: 'cpu', label: 'CPU' },
-                    { value: 'memory', label: 'MEMORY' }
-                  ]},
-                  { group: 'Network', options: [
-                    { value: 'lan', label: 'LAN' },
-                    { value: 'wan', label: 'WAN' }
-                  ]}
-                ]}
-              ></crt-select>
-            </div>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Search / Autocomplete"
-            description="Search input with suggestions, debounce and keyboard support."
-            code='<crt-search placeholder="Search tracks..." .suggestions=\${[{value: "patimwep", label: "Patimwep - Verrostete Terminals"}, {value: "retro", label: "Retro Beats"}, {value: "synth", label: "Synthwave"}, {value: "chiptune", label: "Chiptune Classics"}, {value: "ambient", label: "Ambient Textures"}]}></crt-search>'
-          >
-            <div style="display:flex;flex-direction:column;gap:8px;">
-              <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
-                <crt-search id="demo-search" class="demo-search" placeholder="Search tracks..." .suggestions=${[
-                  { value: 'patimwep', label: 'Patimwep - Verrostete Terminals' },
-                  { value: 'retro', label: 'Retro Beats' },
-                  { value: 'synth', label: 'Synthwave' }
-                ]} style="width:320px;"></crt-search>
-              </div>
-              <crt-text muted style="font-size:12px;">Demo: Tippe ein paar Buchstaben, die Vorschläge kommen asynchron (demo fetcher).</crt-text>
-            </div>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Checkbox & Radio"
-            description="Radio buttons for single selection and checkboxes for multiple selection."
-            code='<crt-checkbox label="Option aktivieren"></crt-checkbox>
-<crt-radio-group name="choice">
-  <crt-radio value="a" label="Option A"></crt-radio>
-  <crt-radio value="b" label="Option B"></crt-radio>
-</crt-radio-group>'
-          >
-            <div style="display: flex; flex-direction: column; gap: 16px; width: 100%;">
-              <div style="display: flex; gap: 24px;">
-                <crt-checkbox label="Enable logging" checked></crt-checkbox>
-                <crt-checkbox label="Debug mode"></crt-checkbox>
-                <crt-checkbox label="Disabled" disabled></crt-checkbox>
-              </div>
-              <div>
-                <crt-text muted style="margin-bottom: 8px;">Mode Selection:</crt-text>
-                <crt-radio-group name="mode" value="auto" style="display: flex; gap: 24px;">
-                  <crt-radio value="auto" label="AUTO"></crt-radio>
-                  <crt-radio value="manual" label="MANUAL"></crt-radio>
-                  <crt-radio value="off" label="OFF"></crt-radio>
-                </crt-radio-group>
-              </div>
-            </div>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Toggle / Switch"
-            description="On/off switch for binary options."
-            code='<crt-toggle label="Power"></crt-toggle>
-<crt-toggle checked label="Active"></crt-toggle>'
-          >
-            <div style="display: flex; gap: 32px; align-items: center;">
-              <crt-toggle label="POWER" checked></crt-toggle>
-              <crt-toggle label="STEALTH MODE" size="small"></crt-toggle>
-              <crt-toggle label="OFFLINE" disabled></crt-toggle>
-            </div>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Slider / Range"
-            description="Slider for numeric values."
-            code='<crt-slider
-  label="Volume"
-  min="0" max="100" value="50"
-  unit="%"
-></crt-slider>'
-          >
-            <div style="width: 100%; display: flex; flex-direction: column; gap: 24px;">
-              <crt-slider label="VOLUME" min="0" max="100" value="75" unit="%"></crt-slider>
-              <crt-slider label="BRIGHTNESS" min="0" max="255" value="128" showMarks></crt-slider>
-              <crt-slider label="CONTRAST" min="0" max="100" value="50" disabled></crt-slider>
-            </div>
-          </crt-code-example>
-
-         
-
-          <crt-code-example
-            class="mb-lg"
-            title="Calendar"
-            description="Full calendar for date selection."
-            code='<crt-calendar></crt-calendar>'
-          >
-            <crt-calendar></crt-calendar>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="File Upload"
-            description="Fallout-style file manager with drag & drop support."
-            code='<crt-file-upload 
-  accept="image/*,.pdf,.txt,.doc,.docx"
-  multiple
-  max-size="5242880"
-  max-files="5"
-></crt-file-upload>'
-          >
-            <crt-file-upload accept="image/*,.pdf,.txt,.doc,.docx" multiple max-files="5"></crt-file-upload>
-          </crt-code-example>
-        </section>
-
-        <!-- ═══════════════════════════════════════════════════════════════ -->
-        <!-- SECTION 3: COMPONENTS (Buttons, Badges, Alerts, Progress, Avatar) -->
-        <!-- ═══════════════════════════════════════════════════════════════ -->
-        <section id="components" class="sg-section">
-          <crt-heading level="2">03. COMPONENTS</crt-heading>
-          <crt-text muted class="mb-lg">Buttons, badges, alerts and UI elements.</crt-text>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Button Variants"
-            description="Different status variants for different actions."
-            code='<crt-button>PRIMARY</crt-button>
-<crt-button variant="success">SUCCESS</crt-button>
-<crt-button variant="warning">WARNING</crt-button>
-<crt-button variant="error">ERROR</crt-button>'
-          >
-            <crt-button>PRIMARY</crt-button>
-            <crt-button variant="success">SUCCESS</crt-button>
-            <crt-button variant="warning">WARNING</crt-button>
-            <crt-button variant="error">ERROR</crt-button>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Button Sizes"
-            description="Different sizes for different contexts."
-            code='<crt-button size="small">SMALL</crt-button>
-<crt-button size="medium">MEDIUM</crt-button>
-<crt-button size="large">LARGE</crt-button>'
-          >
-            <crt-button size="small">SMALL</crt-button>
-            <crt-button size="medium">MEDIUM</crt-button>
-            <crt-button size="large">LARGE</crt-button>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Button States"
-            description="Disabled and link variants."
-            code='<crt-button disabled>DISABLED</crt-button>
-<crt-button variant="link">LINK STYLE</crt-button>'
-          >
-            <crt-button disabled>DISABLED</crt-button>
-            <crt-button variant="link">LINK STYLE</crt-button>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Buttons with Icons"
-            description="Buttons with icons on left, right or icon-only."
-            code='<!-- Icon links -->
-<crt-button icon-left="download">DOWNLOAD</crt-button>
-<crt-button icon-left="upload" variant="success">UPLOAD</crt-button>
-
-<!-- Icon rechts -->
-<crt-button icon-right="arrow-right">WEITER</crt-button>
-<crt-button icon-right="check" variant="success">BESTÄTIGEN</crt-button>
-
-<!-- Icon-Only Buttons -->
-<crt-button icon-only icon-left="plus"></crt-button>
-<crt-button icon-only icon-left="edit"></crt-button>
-<crt-button icon-only icon-left="trash" variant="error"></crt-button>
-<crt-button icon-only icon-left="settings"></crt-button>
-<crt-button icon-only icon-left="search" size="small"></crt-button>
-<crt-button icon-only icon-left="menu" size="large"></crt-button>'
-          >
-            <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;">
-              <crt-button style="height:40px;display:inline-flex;align-items:center;justify-content:center;" icon-left="download">DOWNLOAD</crt-button>
-              <crt-button style="height:40px;display:inline-flex;align-items:center;justify-content:center;" icon-left="upload" variant="success">UPLOAD</crt-button>
-              <crt-button style="height:40px;display:inline-flex;align-items:center;justify-content:center;" icon-right="arrow-right">WEITER</crt-button>
-              <crt-button style="height:40px;display:inline-flex;align-items:center;justify-content:center;" icon-right="check" variant="success">BESTÄTIGEN</crt-button>
-            </div>
-            <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;">
-              <crt-button style="height:40px;display:inline-flex;align-items:center;justify-content:center;" icon-only icon-left="plus"></crt-button>
-              <crt-button style="height:40px;display:inline-flex;align-items:center;justify-content:center;" icon-only icon-left="edit"></crt-button>
-              <crt-button style="height:40px;display:inline-flex;align-items:center;justify-content:center;" icon-only icon-left="trash" variant="error"></crt-button>
-              <crt-button style="height:40px;display:inline-flex;align-items:center;justify-content:center;" icon-only icon-left="settings"></crt-button>
-              <crt-button style="height:40px;display:inline-flex;align-items:center;justify-content:center;" icon-only icon-left="search" size="small"></crt-button>
-              <crt-button style="height:40px;display:inline-flex;align-items:center;justify-content:center;" icon-only icon-left="menu" size="large"></crt-button>
-            </div>
-          </crt-code-example>
-        </section>
-
-        <!-- Feedback merged into Components -->
-        <section id="components-feedback" class="sg-section" style="display:none;">
-          <crt-heading level="2">05. FEEDBACK</crt-heading>
-          <crt-text muted class="mb-lg">Status-Anzeigen und Benachrichtigungen.</crt-text>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Badges"
-            description="Status labels for different states."
-            code='<crt-badge>DEFAULT</crt-badge>
-<crt-badge variant="success">SUCCESS</crt-badge>
-<crt-badge variant="warning">WARNING</crt-badge>
-<crt-badge variant="error">ERROR</crt-badge>
-<crt-badge variant="info">INFO</crt-badge>'
-          >
-            <crt-badge>DEFAULT</crt-badge>
-            <crt-badge variant="success">SUCCESS</crt-badge>
-            <crt-badge variant="warning">WARNING</crt-badge>
-            <crt-badge variant="error">ERROR</crt-badge>
-            <crt-badge variant="info">INFO</crt-badge>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Progress Bar"
-            description="Progress indicator with different variants."
-            code='<crt-progress value="25" label="Processing..."></crt-progress>
-<crt-progress value="75" variant="success" showValue></crt-progress>
-<crt-progress animated indeterminate label="Loading..."></crt-progress>
-<crt-progress value="60" segmented segments="10"></crt-progress>'
-          >
-            <div style="width: 100%; display: flex; flex-direction: column; gap: 16px;">
-              <crt-progress value="25" label="Processing..."></crt-progress>
-              <crt-progress value="75" variant="success" showValue></crt-progress>
-              <crt-progress animated indeterminate label="Loading..."></crt-progress>
-              <crt-progress value="60" segmented segments="10" showValue></crt-progress>
-            </div>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Alert / Banner"
-            description="Permanent notices and messages."
-            code='<crt-alert variant="info" title="INFO">System update available.</crt-alert>
-<crt-alert variant="success" title="SUCCESS" closable>Operation completed.</crt-alert>
-<crt-alert variant="warning" title="WARNING">Low disk space.</crt-alert>
-<crt-alert variant="error" title="ERROR">Connection failed.</crt-alert>'
-          >
-            <div style="width: 100%; display: flex; flex-direction: column; gap: 16px;">
-              <crt-alert variant="info" title="INFO">System update available for download.</crt-alert>
-              <crt-alert variant="success" title="SUCCESS" closable>Operation completed successfully.</crt-alert>
-              <crt-alert variant="warning" title="WARNING">Low disk space detected.</crt-alert>
-              <crt-alert variant="error" title="ERROR">Connection to server failed.</crt-alert>
-            </div>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Skeleton Loader"
-            description="Loading indicators while data is being loaded."
-            code='<crt-skeleton width="100%" height="20px"></crt-skeleton>
-<crt-skeleton-text lines="3"></crt-skeleton-text>
-<crt-skeleton-card></crt-skeleton-card>'
-          >
-            <div style="width: 100%; display: flex; flex-direction: column; gap: 16px;">
-              <crt-skeleton width="100%" height="24px"></crt-skeleton>
-              <crt-skeleton width="80%" height="16px"></crt-skeleton>
-              <crt-skeleton width="60%" height="16px"></crt-skeleton>
-              <div style="margin-top: 16px;">
-                <crt-skeleton-card hideImage></crt-skeleton-card>
-              </div>
-            </div>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Tooltip"
-            description="Contextual hints on hover."
-            code='<crt-tooltip text="Info tooltip" position="top">
-  <crt-button>Hover me</crt-button>
-</crt-tooltip>'
-          >
-            <div style="display: flex; gap: 24px; padding: 40px 0;">
-              <crt-tooltip text="Tooltip oben" position="top">
-                <crt-button size="small">TOP</crt-button>
-              </crt-tooltip>
-              <crt-tooltip text="Tooltip rechts" position="right">
-                <crt-button size="small">RIGHT</crt-button>
-              </crt-tooltip>
-              <crt-tooltip text="Tooltip unten" position="bottom">
-                <crt-button size="small">BOTTOM</crt-button>
-              </crt-tooltip>
-              <crt-tooltip text="Tooltip links" position="left">
-                <crt-button size="small">LEFT</crt-button>
-              </crt-tooltip>
-            </div>
-          </crt-code-example>
-        </section>
-
-        <!-- ═══════════════════════════════════════════════════════════════ -->
-        <!-- SECTION 5: LAYOUT (Card, Grid, Table, Accordion, Modal, Toast) -->
-        <!-- ═══════════════════════════════════════════════════════════════ -->
-        <section id="layout" class="sg-section">
-          <crt-heading level="2">05. LAYOUT</crt-heading>
-          <crt-text muted class="mb-lg">Container and structural components.</crt-text>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Card"
-            description="Container for grouped content."
-            code='<crt-card>
-  <crt-heading level="4" slot="header">Card Title</crt-heading>
-  <crt-text>Card content goes here...</crt-text>
-  <crt-text muted slot="footer">Footer info</crt-text>
-</crt-card>'
-          >
-            <crt-card style="width: 100%; max-width: 400px;">
-              <crt-heading level="4" slot="header">Card Title</crt-heading>
-              <crt-text>Card content goes here. This is an example of how content looks inside a card component.</crt-text>
-              <crt-text muted slot="footer">Footer info</crt-text>
-            </crt-card>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Grid"
-            description="Responsive grid layout."
-            code='<crt-grid columns="3" gap="16px">
-  <crt-card><crt-heading level="5" slot="header">Item 1</crt-heading></crt-card>
-  <crt-card><crt-heading level="5" slot="header">Item 2</crt-heading></crt-card>
-  <crt-card><crt-heading level="5" slot="header">Item 3</crt-heading></crt-card>
-</crt-grid>'
-          >
-            <crt-grid columns="3" gap="16px" style="width: 100%;">
-              <crt-card><crt-heading level="5" slot="header">Item 1</crt-heading><crt-text muted>Content</crt-text></crt-card>
-              <crt-card><crt-heading level="5" slot="header">Item 2</crt-heading><crt-text muted>Content</crt-text></crt-card>
-              <crt-card><crt-heading level="5" slot="header">Item 3</crt-heading><crt-text muted>Content</crt-text></crt-card>
-            </crt-grid>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Table"
-            description="Data overview in table format."
-            code='<crt-table
-  .headers=\${["Name", "Status", "Progress"]}
-  .rows=\${[
-    ["Task 1", "Active", "75%"],
-    ["Task 2", "Done", "100%"],
-  ]}
-></crt-table>'
-          >
-            <crt-table
-              .headers=${['Name', 'Status', 'Progress']}
-              .rows=${[
-                ['Task Alpha', 'Active', '75%'],
-                ['Task Beta', 'Completed', '100%'],
-                ['Task Gamma', 'Pending', '25%'],
-              ]}
-              style="width: 100%;"
-            ></crt-table>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Accordion"
-            description="Collapsible sections for structured content."
-            code='<crt-accordion>
-  <crt-accordion-item header="Section 1">Content 1</crt-accordion-item>
-  <crt-accordion-item header="Section 2">Content 2</crt-accordion-item>
-</crt-accordion>'
-          >
-            <crt-accordion style="width: 100%;">
-              <crt-accordion-item header="[+] SYSTEM CONFIGURATION" open>
-                <crt-text>Configure system parameters and settings for optimal performance.</crt-text>
-              </crt-accordion-item>
-              <crt-accordion-item header="[+] NETWORK SETTINGS">
-                <crt-text>Manage network connections, protocols, and security options.</crt-text>
-              </crt-accordion-item>
-              <crt-accordion-item header="[+] USER MANAGEMENT">
-                <crt-text>Add, remove, and configure user accounts and permissions.</crt-text>
-              </crt-accordion-item>
-            </crt-accordion>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Avatar"
-            description="User images with fallback and status."
-            code='<crt-avatar name="John Doe" size="md"></crt-avatar>
-<crt-avatar name="Jane" status="online"></crt-avatar>
-<crt-avatar shape="circle" name="User"></crt-avatar>'
-          >
-            <div style="display: flex; gap: 16px; align-items: center;">
-              <crt-avatar name="Admin User" size="lg" status="online"></crt-avatar>
-              <crt-avatar name="John Doe" size="md" status="busy"></crt-avatar>
-              <crt-avatar name="Guest" size="sm" shape="circle"></crt-avatar>
-              <crt-avatar size="md"></crt-avatar>
-            </div>
-          </crt-code-example>
-        </section>
-
-        <!-- ═══════════════════════════════════════════════════════════════ -->
-        <!-- SECTION 4: NAVIGATION (Tabs, Breadcrumb, Pagination, Navbar) -->
-        <!-- ═══════════════════════════════════════════════════════════════ -->
-        <section id="navigation" class="sg-section">
-          <crt-heading level="2">04. NAVIGATION</crt-heading>
-          <crt-text muted class="mb-lg">Navigation components for page structure.</crt-text>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Tabs"
-            description="Organize content in tabs."
-            code='<crt-tabs .tabs=\${[
-  { label: "Tab 1", content: "Content 1" },
-  { label: "Tab 2", content: "Content 2" }
-]}></crt-tabs>'
-          >
-            <crt-tabs 
-              style="width: 100%;"
-              .tabs=${[
-                { label: 'OVERVIEW', content: 'System overview and status information.' },
-                { label: 'DETAILS', content: 'Detailed system specifications and metrics.' },
-                { label: 'LOGS', content: 'Recent system activity and event logs.' }
-              ]}
-            ></crt-tabs>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Breadcrumb"
-            description="Display navigation path."
-            code='<crt-breadcrumb
-  .items=\${[
-    { label: "Home", href: "#" },
-    { label: "Section", href: "#" },
-    { label: "Current" }
-  ]}
-></crt-breadcrumb>'
-          >
-            <crt-breadcrumb
-              .items=${[
-                { label: 'ROOT', href: '#' },
-                { label: 'SYSTEM', href: '#' },
-                { label: 'CONFIG', href: '#' },
-                { label: 'NETWORK' }
-              ]}
-            ></crt-breadcrumb>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Pagination"
-            description="Page navigation for data lists."
-            code='<crt-pagination
-  totalPages="10"
-  currentPage="1"
-></crt-pagination>'
-          >
-            <crt-pagination
-              totalPages="15"
-              currentPage="5"
-              showInfo
-            ></crt-pagination>
-          </crt-code-example>
-        </section>
-
-        <!-- Overlays merged into Layout -->
-        <section id="layout-overlays" class="sg-section" style="display:none;">
-          <crt-heading level="2">08. OVERLAYS</crt-heading>
-          <crt-text muted class="mb-lg">Modale Fenster und Benachrichtigungen.</crt-text>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Modal / Dialog"
-            description="Modal dialogs for important interactions."
-            code='<crt-modal open title="Dialog Title">
-  <crt-text>Dialog content here...</crt-text>
-  <div slot="footer">
-    <crt-button variant="link">Cancel</crt-button>
-    <crt-button>Confirm</crt-button>
-  </div>
-</crt-modal>'
-          >
-            <div style="display: flex; gap: 16px;">
-              <crt-button @click=${() => {
-                const modal = document.createElement('crt-modal');
-                modal.setAttribute('title', 'SYSTEM ALERT');
-                modal.setAttribute('open', '');
-                modal.innerHTML = `
-                  <crt-text>Do you want to proceed with the system reset?</crt-text>
-                  <crt-text muted>This action cannot be undone.</crt-text>
-                  <div slot="footer" style="display: flex; gap: 16px; justify-content: flex-end;">
-                    <crt-button variant="link" onclick="this.closest('crt-modal').remove()">CANCEL</crt-button>
-                    <crt-button variant="error" onclick="this.closest('crt-modal').remove()">RESET</crt-button>
-                  </div>
-                `;
-                document.body.appendChild(modal);
-              }}>OPEN MODAL</crt-button>
-              <crt-button variant="warning" @click=${() => {
-                const modal = document.createElement('crt-modal');
-                modal.setAttribute('title', 'CONFIRM');
-                modal.setAttribute('open', '');
-                modal.setAttribute('size', 'small');
-                modal.innerHTML = `
-                  <crt-text>Are you sure?</crt-text>
-                  <div slot="footer" style="display: flex; gap: 16px; justify-content: flex-end;">
-                    <crt-button variant="link" onclick="this.closest('crt-modal').remove()">NO</crt-button>
-                    <crt-button variant="success" onclick="this.closest('crt-modal').remove()">YES</crt-button>
-                  </div>
-                `;
-                document.body.appendChild(modal);
-              }}>SMALL MODAL</crt-button>
-            </div>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Toast Notifications"
-            description="Temporary notifications."
-            code='// Show via JavaScript:
-const toast = document.createElement("crt-toast");
-toast.message = "Success!";
-toast.variant = "success";
-document.body.appendChild(toast);'
-          >
-            <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-              <crt-button variant="success" @click=${() => {
-                const toast = document.createElement('crt-toast') as any;
-                toast.message = 'Operation completed successfully!';
-                toast.variant = 'success';
-                toast.duration = 3000;
-                document.body.appendChild(toast);
-              }}>SUCCESS TOAST</crt-button>
-              <crt-button variant="warning" @click=${() => {
-                const toast = document.createElement('crt-toast') as any;
-                toast.message = 'Warning: Low disk space detected.';
-                toast.variant = 'warning';
-                toast.duration = 3000;
-                document.body.appendChild(toast);
-              }}>WARNING TOAST</crt-button>
-              <crt-button variant="error" @click=${() => {
-                const toast = document.createElement('crt-toast') as any;
-                toast.message = 'Error: Connection failed!';
-                toast.variant = 'error';
-                toast.duration = 3000;
-                document.body.appendChild(toast);
-              }}>ERROR TOAST</crt-button>
-              <crt-button @click=${() => {
-                const toast = document.createElement('crt-toast') as any;
-                toast.message = 'Info: New update available.';
-                toast.variant = 'info';
-                toast.duration = 3000;
-                document.body.appendChild(toast);
-              }}>INFO TOAST</crt-button>
-            </div>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Spinner (Loading Overlay)"
-            description="Blocking overlay with rotating atom symbol for loading states."
-            code='<crt-spinner open message="LOADING..."></crt-spinner>
-
-// Via JavaScript:
-const spinner = document.createElement("crt-spinner");
-spinner.message = "PROCESSING...";
-spinner.open = true;
-document.body.appendChild(spinner);
-// Later: spinner.open = false;'
-          >
-            <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-              <crt-button @click=${() => (window as any).showSpinner('LOADING...', 3000)}>SHOW SPINNER (3s)</crt-button>
-              <crt-button variant="warning" @click=${() => (window as any).showSpinner('PROCESSING DATA...', 3000)}>PROCESSING (3s)</crt-button>
-              <crt-button variant="success" @click=${() => (window as any).showSpinner('INITIALIZING SYSTEM...', 3000)}>INIT SYSTEM (3s)</crt-button>
-            </div>
-          </crt-code-example>
-        </section>
-
-        <!-- ═══════════════════════════════════════════════════════════════ -->
-        <!-- SECTION 6: MEDIA (Terminal, Music Player, Visualizer, Playlist) -->
-        <!-- ═══════════════════════════════════════════════════════════════ -->
-        <section id="media" class="sg-section">
-          <crt-heading level="2">06. MEDIA</crt-heading>
-          <crt-text muted class="mb-lg">Audio visualization and media player components.</crt-text>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Visualizer"
-            description="Audio visualizer with frequency bars. Connects to an audio element via the audioElement property."
-            code='<crt-visualizer
-  .audioElement="\${audioEl}"
-  bars="32"
-></crt-visualizer>'
-          >
-            <crt-visualizer style="height: 150px; width: 100%;"></crt-visualizer>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Terminal"
-            style="width:100%;max-width:none;box-sizing:border-box;"
-            description="Interactive terminal with blinking cursor. Emits 'command' events on Enter."
-            code='<crt-terminal></crt-terminal>'
-          >
-            <div style="display:flex;gap:12px;flex-direction:column;align-items:stretch;width:100%">
-              <!-- Terminal wrapped in a shrinkable container so sibling controls cannot force width -->
-              <div style="width:100%;min-width:0;box-sizing:border-box;">
-                <crt-terminal id="demo-term" style="width:100%;min-width:0;box-sizing:border-box;"></crt-terminal>
-              </div>
-
-              <!-- Controls live in their own container and do not affect terminal width -->
-              <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;justify-content:flex-start;flex:0 0 auto;">
-                <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                  <crt-button @click=${() => {
-                    const t = document.getElementById('demo-term') as any;
-                    t?.type('> Hello from the style guide', 24);
-                  }}>Print Message</crt-button>
-                  <crt-button variant="success" @click=${() => {
-                    const t = document.getElementById('demo-term') as any;
-                    t?.println('> SYSTEM: OK');
-                  }}>Write OK</crt-button>
-                  <crt-button variant="warning" @click=${() => {
-                    const t = document.getElementById('demo-term') as any;
-                    t?.clear();
-                  }}>Clear</crt-button>
-                </div>
-              </div>
-            </div>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Music Player (Empty)"
-            description="Audio player in empty state without loaded tracks."
-            code='<crt-music-player></crt-music-player>'
-          >
-            <crt-music-player></crt-music-player>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Music Player (Active)"
-            description="Audio player with loaded tracks, progress indicator, volume control and playback buttons."
-            code='<crt-music-player
-  .tracks="\${tracks}"
-  .currentIndex="\${0}"
-  @track-change="\${handleChange}"
-></crt-music-player>'
-          >
-            <crt-music-player .tracks="${[{title: 'NEON DREAMS', artist: 'SYNTHWAVE', url: ''}, {title: 'TERMINAL ECHO', artist: 'RETRO PULSE', url: ''}, {title: 'DIGITAL RAIN', artist: 'MATRIX AUDIO', url: ''}]}" .currentIndex="${0}"></crt-music-player>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Playlist (Empty)"
-            description="Empty playlist. Click dispatches 'add-tracks' event to add tracks."
-            code='<crt-playlist
-  @add-tracks="\${handleAddTracks}"
-></crt-playlist>'
-          >
-            <crt-playlist></crt-playlist>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Playlist (Active)"
-            description="Track list as table with active selection and remove buttons."
-            code='<crt-playlist
-  .tracks="\${tracks}"
-  .currentIndex="\${0}"
-  @track-select="\${handleSelect}"
-  @track-remove="\${handleRemove}"
-></crt-playlist>'
-          >
-            <crt-playlist .tracks="${[{title: 'DEMO TRACK 01', artist: 'SYSTEM', url: ''}, {title: 'DEMO TRACK 02', artist: 'TERMINAL', url: ''}, {title: 'AMBIENT NOISE', artist: 'CRT AUDIO', url: ''}]}" .currentIndex="${1}"></crt-playlist>
-          </crt-code-example>
-        </section>
-
-        <!-- Footer removed from sections -->
-        <section id="removed-footer" class="sg-section" style="display:none;">
-          <crt-heading level="2">Footer</crt-heading>
-          <crt-text muted class="mb-lg">Footer-Vorlage für die App.</crt-text>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Footer"
-            description="Footer with slots for links and copyright notice."
-            code='<crt-footer>\n  <span slot="left">© 2026 CRT Style Guide · <crt-link href="#spacing">Spacing</crt-link> · <crt-link href="#layout">Layout</crt-link> · <crt-link href="#navigation">Navigation</crt-link> · <crt-link href="#overlays">Overlays</crt-link> · <crt-link href="#icons">Icons</crt-link></span>\n  <span slot="right">Made with ♥ · <crt-link href="#" target="_blank">GitHub</crt-link></span>\n</crt-footer>'
-          >
-            <crt-footer>
-              <span slot="left">© 2026 CRT Style Guide · <crt-link href="#spacing">Spacing</crt-link> · <crt-link href="#layout">Layout</crt-link> · <crt-link href="#navigation">Navigation</crt-link> · <crt-link href="#overlays">Overlays</crt-link> · <crt-link href="#icons">Icons</crt-link></span>
-              <span slot="right">Made with ♥ · <crt-link href="#" target="_blank">GitHub</crt-link></span>
-            </crt-footer>
-          </crt-code-example>
-        </section>
-
-        <!-- ═══════════════════════════════════════════════════════════════ -->
-        <!-- SECTION 7: CRT SCREEN -->
-        <!-- ═══════════════════════════════════════════════════════════════ -->
-        <section id="crt-screen" class="sg-section">
-          <crt-heading level="2">07. CRT SCREEN</crt-heading>
-          <crt-text muted class="mb-lg">A container with authentic CRT monitor effects including power-on animation, scanlines, and rounded screen edges. Available in three classic phosphor colors.</crt-text>
-
-          <crt-code-example
-            class="mb-lg"
-            title="CRT Screen - Color Variants"
-            description="Choose between Green (default), Amber, or Blue phosphor colors for authentic retro terminal aesthetics."
-            code='<crt-screen color="green" active>...</crt-screen>
-<crt-screen color="amber" active>...</crt-screen>
-<crt-screen color="blue" active>...</crt-screen>'
-          >
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; width: 100%;">
-              <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                <crt-screen color="green" active style="width: 100%; height: 250px;">
-                  <div style="padding: 1.5rem;">
-                    <crt-heading level="3">GREEN PHOSPHOR (DEFAULT)</crt-heading>
-                    <crt-text>Classic monochrome terminal</crt-text>
-                    <crt-text muted>P1/P31 phosphor</crt-text>
-                  </div>
-                </crt-screen>
-                <crt-text muted style="text-align: center; font-size: 0.85rem;">color="green"</crt-text>
-              </div>
-              <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                <crt-screen color="amber" active style="width: 100%; height: 250px;">
-                  <div style="padding: 1.5rem;">
-                    <crt-heading level="3">AMBER PHOSPHOR</crt-heading>
-                    <crt-text>Warm orange glow</crt-text>
-                    <crt-text muted>P3 phosphor</crt-text>
-                  </div>
-                </crt-screen>
-                <crt-text muted style="text-align: center; font-size: 0.85rem;">color="amber"</crt-text>
-              </div>
-              <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                <crt-screen color="blue" active style="width: 100%; height: 250px;">
-                  <div style="padding: 1.5rem;">
-                    <crt-heading level="3">BLUE PHOSPHOR</crt-heading>
-                    <crt-text>Cool cyan display</crt-text>
-                    <crt-text muted>P7 phosphor</crt-text>
-                  </div>
-                </crt-screen>
-                <crt-text muted style="text-align: center; font-size: 0.85rem;">color="blue"</crt-text>
-              </div>
-            </div>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="CRT Screen - Power Control"
-            description="The CRT screen can be turned on/off via the 'active' property. The power button controls the animation."
-            code='<crt-button @click="toggleScreen()">Power</crt-button>
-<crt-screen id="screen1" active style="width: 100%; height: 400px;">
-  <div style="padding: 2rem;">
-    <crt-heading level="1">TERMINAL_OS v2.5</crt-heading>
-    <crt-text>System ready...</crt-text>
-  </div>
-</crt-screen>'
-          >
-            <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%;">
-              <crt-screen id="demo-screen-1" active style="width: 100%; height: 400px;">
-                <div style="padding: 2rem;">
-                  <crt-heading level="1">TERMINAL_OS v2.5</crt-heading>
-                  <crt-text>System ready...</crt-text>
-                  <crt-text muted style="margin-top: 1rem;">Type 'help' for available commands</crt-text>
-                </div>
-              </crt-screen>
-              <div style="display: flex; gap: 0.5rem; align-items: center;">
-                <crt-button 
-                  id="power-btn-1"
-                  variant="success"
-                  @click=${() => {
-                    const screen = document.getElementById('demo-screen-1') as any;
-                    if (screen) {
-                      screen.active = !screen.active;
-                      const btn = document.getElementById('power-btn-1') as any;
-                      btn.variant = screen.active ? 'success' : 'error';
-                      btn.textContent = screen.active ? '⚡ Power ON' : '○ Power OFF';
-                    }
-                  }}
-                >⚡ Power ON</crt-button>
-                <crt-text muted style="font-size: 0.9rem;">Click button to toggle power</crt-text>
-              </div>
-            </div>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="CRT Screen - With Components"
-            description="Various components inside the CRT screen container with power control."
-            code='<crt-button @click="toggleScreen()">Power</crt-button>
-<crt-screen style="width: 100%; height: 500px;">
-  <div style="padding: 2rem; display: flex; flex-direction: column; gap: 1.5rem;">
-    <crt-heading level="2">SYSTEM DASHBOARD</crt-heading>
-    <crt-button variant="primary">Start System</crt-button>
-    <crt-button variant="success">Load Program</crt-button>
-    <crt-progress value="75" max="100"></crt-progress>
-  </div>
-</crt-screen>'
-          >
-            <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%;">
-              <crt-screen id="demo-screen-2" active style="width: 100%; height: 500px;">
-                <div style="padding: 2rem; display: flex; flex-direction: column; gap: 1.5rem;">
-                  <crt-heading level="2">SYSTEM DASHBOARD</crt-heading>
-                  <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                    <crt-button variant="primary">Start System</crt-button>
-                    <crt-button variant="success">Load Program</crt-button>
-                    <crt-button variant="warning">Diagnostics</crt-button>
-                    <crt-button variant="error">Shutdown</crt-button>
-                  </div>
-                  <div style="margin-top: 1rem;">
-                    <crt-text muted>System Load:</crt-text>
-                    <crt-progress value="75" max="100" style="margin-top: 0.5rem;"></crt-progress>
-                  </div>
-                  <div style="margin-top: 1rem;">
-                    <crt-text muted>Memory Usage:</crt-text>
-                    <crt-progress value="45" max="100" style="margin-top: 0.5rem;"></crt-progress>
-                  </div>
-                </div>
-              </crt-screen>
-              <div style="display: flex; gap: 0.5rem; align-items: center;">
-                <crt-button 
-                  id="power-btn-2"
-                  variant="success"
-                  @click=${() => {
-                    const screen = document.getElementById('demo-screen-2') as any;
-                    if (screen) {
-                      screen.active = !screen.active;
-                      const btn = document.getElementById('power-btn-2') as any;
-                      btn.variant = screen.active ? 'success' : 'error';
-                      btn.textContent = screen.active ? '⚡ Power ON' : '○ Power OFF';
-                    }
-                  }}
-                >⚡ Power ON</crt-button>
-                <crt-text muted style="font-size: 0.9rem;">Dashboard Power Control</crt-text>
-              </div>
-            </div>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="CRT Screen - Mit Card Layout"
-            description="Cards and other layout components inside the CRT screen."
-            code='<crt-screen style="width: 100%; height: 600px;">
-  <div style="padding: 2rem;">
-    <crt-card>
-      <crt-heading level="3">Network Status</crt-heading>
-      <crt-text>Connection: Active</crt-text>
-    </crt-card>
-  </div>
-</crt-screen>'
-          >
-            <crt-screen style="width: 100%; height: 600px;">
-              <div style="padding: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
-                <crt-card>
-                  <div style="padding: 1rem;">
-                    <crt-heading level="3">Network Status</crt-heading>
-                    <crt-text style="margin-top: 0.5rem;">Connection: Active</crt-text>
-                    <crt-badge variant="success" style="margin-top: 0.5rem;">Online</crt-badge>
-                  </div>
-                </crt-card>
-                <crt-card>
-                  <div style="padding: 1rem;">
-                    <crt-heading level="3">CPU Monitor</crt-heading>
-                    <crt-text style="margin-top: 0.5rem;">Usage: 47%</crt-text>
-                    <crt-badge variant="warning" style="margin-top: 0.5rem;">Medium Load</crt-badge>
-                  </div>
-                </crt-card>
-                <crt-card>
-                  <div style="padding: 1rem;">
-                    <crt-heading level="3">Disk Space</crt-heading>
-                    <crt-text style="margin-top: 0.5rem;">Free: 125 GB</crt-text>
-                    <crt-badge variant="primary" style="margin-top: 0.5rem;">OK</crt-badge>
-                  </div>
-                </crt-card>
-              </div>
-            </crt-screen>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="CRT Screen - Mit Terminal"
-            description="Ein interaktives Terminal innerhalb des CRT-Screens."
-            code='<crt-screen style="width: 100%; height: 400px;">
-  <crt-terminal no-border></crt-terminal>
-</crt-screen>'
-          >
-            <crt-screen style="width: 100%; height: 400px;">
-              <div style="padding: 1rem; height: 100%; box-sizing: border-box;">
-                <crt-terminal id="crt-screen-terminal" no-border style="width: 100%; height: 100%;"></crt-terminal>
-              </div>
-            </crt-screen>
-          </crt-code-example>
-
-          <crt-code-example
-            class="mb-lg"
-            title="CRT Screen - Navigation Menu"
-            description="Ein Menü-System im Retro-CRT-Stil."
-            code='<crt-screen style="width: 100%; height: 450px;">
-  <div style="padding: 2rem;">
-    <crt-heading level="1">MAIN MENU</crt-heading>
-    <crt-menu>
-      <crt-link href="#">Dashboard</crt-link>
-      <crt-link href="#">Settings</crt-link>
-      <crt-link href="#">About</crt-link>
-    </crt-menu>
-  </div>
-</crt-screen>'
-          >
-            <crt-screen style="width: 100%; height: 450px;">
-              <div style="padding: 2rem; display: flex; flex-direction: column; gap: 2rem; height: 100%; box-sizing: border-box;">
-                <div>
-                  <crt-heading level="1">MAIN MENU</crt-heading>
-                  <crt-text muted style="margin-top: 0.5rem;">Select an option</crt-text>
-                </div>
-                <nav style="display: flex; flex-direction: column; gap: 1rem;">
-                  <crt-link href="#dashboard" style="font-size: 1.2rem;">> Dashboard</crt-link>
-                  <crt-link href="#programs" style="font-size: 1.2rem;">> Programs</crt-link>
-                  <crt-link href="#settings" style="font-size: 1.2rem;">> Settings</crt-link>
-                  <crt-link href="#network" style="font-size: 1.2rem;">> Network</crt-link>
-                  <crt-link href="#about" style="font-size: 1.2rem;">> About</crt-link>
-                </nav>
-                <div style="margin-top: auto;">
-                  <crt-text muted style="font-size: 0.9rem;">Press ENTER to select</crt-text>
-                </div>
-              </div>
-            </crt-screen>
-          </crt-code-example>
-        </section>
-
-        <!-- ═══════════════════════════════════════════════════════════════ -->
-        <!-- SECTION 8: ORGANISMS (Music Station) -->
-        <!-- ═══════════════════════════════════════════════════════════════ -->
-        <section id="organisms" class="sg-section">
-          <crt-heading level="2">08. ORGANISMS</crt-heading>
-          <crt-text muted class="mb-lg">Complex components composed of atoms and molecules.</crt-text>
-
-          <crt-code-example
-            class="mb-lg"
-            title="Music Station"
-            description="Combines the Music Player (molecule) with Playlist and File Upload Modal. Click the empty playlist to add audio files."
-            code='<crt-music-station></crt-music-station>'
-          >
-            <crt-music-station
-              .tracks=${[{ title: 'VERROSTETE TERMINALS', artist: 'PATIMWEP', url: TRACK_URL }]}
-              .currentIndex=${0}
-              .autoplay=${true}
-              .autoplayDelay=${700}
-            ></crt-music-station>
-          </crt-code-example>
-        </section>
-
-      </main>
-
-      <!-- FOOTER -->
-      <crt-footer class="sg-footer">
-        <span slot="left">CRT STYLE GUIDE v0.1.0 | © 2026</span>
-        <span slot="right"><crt-link href="#" target="_blank">GitHub</crt-link></span>
-      </crt-footer>
+      </div>
     </div>
   </div>
 `;
