@@ -14,7 +14,7 @@ export class MusicStation extends LitElement {
   @property({ type: Boolean }) autoplay = false;
   @property({ type: Number }) autoplayDelay = 500;
   @property({ type: Boolean, attribute: 'preload-default' }) preloadDefault = true;
-  @state() private tracks: Track[] = [];
+  @property({ type: Array }) tracks: Track[] = [];
   @state() private currentIndex = 0;
   @state() private showUploadModal = false;
   
@@ -50,7 +50,7 @@ export class MusicStation extends LitElement {
 
     .station-stats {
       font-size: var(--crt-font-size-sm);
-      color: var(--crt-text-muted);
+      color: var(--crt-text-secondary);
     }
 
     .main-content {
@@ -186,7 +186,7 @@ export class MusicStation extends LitElement {
         <!-- Header -->
         <div class="station-header">
           <crt-heading level="3" style="margin: 0;">[MUSIC STATION]</crt-heading>
-          <crt-text muted style="margin: 0;">${this.tracks.length} TRACKS LOADED</crt-text>
+          <crt-text class="station-stats" style="margin: 0;">${this.tracks.length} TRACKS LOADED</crt-text>
         </div>
 
         <!-- Main Content -->

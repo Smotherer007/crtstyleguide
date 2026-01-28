@@ -18,16 +18,16 @@ export class Modal extends LitElement {
 
     .backdrop {
       position: fixed;
-      top: 0;
-      left: 0;
+      inset: 0;
       width: 100vw;
       height: 100vh;
       background: color-mix(in srgb, var(--crt-bg-dark) 70%, transparent);
       z-index: 10000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: grid;
+      place-items: center;
+      padding: var(--crt-spacing-lg);
       animation: fade-in 0.2s ease;
+      box-sizing: border-box;
     }
 
     @keyframes fade-in {

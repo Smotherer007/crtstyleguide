@@ -1054,9 +1054,30 @@ export const componentDocs: ComponentDoc[] = [
     examples: [
       {
         title: 'Music Player',
-        description: 'Standalone player.',
-        preview: html`<crt-music-player></crt-music-player>`,
-        code: '<crt-music-player></crt-music-player>',
+        description: 'Standalone player with lyrics.',
+        preview: html`
+          <crt-music-player
+            .tracks=${[
+              {
+                title: 'VERROSTETE TERMINALS',
+                artist: 'PATIMWEP',
+                url: 'patimwep - Verrostete Terminals.mp3',
+                lyrics: '[INTRO]\nSTATIC IN THE WIRES\nNEON HISS AND SOFT DESIRES\n\n[HOOK]\nVERROSTETE TERMINALS\nSIGNAL LOST, RETURNING CALLS',
+              },
+            ]}
+          ></crt-music-player>
+        `,
+        code: code(
+          '<crt-music-player',
+          '  .tracks=${[',
+          "    { title: 'VERROSTETE TERMINALS',",
+          "      artist: 'PATIMWEP',",
+          "      url: 'patimwep - Verrostete Terminals.mp3',",
+          "      lyrics: '[INTRO]\\nSTATIC IN THE WIRES\\nNEON HISS AND SOFT DESIRES\\n\\n[HOOK]\\nVERROSTETE TERMINALS\\nSIGNAL LOST, RETURNING CALLS'",
+          '    }',
+          '  ]}',
+          '></crt-music-player>'
+        ),
       },
     ],
   },
@@ -1203,15 +1224,15 @@ export const componentDocs: ComponentDoc[] = [
     ],
   },
   {
-    id: 'music-station',
-    name: 'Music Station',
-    tag: 'crt-music-station',
+    id: 'dashboard-table',
+    name: 'Dashboard Table',
+    tag: 'composition',
     category: 'organisms',
-    description: 'Full music station experience.',
+    description: 'Organism-like table with pagination.',
     examples: [
       {
         title: 'Dashboard Table',
-        description: 'Organism-like table with pagination.',
+        description: 'System nodes table with pagination.',
         preview: html`
           <crt-card>
             <div slot="header">System Nodes</div>
@@ -1244,11 +1265,43 @@ export const componentDocs: ComponentDoc[] = [
           '</crt-card>'
         ),
       },
+    ],
+  },
+  {
+    id: 'music-station',
+    name: 'Music Station',
+    tag: 'crt-music-station',
+    category: 'organisms',
+    description: 'Full music station experience.',
+    examples: [
       {
         title: 'Music Station',
-        description: 'Full screen organism demo.',
-        preview: html`<crt-music-station></crt-music-station>`,
-        code: '<crt-music-station></crt-music-station>',
+        description: 'Full screen organism demo with lyrics.',
+        preview: html`
+          <crt-music-station
+            preload-default="false"
+            .tracks=${[
+              {
+                title: 'VERROSTETE TERMINALS',
+                artist: 'PATIMWEP',
+                url: 'patimwep - Verrostete Terminals.mp3',
+                lyrics: '[INTRO]\nSTATIC IN THE WIRES\nNEON HISS AND SOFT DESIRES\n\n[HOOK]\nVERROSTETE TERMINALS\nSIGNAL LOST, RETURNING CALLS',
+              },
+            ]}
+          ></crt-music-station>
+        `,
+        code: code(
+          '<crt-music-station',
+          '  preload-default="false"',
+          '  .tracks=${[',
+          "    { title: 'VERROSTETE TERMINALS',",
+          "      artist: 'PATIMWEP',",
+          "      url: 'patimwep - Verrostete Terminals.mp3',",
+          "      lyrics: '[INTRO]\\nSTATIC IN THE WIRES\\nNEON HISS AND SOFT DESIRES\\n\\n[HOOK]\\nVERROSTETE TERMINALS\\nSIGNAL LOST, RETURNING CALLS'",
+          '    }',
+          '  ]}',
+          '></crt-music-station>'
+        ),
       },
     ],
   },

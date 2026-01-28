@@ -77,7 +77,7 @@ export class MusicPlayer extends LitElement {
 
     .now-playing-label {
       font-size: var(--crt-font-size-xs);
-      color: var(--crt-text-muted);
+      color: var(--crt-text-secondary);
       text-transform: uppercase;
       letter-spacing: 2px;
       margin-bottom: var(--crt-spacing-xs);
@@ -106,12 +106,12 @@ export class MusicPlayer extends LitElement {
 
     .track-artist {
       font-size: var(--crt-font-size-sm);
-      color: var(--crt-text-muted);
+      color: var(--crt-text-secondary);
     }
 
     .track-counter {
       font-size: var(--crt-font-size-sm);
-      color: var(--crt-text-muted);
+      color: var(--crt-text-secondary);
       flex-shrink: 0;
       margin-left: var(--crt-spacing-md);
     }
@@ -132,7 +132,7 @@ export class MusicPlayer extends LitElement {
       display: flex;
       justify-content: space-between;
       font-size: var(--crt-font-size-xs);
-      color: var(--crt-text-muted);
+      color: var(--crt-text-secondary);
       margin-top: var(--crt-spacing-xs);
     }
 
@@ -446,14 +446,14 @@ export class MusicPlayer extends LitElement {
 
           <!-- Now Playing -->
           <div class="now-playing">
-            <crt-text muted style="margin: 0 0 var(--crt-spacing-xs) 0; font-size: var(--crt-font-size-xs); text-transform: uppercase; letter-spacing: 2px;">[NOW PLAYING]</crt-text>
+            <crt-text class="now-playing-label" style="margin: 0 0 var(--crt-spacing-xs) 0;">[NOW PLAYING]</crt-text>
             
             <div class="track-info">
               <div class="track-details">
                 <crt-heading level="4" style="margin: 0;">${this.currentTrack?.title || 'UNKNOWN'}</crt-heading>
-                <crt-text muted style="margin: 0;">${this.currentTrack?.artist || 'UNKNOWN ARTIST'}</crt-text>
+                <crt-text class="track-artist" style="margin: 0;">${this.currentTrack?.artist || 'UNKNOWN ARTIST'}</crt-text>
               </div>
-              <crt-text muted style="margin: 0;">${this.currentIndex + 1}/${this.tracks.length}</crt-text>
+              <crt-text class="track-counter" style="margin: 0;">${this.currentIndex + 1}/${this.tracks.length}</crt-text>
             </div>
 
             <!-- Progress -->
