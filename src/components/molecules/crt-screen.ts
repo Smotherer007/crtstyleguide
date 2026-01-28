@@ -179,10 +179,12 @@ export class CRTScreen extends LitElement {
       left: 0;
       width: 100%;
       height: 100%;
-      padding: 3rem 2.5rem 3rem 2rem;
+      padding: var(--crt-padding);
       box-sizing: border-box;
       background-color: transparent;
       clip-path: var(--crt-clip, url(#crtPath));
+      border-radius: var(--crt-radius);
+      text-align: center;
       scrollbar-gutter: stable;
       overflow-y: auto;
       overflow-x: hidden;
@@ -202,10 +204,7 @@ export class CRTScreen extends LitElement {
       background: transparent;
     }
 
-    .contents::-webkit-scrollbar-thumb {
-      background: rgba(0, 255, 0, 0.15);
-      border-radius: 3px;
-    }
+
 
     .contents::-webkit-scrollbar-thumb:hover {
       background: rgba(0, 255, 0, 0.3);
