@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import './visualizer';
+import './modal';
 import '../atoms/button';
 import '../atoms/progress';
 import '../atoms/slider';
@@ -22,6 +23,7 @@ export class MusicPlayer extends LitElement {
   @state() private duration = 0;
   @state() private volume = 80;
   @state() private autoplayMuted = false;
+  @state() private lyricsOpen = false;
 
 
   @query('audio') private audio!: HTMLAudioElement;
@@ -151,6 +153,13 @@ export class MusicPlayer extends LitElement {
       min-width: 0;
     }
 
+    .action-buttons {
+      display: flex;
+      gap: var(--crt-spacing-sm);
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
     .volume-section {
       flex: 1 1 auto;
       max-width: 200px;
@@ -161,6 +170,7 @@ export class MusicPlayer extends LitElement {
     @media (max-width: 520px) {
       .controls { flex-direction: column; align-items: stretch; }
       .control-buttons { justify-content: center; margin-bottom: var(--crt-spacing-sm); }
+      .action-buttons { justify-content: center; }
       .volume-section { max-width: 100%; min-width: 0; }
     }
 
@@ -175,6 +185,13 @@ export class MusicPlayer extends LitElement {
       font-size: 2rem;
       margin-bottom: var(--crt-spacing-md);
       opacity: 0.5;
+    }
+
+    .lyrics-body {
+      white-space: pre-wrap;
+      line-height: 1.5;
+      color: var(--crt-text-primary);
+      padding: var(--crt-spacing-md) 0;
     }
   `;
 
@@ -214,6 +231,7 @@ export class MusicPlayer extends LitElement {
     if (index < 0 || index >= this.tracks.length) return;
     
     const track = this.tracks[index];
+    this.lyricsOpen = false;
     // Don't try to load if URL is empty (demo mode)
     if (!track?.url) {
       this.currentIndex = index;
@@ -371,6 +389,45 @@ export class MusicPlayer extends LitElement {
     return (this.currentTime / this.duration) * 100;
   }
 
+  private readonly handleDownload = () => {
+    const track = this.currentTrack;
+    if (!track?.url) return;
+
+    let filename = 'track';
+    let extension = '';
+    try {
+      const url = new URL(track.url, globalThis.location.href);
+      const pathName = url.pathname.split('/').pop();
+      if (pathName) {
+        filename = pathName;
+        const extMatch = /\.[a-z0-9]+$/i.exec(pathName);
+        extension = extMatch ? extMatch[0] : '';
+      }
+    } catch {
+      // Fallback to default filename
+    }
+
+    if (track.title) {
+      filename = `${track.title}${extension || ''}`;
+    }
+
+    const link = document.createElement('a');
+    link.href = track.url;
+    link.download = filename;
+    link.rel = 'noopener';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  };
+
+  private readonly openLyrics = () => {
+    this.lyricsOpen = true;
+  };
+
+  private readonly closeLyrics = () => {
+    this.lyricsOpen = false;
+  };
+
   render() {
     const hasTrack = this.tracks.length > 0 && this.currentTrack;
 
@@ -430,6 +487,22 @@ export class MusicPlayer extends LitElement {
                   @change="${this.handleVolumeChange}"
                 ></crt-slider>
               </div>
+              <div class="action-buttons">
+                <crt-button
+                  icon-left="download"
+                  @click="${this.handleDownload}"
+                  ?disabled="${!this.currentTrack?.url}"
+                >
+                  DOWNLOAD
+                </crt-button>
+                <crt-button
+                  icon-left="file"
+                  @click="${this.openLyrics}"
+                  ?disabled="${!(this.currentTrack?.lyrics && this.currentTrack.lyrics.trim())}"
+                >
+                  LYRICS
+                </crt-button>
+              </div>
               ${this.autoplayMuted ? html`
                 <div style="display:flex;align-items:center;gap:8px;">
                   <crt-button variant="success" @click="${() => this.unmuteAndResume()}">UNMUTE</crt-button>
@@ -438,6 +511,15 @@ export class MusicPlayer extends LitElement {
               ` : ''}
             </div>
           </div>
+          <crt-modal
+            .open=${this.lyricsOpen}
+            title="${this.currentTrack?.title ? `${this.currentTrack.title} — Lyrics` : 'Lyrics'}"
+            @close="${this.closeLyrics}"
+          >
+            ${this.currentTrack?.lyrics
+              ? html`<div class="lyrics-body">${this.currentTrack.lyrics}</div>`
+              : html`<crt-text muted>No lyrics available for this track.</crt-text>`}
+          </crt-modal>
         ` : html`
           <!-- Empty State -->
           <div class="empty-state">

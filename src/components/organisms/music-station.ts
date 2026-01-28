@@ -13,13 +13,14 @@ import type { FileUpload } from '../atoms/file-upload';
 export class MusicStation extends LitElement {
   @property({ type: Boolean }) autoplay = false;
   @property({ type: Number }) autoplayDelay = 500;
+  @property({ type: Boolean, attribute: 'preload-default' }) preloadDefault = true;
   @state() private tracks: Track[] = [];
   @state() private currentIndex = 0;
   @state() private showUploadModal = false;
   
-  @query('crt-file-upload') private fileUpload!: FileUpload;
+  @query('crt-file-upload') private readonly fileUpload!: FileUpload;
 
-  static styles = css`
+  static readonly styles = css`
     :host {
       display: block;
       font-family: var(--crt-font-family);
@@ -86,7 +87,34 @@ export class MusicStation extends LitElement {
     }
   `;
 
-  private handleFilesChanged = (e: CustomEvent) => {
+  connectedCallback() {
+    super.connectedCallback();
+    this.preloadDefaultTrack();
+  }
+
+  private preloadDefaultTrack() {
+    if (!this.preloadDefault || this.tracks.length > 0) return;
+
+    const baseUrl = (import.meta as ImportMeta & { env?: { BASE_URL?: string } }).env?.BASE_URL || '/';
+    const baseOrigin = new URL(baseUrl, globalThis.location.origin);
+    const defaultUrl = new URL('patimwep - Verrostete Terminals.mp3', baseOrigin).toString();
+    this.tracks = [{
+      title: 'VERROSTETE TERMINALS',
+      artist: 'PATIMWEP',
+      url: defaultUrl,
+      lyrics: [
+        '[INTRO]',
+        'STATIC IN THE WIRES',
+        'NEON HISS AND SOFT DESIRES',
+        '',
+        '[HOOK]',
+        'VERROSTETE TERMINALS',
+        'SIGNAL LOST, RETURNING CALLS',
+      ].join('\n'),
+    }];
+  }
+
+  private readonly handleFilesChanged = (e: CustomEvent) => {
     const files: File[] = e.detail.files;
     
     const newTracks: Track[] = files
@@ -114,15 +142,17 @@ export class MusicStation extends LitElement {
     this.tracks = [...this.tracks, ...newTracks];
   };
 
-  private handleTrackSelect = (e: CustomEvent) => {
+  private readonly handleTrackSelect = (e: CustomEvent) => {
     this.currentIndex = e.detail.index;
   };
 
-  private handleTrackRemove = (e: CustomEvent) => {
+  private readonly handleTrackRemove = (e: CustomEvent) => {
     const index = e.detail.index;
     const track = this.tracks[index];
     
-    URL.revokeObjectURL(track.url);
+    if (track?.url?.startsWith('blob:')) {
+      URL.revokeObjectURL(track.url);
+    }
     
     this.tracks = this.tracks.filter((_, i) => i !== index);
     
@@ -133,19 +163,19 @@ export class MusicStation extends LitElement {
     }
   };
 
-  private handleTrackChange = (e: CustomEvent) => {
+  private readonly handleTrackChange = (e: CustomEvent) => {
     this.currentIndex = e.detail.index;
   };
 
-  private openUploadModal = () => {
+  private readonly openUploadModal = () => {
     this.showUploadModal = true;
   };
 
-  private closeUploadModal = () => {
+  private readonly closeUploadModal = () => {
     this.showUploadModal = false;
   };
 
-  private handleUploadDone = () => {
+  private readonly handleUploadDone = () => {
     this.fileUpload?.clearFiles();
     this.showUploadModal = false;
   };
