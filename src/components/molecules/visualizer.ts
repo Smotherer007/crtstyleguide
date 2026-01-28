@@ -99,7 +99,11 @@ export class Visualizer extends LitElement {
 
   connectAudio(audioElement: HTMLAudioElement) {
     if (!this.audioContext) {
-      this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const AudioContextCtor = window.AudioContext
+        || (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+      if (!AudioContextCtor) return;
+
+      this.audioContext = new AudioContextCtor();
       this.analyser = this.audioContext.createAnalyser();
       this.analyser.fftSize = 64;
       
@@ -111,7 +115,11 @@ export class Visualizer extends LitElement {
       this.dataArray = new Uint8Array(bufferLength);
     }
     
-    if (this.audioContext.state === 'suspended') {
+    this.resumeAudioContext();
+  }
+
+  resumeAudioContext() {
+    if (this.audioContext && this.audioContext.state === 'suspended') {
       this.audioContext.resume();
     }
   }

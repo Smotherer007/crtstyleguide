@@ -258,8 +258,12 @@ export class MusicPlayer extends LitElement {
       this.autoplayMuted = false;
       this.visualizer?.start();
       // Ensure audio is unmuted if it was previously muted
-      try { this.audio.muted = false; } catch (e) {}
-    } catch (err: any) {
+      try {
+        this.audio.muted = false;
+      } catch (e) {
+        // Some browsers block programmatic unmute before user interaction.
+      }
+    } catch (err: unknown) {
       console.warn('Playback failed:', err);
       // Try muted autoplay fallback
       try {
@@ -296,7 +300,11 @@ export class MusicPlayer extends LitElement {
     if (!this.audio) return;
     try {
       this.audio.muted = false;
-      try { (this.visualizer as any)?.audioContext?.resume?.(); } catch (e) {}
+      try {
+        this.visualizer?.resumeAudioContext();
+      } catch (e) {
+        console.warn('Audio context resume failed:', e);
+      }
       const r = this.audio.play();
       if (r instanceof Promise) await r;
       this.autoplayMuted = false;

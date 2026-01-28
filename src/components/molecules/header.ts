@@ -65,8 +65,8 @@ export class Header extends LitElement {
     document.documentElement.style.setProperty('--crt-cursor-text', cursorText);
 
     // Update all crt-screen components
-    const screens = document.querySelectorAll('crt-screen');
-    screens.forEach((screen: any) => {
+    const screens = document.querySelectorAll<HTMLElement & { color: 'green' | 'amber' | 'blue' }>('crt-screen');
+    screens.forEach((screen) => {
       screen.color = color;
     });
 

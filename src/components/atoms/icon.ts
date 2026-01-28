@@ -68,7 +68,7 @@ export class Icon extends LitElement {
   @property() size: 'sm' | 'md' | 'lg' = 'md';
 
   render() {
-    const svgMarkup = (ICONS_MAP as any)[this.name] || ICONS_MAP.unknown;
+    const svgMarkup = ICONS_MAP[this.name] ?? ICONS_MAP.unknown;
     const parsed = new DOMParser().parseFromString(svgMarkup, 'image/svg+xml');
     return html`<span class="icon" aria-hidden="true">${parsed.documentElement}</span>`;
   }
