@@ -65,7 +65,8 @@
   font-display: swap;
 }
 
-:root {
+:root,
+[data-crt-theme="green"] {
   /* Colors - Primary Green Phosphor (P1/P31) - Global Default */
   --crt-primary: #8aff8a;
   --crt-primary-light: #b4ffb4;
@@ -87,9 +88,14 @@
   --crt-error: #ff0000;
   --crt-info: #00ffff;
   
+  /* RGB Chromatic Aberration Values */
+  --crt-rgb-r: 0.3;
+  --crt-rgb-g: 0.3;
+  --crt-rgb-b: 0.3;
+  
   /* Borders */
   --crt-border-width: 2px;
-  --crt-border-color: var(--crt-primary);
+  --crt-border-color: #8aff8a;
   --crt-border: var(--crt-border-width) solid var(--crt-border-color);
   
   /* Radius */
@@ -130,6 +136,52 @@
   --crt-cursor-pointer: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"><rect width="12" height="12" fill="%238aff8a"/></svg>') 6 6, pointer;
   --crt-cursor-pointer-dark: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"><rect width="12" height="12" fill="%230a0a0a"/></svg>') 6 6, pointer;
   --crt-cursor-text: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="24" viewBox="0 0 16 24"><rect x="2" y="0" width="12" height="2" fill="%238aff8a"/><rect x="7" y="2" width="2" height="20" fill="%238aff8a"/><rect x="2" y="22" width="12" height="2" fill="%238aff8a"/></svg>') 8 12, text;
+}
+
+/* Amber Phosphor Theme (P3) */
+[data-crt-theme="amber"] {
+  --crt-primary: #ffd700;
+  --crt-primary-light: #ffe680;
+  --crt-primary-dark: #ffb000;
+  
+  --crt-text-primary: #ffd700;
+  --crt-text-secondary: rgba(255, 215, 0, 0.7);
+  --crt-text-muted: rgba(255, 215, 0, 0.5);
+  
+  --crt-rgb-r: 0.4;
+  --crt-rgb-g: 0.2;
+  --crt-rgb-b: 0.1;
+  
+  --crt-border-color: #ffd700;
+  
+  /* Glow effects für Amber */
+  --crt-glow-sm: 0 0 5px rgba(255, 215, 0, 0.3);
+  --crt-glow: 0 0 10px rgba(255, 215, 0, 0.5);
+  --crt-glow-lg: 0 0 20px rgba(255, 215, 0, 0.7);
+  --crt-glow-inset: inset 0 0 10px rgba(255, 215, 0, 0.1);
+}
+
+/* Blue/Cyan Phosphor Theme (P4) */
+[data-crt-theme="blue"] {
+  --crt-primary: #66ffff;
+  --crt-primary-light: #99ffff;
+  --crt-primary-dark: #00cccc;
+  
+  --crt-text-primary: #66ffff;
+  --crt-text-secondary: rgba(102, 255, 255, 0.7);
+  --crt-text-muted: rgba(102, 255, 255, 0.5);
+  
+  --crt-rgb-r: 0.2;
+  --crt-rgb-g: 0.3;
+  --crt-rgb-b: 0.4;
+  
+  --crt-border-color: #66ffff;
+  
+  /* Glow effects für Blue */
+  --crt-glow-sm: 0 0 5px rgba(102, 255, 255, 0.3);
+  --crt-glow: 0 0 10px rgba(102, 255, 255, 0.5);
+  --crt-glow-lg: 0 0 20px rgba(102, 255, 255, 0.7);
+  --crt-glow-inset: inset 0 0 10px rgba(102, 255, 255, 0.1);
 }
 
 /* Base Styles */

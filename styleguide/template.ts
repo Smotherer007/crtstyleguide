@@ -126,6 +126,9 @@ const renderComponent = (component: ComponentDoc) => html`
 `;
 
 export const styleGuideTemplate = () => html`
+  <!-- Global CRT Overlay - controlled by header power button -->
+  <crt-overlay id="global-crt-overlay" .active=${false}></crt-overlay>
+  
   <div class="sg-wrapper">
     <div class="sg-container">
       <div class="sg-layout">

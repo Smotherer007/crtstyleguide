@@ -43,7 +43,7 @@ import '../src/components/molecules/terminal';
 import '../src/components/molecules/navbar';
 import '../src/components/molecules/header';
 import '../src/components/molecules/footer';
-import '../src/components/molecules/crt-screen';
+import '../src/components/molecules/crt-overlay';
 import '../src/components/organisms/music-station';
 
 // Import and render template
@@ -127,59 +127,20 @@ customElements.whenDefined('crt-button').then(() => {
         sync();
       }
 
-      // Global CRT Screen wrapper functionality
-      let globalScreen: any = null;
-      let currentColor: 'green' | 'amber' | 'blue' = 'green';
-      const appContainer = document.getElementById('app');
-      let originalContent: Node[] = [];
+      // Global CRT Overlay functionality
+      const globalOverlay = document.getElementById('global-crt-overlay') as any;
       
-      // Use event delegation on document level to ensure events work after DOM changes
-      document.addEventListener('screen-toggle', (e: any) => {
+      // Listen for overlay toggle from header
+      document.addEventListener('overlay-toggle', (e: any) => {
         const active = e.detail.active;
-        
-        if (active && !globalScreen) {
-          // Store original DOM nodes
-          originalContent = Array.from(appContainer?.childNodes || []);
-          
-          // Create and wrap content in CRT screen
-          globalScreen = document.createElement('crt-screen');
-          globalScreen.color = currentColor;
-          globalScreen.active = true;
-          globalScreen.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; z-index: 1; background: #000;';
-          
-          // Move nodes into screen
-          if (appContainer) {
-            originalContent.forEach(node => {
-              globalScreen.appendChild(node);
-            });
-            appContainer.appendChild(globalScreen);
-          }
-        } else if (!active && globalScreen) {
-          // Trigger power-off animation first
-          globalScreen.active = false;
-          
-          // Wait for power-off animation to complete (0.55s)
-          setTimeout(() => {
-            // Restore original content
-            if (appContainer && globalScreen && globalScreen.parentNode) {
-              // Move nodes back from screen to app container
-              const nodes = Array.from(globalScreen.childNodes) as Node[];
-              globalScreen.remove();
-              nodes.forEach((node: Node) => {
-                appContainer.appendChild(node);
-              });
-            }
-            globalScreen = null;
-          }, 600); // 550ms animation + 50ms buffer
+        if (globalOverlay) {
+          globalOverlay.active = active;
         }
       });
 
-      // Listen for color changes
+      // Listen for color changes (theme updates)
       document.addEventListener('color-change', (e: any) => {
-        currentColor = e.detail.color;
-        if (globalScreen) {
-          globalScreen.color = currentColor;
-        }
+        console.log('Theme changed to:', e.detail.color);
       });
     }, 50);
   }

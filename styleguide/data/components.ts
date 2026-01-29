@@ -1092,62 +1092,113 @@ export const componentDocs: ComponentDoc[] = [
     ],
   },
   {
-    id: 'crt-screen',
-    name: 'CRT Screen',
-    tag: 'crt-screen',
+    id: 'crt-overlay',
+    name: 'CRT Overlay',
+    tag: 'crt-overlay',
     category: 'crt',
-    description: 'CRT screen container with scanlines and glow.',
+    description: 'Pure visual CRT overlay. Adds scanlines, vignette, and flicker effects over the entire viewport without wrapping content. All interactions pass through.',
+    props: [
+      { name: 'active', type: 'boolean', default: 'true', description: 'Enable/disable all effects.' },
+      { name: 'scanlines', type: 'boolean', default: 'true', description: 'Show scanline effect.' },
+      { name: 'vignette', type: 'boolean', default: 'true', description: 'Show vignette edge darkening.' },
+      { name: 'flicker', type: 'boolean', default: 'true', description: 'Enable subtle flicker animation.' },
+      { name: 'contained', type: 'boolean', default: 'false', description: 'Use absolute positioning for containers instead of fixed fullscreen.' },
+    ],
     examples: [
       {
-        title: 'CRT Screen',
-        description: 'Wrap content inside CRT display.',
+        title: 'CRT Overlay Demo',
+        description: 'The overlay sits on top of everything but allows all interactions. Toggle effects below.',
+        preview: html`
+          <div style="position:relative;border:2px solid var(--crt-primary);min-height:200px;overflow:hidden;">
+            <!-- Demo content underneath -->
+            <div style="padding:16px;display:flex;flex-direction:column;gap:12px;">
+              <crt-heading level="4">Content Under Overlay</crt-heading>
+              <crt-text>All buttons and inputs remain clickable - the overlay is purely visual.</crt-text>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <crt-button size="small">Click Me</crt-button>
+                <crt-input placeholder="Type here..." style="width:150px;"></crt-input>
+              </div>
+              <crt-modal id="overlay-demo-modal" title="Modal Test">
+                <crt-text>This modal appears correctly over the overlay!</crt-text>
+              </crt-modal>
+              <crt-button size="small" variant="success" @click=${() => {
+                const modal = document.getElementById('overlay-demo-modal') as ModalElement | null;
+                if (modal) modal.open = true;
+              }}>Open Modal</crt-button>
+            </div>
+            <!-- The CRT Overlay with contained attribute -->
+            <crt-overlay id="demo-crt-overlay" contained></crt-overlay>
+          </div>
+          <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+            <crt-button
+              size="small"
+              @click=${() => {
+                const el = document.getElementById('demo-crt-overlay') as (HTMLElement & { active?: boolean }) | null;
+                if (el) el.active = !el.active;
+              }}
+            >Toggle Active</crt-button>
+            <crt-button
+              size="small"
+              @click=${() => {
+                const el = document.getElementById('demo-crt-overlay') as (HTMLElement & { scanlines?: boolean }) | null;
+                if (el) el.scanlines = !el.scanlines;
+              }}
+            >Toggle Scanlines</crt-button>
+            <crt-button
+              size="small"
+              @click=${() => {
+                const el = document.getElementById('demo-crt-overlay') as (HTMLElement & { vignette?: boolean }) | null;
+                if (el) el.vignette = !el.vignette;
+              }}
+            >Toggle Vignette</crt-button>
+          </div>
+        `,
+        code: code(
+          '<!-- Place at the end of your body for full-page effect -->',
+          '<crt-overlay></crt-overlay>',
+          '',
+          '<!-- Or use "contained" in a positioned container -->',
+          '<div style="position:relative;">',
+          '  <div>Your content here...</div>',
+          '  <crt-overlay contained></crt-overlay>',
+          '</div>',
+          '',
+          '<!-- Toggle individual effects -->',
+          '<crt-overlay scanlines="false"></crt-overlay>',
+          '<crt-overlay vignette="false"></crt-overlay>',
+          '<crt-overlay flicker="false"></crt-overlay>'
+        ),
+      },
+      {
+        title: 'Theme Colors',
+        description: 'Use data-crt-theme attribute on parent or body to change phosphor colors globally.',
         preview: html`
           <div style="display:flex;gap:12px;flex-wrap:wrap;">
-            ${(['green', 'amber', 'blue'] as const).map((color) => html`
-              <div style="flex:1 1 240px;min-width:240px;display:flex;flex-direction:column;gap:8px;">
-                <div style="display:flex;gap:8px;align-items:center;">
-                  <crt-button
-                    size="small"
-                    @click=${() => {
-                      const el = document.getElementById(`crt-screen-${color}`) as (HTMLElement & { active?: boolean }) | null;
-                      if (el) el.active = true;
-                    }}
-                  >On</crt-button>
-                  <crt-button
-                    size="small"
-                    variant="warning"
-                    @click=${() => {
-                      const el = document.getElementById(`crt-screen-${color}`) as (HTMLElement & { active?: boolean }) | null;
-                      if (el) el.active = false;
-                    }}
-                  >Off</crt-button>
-                  <crt-text muted style="font-size:12px;text-transform:uppercase;">${color}</crt-text>
-                </div>
-                <div style="height:200px;">
-                  <crt-screen
-                    id="crt-screen-${color}"
-                    .color=${color}
-                    style="width:100%;height:100%;display:block;--crt-clip:none;background:var(--crt-bg-dark);"
-                  >
-                    <div style="padding:12px;">
-                      <crt-text>CRT screen ${color}</crt-text>
-                    </div>
-                  </crt-screen>
-                </div>
+            ${(['green', 'amber', 'blue'] as const).map((theme) => html`
+              <div
+                data-crt-theme="${theme}"
+                style="flex:1 1 180px;min-width:180px;position:relative;border:2px solid var(--crt-primary);padding:16px;min-height:120px;overflow:hidden;"
+              >
+                <crt-heading level="5" style="margin-bottom:8px;">${theme.toUpperCase()}</crt-heading>
+                <crt-text>Theme: ${theme}</crt-text>
+                <crt-button size="small" style="margin-top:8px;">Button</crt-button>
+                <crt-overlay contained></crt-overlay>
               </div>
             `)}
           </div>
         `,
         code: code(
-          '<div class="crt-screen-row">',
-          '  <crt-screen color="green">...</crt-screen>',
-          '  <crt-screen color="amber">...</crt-screen>',
-          '  <crt-screen color="blue">...</crt-screen>',
-          '</div>',
+          '<!-- Set theme on body or container -->',
+          '<body data-crt-theme="amber">',
+          '  <crt-overlay></crt-overlay>',
+          '  ...',
+          '</body>',
           '',
-          '<!-- Optional: toggle active on/off -->',
-          '<crt-button @click=${() => (screen.active = true)}>On</crt-button>',
-          '<crt-button @click=${() => (screen.active = false)}>Off</crt-button>'
+          '<!-- Or scope theme to a section -->',
+          '<div data-crt-theme="blue" style="position:relative;">',
+          '  <crt-overlay contained></crt-overlay>',
+          '  ...',
+          '</div>'
         ),
       },
     ],

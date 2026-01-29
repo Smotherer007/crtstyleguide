@@ -14,4 +14,5 @@ export { Header } from './header';
 export { Footer } from './footer';
 export { Menu } from './menu';
 export { CRTScreen } from './crt-screen';
+export { CRTOverlay } from './crt-overlay';
 export type { Track } from './playlist';
