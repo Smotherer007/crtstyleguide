@@ -32,6 +32,7 @@ export type ComponentDoc = {
   tag: string;
   category: string;
   description?: string;
+  hideHeader?: boolean;
   props?: PropDoc[];
   events?: EventDoc[];
   slots?: SlotDoc[];
