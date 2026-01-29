@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import { categories, componentDocs, useCases, type ComponentDoc, type EventDoc, type PropDoc, type SlotDoc } from './data/components';
+import { categories, componentDocs, type ComponentDoc, type EventDoc, type PropDoc, type SlotDoc } from './data/components';
 
 const renderPropsTable = (props: PropDoc[] = []) => {
   const rows = props.length
@@ -142,9 +142,7 @@ export const styleGuideTemplate = () => html`
             </nav>
 
             <div class="sg-sidebar-title">Components</div>
-            ${categories
-              .filter((category) => category.id !== 'use-cases')
-              .map((category) => html`
+            ${categories.map((category) => html`
                 <div class="sg-sidebar-group">
                   <div class="sg-sidebar-group-title">${category.label}</div>
                   <div class="sg-sidebar-group-links">
@@ -168,9 +166,7 @@ export const styleGuideTemplate = () => html`
             </div>
           </crt-header>
 
-          ${categories
-            .filter((category) => category.id !== 'use-cases')
-            .map((category) => html`
+          ${categories.map((category) => html`
               <section id="${category.id}" class="sg-section">
                 <div class="sg-section-header">
                   <crt-heading level="2">${category.label}</crt-heading>
@@ -181,25 +177,6 @@ export const styleGuideTemplate = () => html`
                   .map(renderComponent)}
               </section>
             `)}
-
-          <section id="use-cases" class="sg-section">
-            <div class="sg-section-header">
-              <crt-heading level="2">Use Cases</crt-heading>
-              <crt-text muted>Scenario-driven examples with real UI compositions.</crt-text>
-            </div>
-            ${useCases.map((useCase) => html`
-              <div id="${useCase.id}">
-                <crt-code-example
-                  class="mb-lg"
-                  .title=${useCase.title}
-                  .description=${useCase.description ?? ''}
-                  .code=${useCase.code}
-                >
-                  ${useCase.preview}
-                </crt-code-example>
-              </div>
-            `)}
-          </section>
 
           <crt-footer class="sg-footer">
             <span slot="left">Made with ♥</span>

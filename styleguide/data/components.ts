@@ -45,14 +45,6 @@ export type CategoryDoc = {
   description?: string;
 };
 
-export type UseCaseDoc = {
-  id: string;
-  title: string;
-  description?: string;
-  preview: TemplateResult;
-  code: string;
-};
-
 const code = (...lines: string[]) => lines.join('\n');
 
 type ToastElement = HTMLElement & { show?: (options: { message: string; variant?: string }) => void };
@@ -68,7 +60,6 @@ export const categories: CategoryDoc[] = [
   { id: 'media', label: 'Media', description: 'Audio and visualization components.' },
   { id: 'crt', label: 'CRT', description: 'CRT screen effects and retro UX.' },
   { id: 'organisms', label: 'Organisms', description: 'Complex composed components.' },
-  { id: 'use-cases', label: 'Use Cases', description: 'Larger scenarios and real layouts.' },
 ];
 
 export const componentDocs: ComponentDoc[] = [
@@ -853,6 +844,41 @@ export const componentDocs: ComponentDoc[] = [
           '  ]} page-size="2"></crt-table>'
         ),
       },
+      {
+        title: 'Dashboard Table',
+        description: 'Table inside a card with header.',
+        preview: html`
+          <crt-card>
+            <div slot="header">System Nodes</div>
+            <crt-table
+              .headers=${['Node', 'Status', 'Latency']}
+              .rows=${[
+                ['Node A', 'Online', '12ms'],
+                ['Node B', 'Online', '18ms'],
+                ['Node C', 'Warning', '42ms'],
+                ['Node D', 'Online', '16ms'],
+                ['Node E', 'Offline', '—'],
+                ['Node F', 'Online', '22ms'],
+              ]}
+              page-size="3"
+            ></crt-table>
+          </crt-card>
+        `,
+        code: code(
+          '<crt-card>',
+          '  <div slot="header">System Nodes</div>',
+          '  <crt-table .headers=${["Node","Status","Latency"]}',
+          '    .rows=${[',
+          "      ['Node A','Online','12ms'],",
+          "      ['Node B','Online','18ms'],",
+          "      ['Node C','Warning','42ms'],",
+          "      ['Node D','Online','16ms'],",
+          "      ['Node E','Offline','—'],",
+          "      ['Node F','Online','22ms']",
+          '    ]} page-size="3"></crt-table>',
+          '</crt-card>'
+        ),
+      },
     ],
   },
   {
@@ -1259,101 +1285,75 @@ export const componentDocs: ComponentDoc[] = [
     name: 'Music Station',
     tag: 'crt-music-station',
     category: 'organisms',
-    description: 'Full music station experience.',
+    description: 'Full music station with player, playlist, upload functionality, and lyrics display.',
     examples: [
       {
-        title: 'Dashboard Table',
-        description: 'Organism-like table with pagination.',
+        title: 'Music Station',
+        description: 'Music station with custom tracks passed via the tracks property.',
         preview: html`
-          <crt-card>
-            <div slot="header">System Nodes</div>
-            <crt-table
-              .headers=${['Node', 'Status', 'Latency']}
-              .rows=${[
-                ['Node A', 'Online', '12ms'],
-                ['Node B', 'Online', '18ms'],
-                ['Node C', 'Warning', '42ms'],
-                ['Node D', 'Online', '16ms'],
-                ['Node E', 'Offline', '—'],
-                ['Node F', 'Online', '22ms'],
-              ]}
-              page-size="3"
-            ></crt-table>
-          </crt-card>
+          <crt-music-station
+            ?preload-default=${false}
+            .tracks=${[
+              {
+                title: 'VERROSTETE TERMINALS',
+                artist: 'PATIMWEP',
+                url: './patimwep - Verrostete Terminals.mp3',
+                lyrics: `[INTRO]
+STATIC IN THE WIRES
+NEON HISS AND SOFT DESIRES
+
+[HOOK]
+VERROSTETE TERMINALS
+SIGNAL LOST, RETURNING CALLS
+GHOST DATA IN THE HALLS
+VERROSTETE TERMINALS
+
+[VERSE 1]
+PHOSPHOR GLOW ON MIDNIGHT SCREENS
+ECHOES OF FORGOTTEN DREAMS
+CURSOR BLINKS IN EMPTY SPACE
+TIME HAS LEFT WITHOUT A TRACE`
+              }
+            ]}
+          ></crt-music-station>
         `,
         code: code(
-          '<crt-card>',
-          '  <div slot="header">System Nodes</div>',
-          '  <crt-table .headers=${["Node","Status","Latency"]}',
-          '    .rows=${[[',
-          "      ['Node A','Online','12ms'],",
-          "      ['Node B','Online','18ms'],",
-          "      ['Node C','Warning','42ms'],",
-          "      ['Node D','Online','16ms'],",
-          "      ['Node E','Offline','—'],",
-          "      ['Node F','Online','22ms']",
-          '    ]} page-size="3"></crt-table>',
-          '</crt-card>'
+          '<crt-music-station',
+          '  preload-default="false"',
+          '  .tracks="${[',
+          '    {',
+          '      title: \'VERROSTETE TERMINALS\',',
+          '      artist: \'PATIMWEP\',',
+          '      url: \'./patimwep - Verrostete Terminals.mp3\',',
+          '      lyrics: `[INTRO]',
+          'STATIC IN THE WIRES',
+          'NEON HISS AND SOFT DESIRES',
+          '',
+          '[HOOK]',
+          'VERROSTETE TERMINALS',
+          'SIGNAL LOST, RETURNING CALLS`',
+          '    }',
+          '  ]}"',
+          '></crt-music-station>',
+          '',
+          '// Track interface:',
+          'interface Track {',
+          '  title: string;    // Track title',
+          '  artist: string;   // Artist name',
+          '  url: string;      // Audio file path or URL',
+          '  lyrics?: string;  // Optional lyrics text',
+          '}'
         ),
       },
-      {
-        title: 'Music Station',
-        description: 'Full screen organism demo.',
-        preview: html`<crt-music-station></crt-music-station>`,
-        code: '<crt-music-station></crt-music-station>',
-      },
     ],
-  },
-];
-
-export const useCases: UseCaseDoc[] = [
-  {
-    id: 'form-flow',
-    title: 'Form Flow',
-    description: 'Input + select + toggle + submit.',
-    preview: html`
-      <div style="display:flex;flex-direction:column;gap:12px;max-width:420px;">
-        <crt-input placeholder="Username"></crt-input>
-        <crt-input type="password" placeholder="Password"></crt-input>
-        <crt-select
-          .options=${[
-            { value: 'us', label: 'US-East' },
-            { value: 'eu', label: 'EU-West' },
-            { value: 'apac', label: 'APAC' },
-          ]}
-        ></crt-select>
-        <crt-toggle label="Remember me" checked></crt-toggle>
-        <crt-button>Sign In</crt-button>
-      </div>
-    `,
-    code: code(
-      '<crt-input placeholder="Username"></crt-input>',
-      '<crt-input type="password" placeholder="Password"></crt-input>',
-      '<crt-select .options=${[ ... ]}></crt-select>',
-      '<crt-toggle label="Remember me" checked></crt-toggle>',
-      '<crt-button>Sign In</crt-button>'
-    ),
-  },
-  {
-    id: 'feedback-stack',
-    title: 'Feedback Stack',
-    description: 'Alert + progress + toast.',
-    preview: html`
-      <div style="display:flex;flex-direction:column;gap:12px;">
-        <crt-alert title="Backup running">Estimated 2 minutes remaining.</crt-alert>
-        <crt-progress value="55" label="Backup progress"></crt-progress>
-        <crt-toast></crt-toast>
-        <crt-button size="small" @click=${() => {
-          const toast = document.querySelector('crt-toast') as ToastElement | null;
-          toast?.show?.({ message: 'Backup completed', variant: 'success' });
-        }}>Notify</crt-button>
-      </div>
-    `,
-    code: code(
-      '<crt-alert title="Backup running">Estimated 2 minutes remaining.</crt-alert>',
-      '<crt-progress value="55" label="Backup progress"></crt-progress>',
-      '<crt-toast></crt-toast>',
-      '<crt-button size="small" @click=${...}>Notify</crt-button>'
-    ),
+    props: [
+      { name: 'tracks', type: 'Track[]', default: '[]', description: 'Array of track objects with title, artist, url, and optional lyrics.' },
+      { name: 'autoplay', type: 'boolean', default: 'false', description: 'Auto-start playback when tracks are loaded.' },
+      { name: 'autoplay-delay', type: 'number', default: '500', description: 'Delay in ms before autoplay starts.' },
+      { name: 'preload-default', type: 'boolean', default: 'true', description: 'Load the default demo track if no tracks provided.' },
+    ],
+    events: [
+      { name: 'track-change', detail: '{ index: number }', description: 'Fired when the current track changes.' },
+    ],
   },
 ];

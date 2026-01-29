@@ -49,7 +49,7 @@ import '../src/components/organisms/music-station';
 // Import and render template
 import { render } from 'lit';
 import { styleGuideTemplate } from './template';
-import { categories, componentDocs, useCases } from './data/components';
+import { categories, componentDocs } from './data/components';
 
 // Wait for custom elements to be defined, then render
 customElements.whenDefined('crt-button').then(() => {
@@ -81,13 +81,7 @@ customElements.whenDefined('crt-button').then(() => {
         href: `#${component.id}`,
       }));
 
-      const cases = useCases.map((useCase) => ({
-        value: useCase.title.toLowerCase(),
-        label: `Use Case: ${useCase.title}`,
-        href: `#${useCase.id}`,
-      }));
-
-      const suggestions = [...sections, ...components, ...cases, ...data];
+      const suggestions = [...sections, ...components, ...data];
 
       // Attach fetcher to all search instances in the styleguide (header + demo)
       const searches = Array.from(document.querySelectorAll('crt-search')) as any[];
