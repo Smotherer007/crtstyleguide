@@ -6,6 +6,7 @@ export { Input, Textarea } from './input';
 export { Icon } from './icon';
 export { Link } from './link';
 export { FileUpload } from './file-upload';
+export { FileInput } from './file-input';
 export { Calendar } from './calendar';
 export { Select } from './select';
 export { Search } from './search';

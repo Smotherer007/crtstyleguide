@@ -430,6 +430,41 @@ export const componentDocs: ComponentDoc[] = [
     ],
   },
   {
+    id: 'file-input',
+    name: 'File Input',
+    tag: 'crt-file-input',
+    category: 'forms',
+    description: 'Simple file input styled like a regular input field.',
+    props: [
+      { name: 'accept', type: 'string', default: '-', description: 'Accepted file types (e.g., "image/*,.pdf").' },
+      { name: 'multiple', type: 'boolean', default: 'false', description: 'Allow multiple file selection.' },
+      { name: 'placeholder', type: 'string', default: 'No file selected...', description: 'Placeholder text.' },
+      { name: 'label', type: 'string', default: '-', description: 'Label above the input.' },
+      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disable the input.' },
+    ],
+    events: [
+      { name: 'change', detail: '{ files: File[] }', description: 'Fired when files are selected.' },
+    ],
+    examples: [
+      {
+        title: 'Simple File Input',
+        description: 'Basic file input with label.',
+        preview: html`
+          <div style="display:flex;flex-direction:column;gap:16px;max-width:400px;">
+            <crt-file-input label="SELECT FILE" placeholder="Choose a file..."></crt-file-input>
+            <crt-file-input label="IMAGES ONLY" accept="image/*" placeholder="Select image..."></crt-file-input>
+            <crt-file-input label="MULTIPLE FILES" multiple placeholder="Select files..."></crt-file-input>
+          </div>
+        `,
+        code: code(
+          '<crt-file-input label="SELECT FILE" placeholder="Choose a file..."></crt-file-input>',
+          '<crt-file-input label="IMAGES ONLY" accept="image/*"></crt-file-input>',
+          '<crt-file-input label="MULTIPLE FILES" multiple></crt-file-input>'
+        ),
+      },
+    ],
+  },
+  {
     id: 'button',
     name: 'Button',
     tag: 'crt-button',
@@ -663,6 +698,109 @@ export const componentDocs: ComponentDoc[] = [
         code: code(
           '<crt-toast></crt-toast>',
           '<crt-button size="small" @click=${...}>Trigger Toast</crt-button>'
+        ),
+      },
+    ],
+  },
+  {
+    id: 'log',
+    name: 'Log',
+    tag: 'crt-log',
+    category: 'feedback',
+    description: 'Log display component for system messages with filtering and autoscroll.',
+    props: [
+      { name: 'entries', type: 'LogEntry[]', default: '[]', description: 'Array of log entries.' },
+      { name: 'autoscroll', type: 'boolean', default: 'true', description: 'Auto-scroll to bottom on new entries.' },
+      { name: 'show-timestamp', type: 'boolean', default: 'true', description: 'Show timestamps.' },
+      { name: 'show-level', type: 'boolean', default: 'true', description: 'Show log level badges.' },
+      { name: 'title', type: 'string', default: 'SYSTEM LOG', description: 'Title in header.' },
+      { name: 'max-entries', type: 'number', default: '500', description: 'Maximum entries to keep.' },
+    ],
+    events: [
+      { name: 'log-clear', detail: '-', description: 'Fired when log is cleared.' },
+    ],
+    examples: [
+      {
+        title: 'Log Display',
+        description: 'Interactive log with filtering. Click buttons to add entries.',
+        preview: html`
+          <crt-log 
+            id="demo-log"
+            title="APPLICATION LOG"
+            .entries=${[
+              { timestamp: new Date(), level: 'info', message: 'System initialized', source: 'CORE' },
+              { timestamp: new Date(), level: 'success', message: 'Connection established', source: 'NET' },
+              { timestamp: new Date(), level: 'debug', message: 'Loading configuration...', source: 'CFG' },
+              { timestamp: new Date(), level: 'warn', message: 'Memory usage at 75%', source: 'MEM' },
+              { timestamp: new Date(), level: 'error', message: 'Failed to load module XYZ', source: 'MOD' },
+              { timestamp: new Date(), level: 'info', message: 'User session started', source: 'AUTH' },
+            ]}
+          ></crt-log>
+          <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+            <crt-button size="small" @click=${() => {
+              const log = document.getElementById('demo-log') as any;
+              log?.info?.('New info message ' + Date.now(), 'DEMO');
+            }}>+ INFO</crt-button>
+            <crt-button size="small" variant="success" @click=${() => {
+              const log = document.getElementById('demo-log') as any;
+              log?.success?.('Operation completed', 'DEMO');
+            }}>+ SUCCESS</crt-button>
+            <crt-button size="small" variant="warning" @click=${() => {
+              const log = document.getElementById('demo-log') as any;
+              log?.warn?.('Warning: check this', 'DEMO');
+            }}>+ WARN</crt-button>
+            <crt-button size="small" variant="error" @click=${() => {
+              const log = document.getElementById('demo-log') as any;
+              log?.error?.('Error occurred!', 'DEMO');
+            }}>+ ERROR</crt-button>
+          </div>
+        `,
+        code: code(
+          '<crt-log',
+          '  title="APPLICATION LOG"',
+          '  .entries=${[',
+          '    { timestamp: new Date(), level: "info", message: "System started", source: "CORE" },',
+          '    { timestamp: new Date(), level: "error", message: "Connection failed", source: "NET" },',
+          '  ]}',
+          '></crt-log>',
+          '',
+          '// Add entries programmatically:',
+          'const log = document.querySelector("crt-log");',
+          'log.info("Info message", "SOURCE");',
+          'log.warn("Warning message", "SOURCE");',
+          'log.error("Error message", "SOURCE");',
+          'log.success("Success message", "SOURCE");',
+          'log.debug("Debug message", "SOURCE");'
+        ),
+      },
+      {
+        title: 'Minimal Log (No Timestamp)',
+        description: 'Compact log display without timestamps.',
+        preview: html`
+          <crt-log 
+            title="COMPACT LOG"
+            show-timestamp=${false}
+            .entries=${[
+              { level: 'info', message: 'Application started' },
+              { level: 'success', message: 'Connected to server' },
+              { level: 'warn', message: 'Deprecated API usage detected' },
+              { level: 'error', message: 'Failed to load resource: styles.css' },
+              { level: 'debug', message: 'Cache cleared' },
+            ]}
+          ></crt-log>
+        `,
+        code: code(
+          '<crt-log',
+          '  title="COMPACT LOG"',
+          '  show-timestamp=${false}',
+          '  .entries=${[',
+          '    { level: "info", message: "Application started" },',
+          '    { level: "success", message: "Connected to server" },',
+          '    { level: "warn", message: "Deprecated API usage" },',
+          '    { level: "error", message: "Failed to load resource" },',
+          '    { level: "debug", message: "Cache cleared" },',
+          '  ]}',
+          '></crt-log>'
         ),
       },
     ],

@@ -17,6 +17,7 @@ import '../src/components/atoms/icon';
 import '../src/components/atoms/link';
 import '../src/components/atoms/search';
 import '../src/components/atoms/file-upload';
+import '../src/components/atoms/file-input';
 import '../src/components/atoms/calendar';
 import '../src/components/atoms/select';
 import '../src/components/atoms/checkbox-radio';
@@ -44,6 +45,7 @@ import '../src/components/molecules/navbar';
 import '../src/components/molecules/header';
 import '../src/components/molecules/footer';
 import '../src/components/molecules/crt-overlay';
+import '../src/components/molecules/log';
 import '../src/components/organisms/music-station';
 
 // Import and render template

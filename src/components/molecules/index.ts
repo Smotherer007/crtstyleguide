@@ -15,4 +15,6 @@ export { Footer } from './footer';
 export { Menu } from './menu';
 export { CRTScreen } from './crt-screen';
 export { CRTOverlay } from './crt-overlay';
+export { Log } from './log';
 export type { Track } from './playlist';
+export type { LogEntry } from './log';
