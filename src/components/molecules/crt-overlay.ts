@@ -38,7 +38,6 @@ export class CRTOverlay extends LitElement {
   @property({ type: Boolean, reflect: true }) contained = false;
   
   @state() private _powerState: 'idle' | 'power-on' | 'power-off' = 'idle';
-  private _previousActive: boolean | null = null;
   private _isFirstRender = true;
   private _hasBeenActivated = false; // Track if overlay was ever turned on
 
@@ -380,7 +379,6 @@ export class CRTOverlay extends LitElement {
         this.requestUpdate();
       }, 4000);
     }
-    this._previousActive = this.active;
     this._isFirstRender = false;
   }
 
@@ -413,8 +411,6 @@ export class CRTOverlay extends LitElement {
         }
         this.requestUpdate();
       }
-      
-      this._previousActive = this.active;
     }
   }
 
