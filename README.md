@@ -106,6 +106,7 @@ Opens the Style Guide at: **http://localhost:5175/styleguide/**
 | Textarea | `<crt-textarea>` | Multiline input |
 | Icon | `<crt-icon>` | Icon rendering |
 | Link | `<crt-link>` | Links |
+| FileInput | `<crt-file-input>` | File selection input |
 | FileUpload | `<crt-file-upload>` | File upload |
 | Calendar | `<crt-calendar>` | Date picker |
 | Select | `<crt-select>` | Dropdown selection |
@@ -143,6 +144,7 @@ Opens the Style Guide at: **http://localhost:5175/styleguide/**
 | Playlist | `<crt-playlist>` | Playlist view |
 | Visualizer | `<crt-visualizer>` | Audio visualization |
 | Terminal | `<crt-terminal>` | Terminal simulator |
+| Log | `<crt-log>` | Log output panel |
 | Navbar | `<crt-navbar>` | Navigation bar |
 | Header | `<crt-header>` | Header |
 | Footer | `<crt-footer>` | Footer |
