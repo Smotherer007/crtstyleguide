@@ -147,7 +147,8 @@ Opens the Style Guide at: **http://localhost:5175/styleguide/**
 | Header | `<crt-header>` | Header |
 | Footer | `<crt-footer>` | Footer |
 | Menu | `<crt-menu>` | Context menu |
-| CRTScreen | `<crt-screen>` | CRT screen container |
+| CRTScreen | `<crt-screen>` | CRT screen container (wraps content) |
+| CRTOverlay | `<crt-overlay>` | CRT visual overlay (non-blocking) |
 
 ### Organisms (Komplex)
 
