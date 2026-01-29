@@ -8,6 +8,8 @@ export class Button extends LitElement {
   static readonly styles = css`
     :host {
       display: inline-block;
+      vertical-align: middle;
+      line-height: 0;
     }
 
     button {
@@ -15,10 +17,11 @@ export class Button extends LitElement {
       color: var(--crt-primary);
       border: 2px solid var(--crt-primary);
       box-sizing: border-box;
-      height: 100%;
+      margin: 0;
       padding: 16px 32px;
       font-family: var(--crt-font-family);
       font-size: 1rem;
+      line-height: 1;
       letter-spacing: 2px;
       cursor: var(--crt-cursor-pointer);
       text-transform: uppercase;

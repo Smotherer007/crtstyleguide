@@ -78,30 +78,76 @@ export class Log extends LitElement {
       gap: var(--crt-spacing-sm);
     }
 
-    .log-title-icon {
-      animation: blink 1s steps(1) infinite;
-    }
-
-    @keyframes blink {
-      0%, 50% { opacity: 1; }
-      51%, 100% { opacity: 0; }
-    }
-
     .log-stats {
       color: var(--crt-text-muted);
       font-size: var(--crt-font-size-xs);
     }
 
     /* Controls */
-    .log-controls {
+    .log-actions {
       display: flex;
       align-items: center;
       gap: var(--crt-spacing-xs);
       flex-wrap: wrap;
     }
 
-    .log-controls crt-button {
+    .log-actions crt-button {
       --crt-button-padding: 2px 6px;
+    }
+
+    .log-actions .log-action {
+      min-width: 80px;
+      display: inline-flex;
+      align-self: center;
+    }
+
+    .log-actions .log-action[icon-only] {
+      min-width: auto;
+    }
+
+    /* Filter Tabs */
+    .log-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      border-bottom: 1px solid color-mix(in srgb, var(--crt-primary) 40%, transparent);
+      padding: 0 var(--crt-spacing-md);
+      background: transparent;
+    }
+
+    .log-tab {
+      background: transparent;
+      border: none;
+      color: var(--crt-text-primary);
+      padding: var(--crt-spacing-xs) var(--crt-spacing-md);
+      cursor: pointer;
+      font-family: var(--crt-font-family);
+      font-size: var(--crt-font-size-xs);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      display: inline-flex;
+      align-items: baseline;
+      gap: var(--crt-spacing-xs);
+      white-space: nowrap;
+    }
+
+    .log-tab:hover:not(.active) {
+      color: var(--crt-text-primary);
+    }
+
+    .log-tab.active {
+      color: var(--crt-primary);
+      border-bottom-color: var(--crt-primary);
+    }
+
+    .log-tab-count {
+      display: inline-block;
+      min-width: 3ch;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      color: var(--crt-text-muted);
     }
 
     /* Log Content */
@@ -340,43 +386,68 @@ export class Log extends LitElement {
         <!-- Header -->
         <div class="log-header">
           <span class="log-title">
-            <span class="log-title-icon">▶</span>
             ${this.title}
           </span>
           
-          <div class="log-controls">
-            <crt-button 
+          <div class="log-actions">
+            <crt-button
+              class="log-action"
               size="small"
-              variant="${this._filter === 'all' ? 'primary' : 'link'}"
-              @click=${() => this._setFilter('all')}
-            >ALL (${counts.all})</crt-button>
-            <crt-button 
-              size="small"
-              variant="${this._filter === 'error' ? 'error' : 'link'}"
-              @click=${() => this._setFilter('error')}
-            >ERR (${counts.error})</crt-button>
-            <crt-button 
-              size="small"
-              variant="${this._filter === 'warn' ? 'warning' : 'link'}"
-              @click=${() => this._setFilter('warn')}
-            >WRN (${counts.warn})</crt-button>
-            <crt-button 
-              size="small"
-              variant="${this._filter === 'info' ? 'info' : 'link'}"
-              @click=${() => this._setFilter('info')}
-            >INF (${counts.info})</crt-button>
-            
-            <crt-button 
-              size="small"
-              variant="${this._isPaused ? 'warning' : 'link'}"
               @click=${this._togglePause}
-            >${this._isPaused ? '▶ RESUME' : '⏸ PAUSE'}</crt-button>
-            <crt-button 
+              icon-only
+              icon-left="${this._isPaused ? 'play' : 'pause'}"
+              title="${this._isPaused ? 'Play' : 'Pause'}"
+              aria-label="${this._isPaused ? 'Play' : 'Pause'}"
+            ></crt-button>
+            <crt-button
+              class="log-action"
               size="small"
               variant="error"
               @click=${this._clearLog}
-            >✕ CLEAR</crt-button>
+              icon-only
+              icon-left="trash"
+              aria-label="Clear"
+            ></crt-button>
           </div>
+        </div>
+
+        <div class="log-tabs" role="tablist">
+          <button
+            class="log-tab ${this._filter === 'all' ? 'active' : ''}"
+            role="tab"
+            aria-selected="${this._filter === 'all' ? 'true' : 'false'}"
+            @click=${() => this._setFilter('all')}
+          >ALL <span class="log-tab-count">${counts.all}</span></button>
+          <button
+            class="log-tab ${this._filter === 'error' ? 'active' : ''}"
+            role="tab"
+            aria-selected="${this._filter === 'error' ? 'true' : 'false'}"
+            @click=${() => this._setFilter('error')}
+          >ERR <span class="log-tab-count">${counts.error}</span></button>
+          <button
+            class="log-tab ${this._filter === 'warn' ? 'active' : ''}"
+            role="tab"
+            aria-selected="${this._filter === 'warn' ? 'true' : 'false'}"
+            @click=${() => this._setFilter('warn')}
+          >WRN <span class="log-tab-count">${counts.warn}</span></button>
+          <button
+            class="log-tab ${this._filter === 'info' ? 'active' : ''}"
+            role="tab"
+            aria-selected="${this._filter === 'info' ? 'true' : 'false'}"
+            @click=${() => this._setFilter('info')}
+          >INF <span class="log-tab-count">${counts.info}</span></button>
+          <button
+            class="log-tab ${this._filter === 'success' ? 'active' : ''}"
+            role="tab"
+            aria-selected="${this._filter === 'success' ? 'true' : 'false'}"
+            @click=${() => this._setFilter('success')}
+          >SUC <span class="log-tab-count">${counts.success}</span></button>
+          <button
+            class="log-tab ${this._filter === 'debug' ? 'active' : ''}"
+            role="tab"
+            aria-selected="${this._filter === 'debug' ? 'true' : 'false'}"
+            @click=${() => this._setFilter('debug')}
+          >DBG <span class="log-tab-count">${counts.debug}</span></button>
         </div>
 
         <!-- Log Content -->
